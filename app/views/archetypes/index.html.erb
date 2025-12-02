@@ -1,0 +1,17 @@
+<div class="container">
+  <h1>Archétypes</h1>
+
+  <div class="row">
+    <% @archetypes.each do |archetype| %>
+      <div class="col-md-4 mb-4">
+        <div class="card">
+          <div class="card-body">
+            <h5 class="card-title"><%= archetype.archetype_name %></h5>
+            <p class="card-text"><%= truncate(archetype.archetype_desc, length: 100) %></p>
+            <%= link_to "Voir plus", archetype_path(archetype), class: "btn btn-primary" %>
+          </div>
+        </div>
+      </div>
+    <% end %>
+  </div>
+</div>
