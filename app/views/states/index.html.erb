@@ -1,0 +1,51 @@
+<div class="states-container">
+  <div class="states-header">
+    <h1>Historique de mes états</h1>
+    <%= link_to new_state_path, class: "btn-new-state" do %>
+      <i class="fas fa-plus"></i> Nouvel état
+    <% end %>
+  </div>
+
+  <% if @states.any? %>
+    <div class="states-list">
+      <% @states.each do |state| %>
+        <%= link_to state, class: "state-card" do %>
+          <% pain = state.pain_level || 0 %>
+          <div class="state-pain <%= pain <= 3 ? 'low' : pain <= 6 ? 'medium' : 'high' %>">
+            <%= pain %>
+          </div>
+          <div class="state-info">
+            <div class="state-date"><%= l(state.created_at, format: :short) %></div>
+            <div class="state-emotion"><%= state.emotion_label&.humanize || "Non renseigné" %></div>
+          </div>
+          <div class="state-meta">
+            <% if state.grief_stage %>
+              <div class="meta-item">
+                <i class="fas fa-layer-group"></i>
+                <%= state.grief_stage.name %>
+              </div>
+            <% end %>
+            <% if state.time_of_day %>
+              <div class="meta-item">
+                <i class="fas fa-clock"></i>
+                <%= state.time_of_day.humanize %>
+              </div>
+            <% end %>
+          </div>
+          <div class="state-arrow">
+            <i class="fas fa-chevron-right"></i>
+          </div>
+        <% end %>
+      <% end %>
+    </div>
+  <% else %>
+    <div class="states-empty">
+      <i class="fas fa-heart"></i>
+      <h3>Aucun état enregistré</h3>
+      <p>Commence à suivre ton évolution en enregistrant ton premier état.</p>
+      <%= link_to new_state_path, class: "btn-new-state" do %>
+        <i class="fas fa-plus"></i> Mon premier état
+      <% end %>
+    </div>
+  <% end %>
+</div>

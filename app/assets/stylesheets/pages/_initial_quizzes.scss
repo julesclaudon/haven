@@ -1,0 +1,262 @@
+// Styles pour Initial Quizzes
+
+.quiz-container {
+  max-width: 700px;
+  margin: 2rem auto;
+  padding: 0 1rem;
+}
+
+.quiz-header {
+  text-align: center;
+  margin-bottom: 2rem;
+
+  h1 {
+    color: $primary;
+    font-family: $headers-font;
+    font-weight: 700;
+    margin-bottom: 0.5rem;
+  }
+
+  p {
+    color: $gray;
+    font-size: 1.1rem;
+  }
+}
+
+.quiz-card {
+  background: white;
+  border-radius: 16px;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+  padding: 2rem;
+  margin-bottom: 2rem;
+}
+
+.quiz-section {
+  margin-bottom: 2rem;
+  padding-bottom: 1.5rem;
+  border-bottom: 1px solid $light-gray;
+
+  &:last-child {
+    border-bottom: none;
+    margin-bottom: 0;
+    padding-bottom: 0;
+  }
+}
+
+.quiz-section-title {
+  color: $primary;
+  font-family: $headers-font;
+  font-size: 1.1rem;
+  font-weight: 600;
+  margin-bottom: 1rem;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+
+  i {
+    color: $secondary;
+  }
+}
+
+.quiz-field {
+  margin-bottom: 1.5rem;
+
+  label {
+    display: block;
+    color: $dark;
+    font-weight: 500;
+    margin-bottom: 0.5rem;
+  }
+
+  .form-control,
+  .form-select {
+    border: 2px solid $light-gray;
+    border-radius: 10px;
+    padding: 0.75rem 1rem;
+    transition: all 0.2s ease;
+
+    &:focus {
+      border-color: $primary;
+      box-shadow: 0 0 0 3px rgba($primary, 0.15);
+    }
+  }
+
+  textarea.form-control {
+    resize: vertical;
+    min-height: 100px;
+  }
+}
+
+// Slider pour pain level
+.pain-slider {
+  position: relative;
+  padding-top: 0.5rem;
+
+  .form-range {
+    width: 100%;
+    height: 8px;
+    border-radius: 4px;
+    background: linear-gradient(to right, $pain-low, $pain-medium, $pain-high);
+    -webkit-appearance: none;
+
+    &::-webkit-slider-thumb {
+      -webkit-appearance: none;
+      width: 24px;
+      height: 24px;
+      border-radius: 50%;
+      background: white;
+      border: 3px solid $primary;
+      cursor: pointer;
+      box-shadow: 0 2px 6px rgba(0, 0, 0, 0.15);
+    }
+  }
+
+  .pain-labels {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 0.5rem;
+    font-size: 0.85rem;
+    color: $gray;
+  }
+}
+
+// Radio buttons stylisés
+.radio-group {
+  display: flex;
+  gap: 1rem;
+  flex-wrap: wrap;
+
+  .radio-option {
+    flex: 1;
+    min-width: 120px;
+
+    input[type="radio"] {
+      display: none;
+
+      &:checked + label {
+        background: $primary;
+        color: white;
+        border-color: $primary;
+      }
+    }
+
+    label {
+      display: block;
+      padding: 0.75rem 1.5rem;
+      border: 2px solid $light-gray;
+      border-radius: 10px;
+      text-align: center;
+      cursor: pointer;
+      transition: all 0.2s ease;
+
+      &:hover {
+        border-color: $primary;
+        background: rgba($primary, 0.05);
+      }
+    }
+  }
+}
+
+// Boutons
+.quiz-actions {
+  display: flex;
+  gap: 1rem;
+  margin-top: 2rem;
+  padding-top: 1.5rem;
+  border-top: 1px solid $light-gray;
+
+  .btn-primary {
+    background: $primary;
+    border-color: $primary;
+    padding: 0.75rem 2rem;
+    border-radius: 10px;
+    font-weight: 600;
+
+    &:hover {
+      background: darken($primary, 8%);
+      border-color: darken($primary, 8%);
+    }
+  }
+
+  .btn-secondary {
+    background: transparent;
+    border: 2px solid $gray;
+    color: $gray;
+    padding: 0.75rem 2rem;
+    border-radius: 10px;
+
+    &:hover {
+      background: $light-gray;
+    }
+  }
+}
+
+// Page Show
+.quiz-show {
+  .info-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 1.5rem;
+  }
+
+  .info-item {
+    background: $light;
+    padding: 1rem 1.25rem;
+    border-radius: 10px;
+
+    .info-label {
+      font-size: 0.85rem;
+      color: $gray;
+      margin-bottom: 0.25rem;
+    }
+
+    .info-value {
+      font-weight: 600;
+      color: $dark;
+    }
+  }
+
+  .info-text {
+    background: $light;
+    padding: 1.25rem;
+    border-radius: 10px;
+    margin-top: 1.5rem;
+
+    .info-label {
+      font-size: 0.85rem;
+      color: $gray;
+      margin-bottom: 0.5rem;
+    }
+
+    p {
+      margin: 0;
+      color: $dark;
+      line-height: 1.6;
+    }
+  }
+}
+
+// Pain level badge
+.pain-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.25rem 0.75rem;
+  border-radius: 20px;
+  font-weight: 600;
+
+  &.low {
+    background: rgba($pain-low, 0.2);
+    color: darken($pain-low, 20%);
+  }
+
+  &.medium {
+    background: rgba($pain-medium, 0.3);
+    color: darken($pain-medium, 30%);
+  }
+
+  &.high {
+    background: rgba($pain-high, 0.2);
+    color: darken($pain-high, 15%);
+  }
+}
