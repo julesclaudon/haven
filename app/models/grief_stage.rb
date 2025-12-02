@@ -1,0 +1,2 @@
+class GriefStage < ApplicationRecord
+end
