@@ -1,2 +1,9 @@
-<h1>Pages#home</h1>
-<p>Find me in app/views/pages/home.html.erb</p>
+<h1>Bienvenue sur Haven</h1>
+
+<% if user_signed_in? %>
+  <p>Tu es connecté en tant que <%= current_user.email %></p>
+  <%= link_to "Aller au dashboard", dashboard_path, class: "btn btn-primary" %>
+<% else %>
+  <%= link_to "Se connecter", new_user_session_path, class: "btn btn-primary" %>
+  <%= link_to "S'inscrire", new_user_registration_path, class: "btn btn-secondary" %>
+<% end %>

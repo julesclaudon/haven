@@ -14,4 +14,6 @@ Rails.application.routes.draw do
 
   resources :initial_quizzes, only: [:new, :create, :show, :edit, :update]
   resources :states, only: [:new, :create, :show, :index]
+  resource :dashboard, only: :show
+
 end
