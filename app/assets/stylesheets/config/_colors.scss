@@ -1,10 +1,22 @@
-// Define variables for your color scheme
+// Define variables for your color scheme - Haven theme (apaisant)
 
-// For example:
-$red: #FD1015;
-$blue: #0D6EFD;
-$yellow: #FFC65A;
-$orange: #E67E22;
-$green: #1EDD88;
-$gray: #0E0000;
-$light-gray: #F4F4F4;
+// Palette principale
+$primary: #6B8E9F;       // Bleu-gris apaisant
+$secondary: #A8C5B5;     // Vert sauge doux
+$accent: #E8B4A8;        // Rose pêche chaleureux
+$dark: #4A5568;          // Gris foncé doux
+$light: #F7F8FA;         // Blanc cassé
+
+// Couleurs fonctionnelles
+$red: #E57373;
+$blue: #6B8E9F;
+$yellow: #FFD993;
+$orange: #FFAB7B;
+$green: #81C995;
+$gray: #718096;
+$light-gray: #EDF2F7;
+
+// Couleurs d'état émotionnel
+$pain-low: #81C995;
+$pain-medium: #FFD993;
+$pain-high: #E57373;

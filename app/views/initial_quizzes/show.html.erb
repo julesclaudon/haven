@@ -1,0 +1,119 @@
+<div class="quiz-container">
+  <div class="quiz-header">
+    <h1>Mon questionnaire</h1>
+    <p>Voici les informations que tu as partagées avec nous.</p>
+  </div>
+
+  <div class="quiz-card quiz-show">
+    <div class="quiz-section">
+      <div class="quiz-section-title">
+        <i class="fas fa-user"></i> À propos de toi
+      </div>
+      <div class="info-grid">
+        <div class="info-item">
+          <div class="info-label">Âge</div>
+          <div class="info-value"><%= @initial_quiz.age %> ans</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="quiz-section">
+      <div class="quiz-section-title">
+        <i class="fas fa-heart-broken"></i> Ta relation
+      </div>
+      <div class="info-grid">
+        <div class="info-item">
+          <div class="info-label">Date de fin</div>
+          <div class="info-value"><%= l(@initial_quiz.relation_end_date, format: :long) %></div>
+        </div>
+        <div class="info-item">
+          <div class="info-label">Durée de la relation</div>
+          <div class="info-value"><%= @initial_quiz.relation_duration %> mois</div>
+        </div>
+        <div class="info-item">
+          <div class="info-label">Type de rupture</div>
+          <div class="info-value"><%= @initial_quiz.breakup_type&.humanize %></div>
+        </div>
+        <div class="info-item">
+          <div class="info-label">Initiateur</div>
+          <div class="info-value"><%= @initial_quiz.breakup_initiator&.humanize %></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="quiz-section">
+      <div class="quiz-section-title">
+        <i class="fas fa-brain"></i> Ton état
+      </div>
+      <div class="info-grid">
+        <div class="info-item">
+          <div class="info-label">Niveau de douleur</div>
+          <div class="info-value">
+            <% pain = @initial_quiz.pain_level %>
+            <span class="pain-badge <%= pain <= 3 ? 'low' : pain <= 6 ? 'medium' : 'high' %>">
+              <%= pain %>/10
+            </span>
+          </div>
+        </div>
+        <div class="info-item">
+          <div class="info-label">Émotion principale</div>
+          <div class="info-value"><%= @initial_quiz.emotion_label&.humanize %></div>
+        </div>
+      </div>
+      <% if @initial_quiz.main_sentiment.present? %>
+        <div class="info-text">
+          <div class="info-label">Ce que tu ressens</div>
+          <p><%= @initial_quiz.main_sentiment %></p>
+        </div>
+      <% end %>
+    </div>
+
+    <div class="quiz-section">
+      <div class="quiz-section-title">
+        <i class="fas fa-comments"></i> Contact avec ton ex
+      </div>
+      <div class="info-grid">
+        <div class="info-item">
+          <div class="info-label">Fréquence de contact</div>
+          <div class="info-value"><%= @initial_quiz.ex_contact_frequency&.humanize %></div>
+        </div>
+        <div class="info-item">
+          <div class="info-label">Réconciliation envisagée</div>
+          <div class="info-value"><%= @initial_quiz.considered_reunion ? "Oui" : "Non" %></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="quiz-section">
+      <div class="quiz-section-title">
+        <i class="fas fa-moon"></i> Ton quotidien
+      </div>
+      <div class="info-grid">
+        <div class="info-item">
+          <div class="info-label">Rumination</div>
+          <div class="info-value"><%= @initial_quiz.ruminating_frequency&.humanize %></div>
+        </div>
+        <div class="info-item">
+          <div class="info-label">Qualité du sommeil</div>
+          <div class="info-value"><%= @initial_quiz.sleep_quality&.humanize %></div>
+        </div>
+        <div class="info-item">
+          <div class="info-label">Niveau de soutien</div>
+          <div class="info-value"><%= @initial_quiz.support_level&.humanize %></div>
+        </div>
+      </div>
+      <% if @initial_quiz.habits_changed.present? %>
+        <div class="info-text">
+          <div class="info-label">Habitudes modifiées</div>
+          <p><%= @initial_quiz.habits_changed %></p>
+        </div>
+      <% end %>
+    </div>
+
+    <div class="quiz-actions">
+      <%= link_to edit_initial_quiz_path(@initial_quiz), class: "btn btn-primary" do %>
+        <i class="fas fa-edit"></i> Modifier
+      <% end %>
+    </div>
+  </div>
+</div>

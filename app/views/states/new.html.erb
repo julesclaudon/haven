@@ -1,0 +1,182 @@
+<div class="state-form-container">
+  <div class="state-form-header">
+    <h1>Comment te sens-tu ?</h1>
+    <p class="subtitle">Prends un moment pour faire le point sur ton état.</p>
+  </div>
+
+  <%= form_with model: @state do |f| %>
+    <% if @state.errors.any? %>
+      <div class="alert alert-danger mb-4">
+        <ul class="mb-0">
+          <% @state.errors.full_messages.each do |message| %>
+            <li><%= message %></li>
+          <% end %>
+        </ul>
+      </div>
+    <% end %>
+
+    <div class="state-form-card">
+      <div class="quiz-section">
+        <div class="quiz-section-title">
+          <i class="fas fa-clock"></i> Contexte
+        </div>
+
+        <div class="quiz-field">
+          <%= f.label :time_of_day, "À quel moment de la journée sommes-nous ?" %>
+          <%= f.select :time_of_day,
+              [["Matin", "matin"],
+               ["Après-midi", "après-midi"],
+               ["Soir", "soir"],
+               ["Nuit", "nuit"]],
+              { prompt: "Sélectionne une option" },
+              class: "form-select" %>
+        </div>
+
+        <div class="quiz-field">
+          <%= f.label :trigger_source, "Qu'est-ce qui a déclenché cet état ?" %>
+          <%= f.select :trigger_source,
+              [["Médias sociaux", "médias sociaux"],
+               ["Une mémoire", "mémoire"],
+               ["Un message", "message"],
+               ["Une chanson", "chanson"],
+               ["Un lieu", "lieu"],
+               ["Autre", "autre"]],
+              { prompt: "Sélectionne une option" },
+              class: "form-select" %>
+        </div>
+      </div>
+
+      <div class="quiz-section">
+        <div class="quiz-section-title">
+          <i class="fas fa-heart"></i> Ton ressenti
+        </div>
+
+        <div class="quiz-field">
+          <%= f.label :pain_level, "Niveau de douleur actuel" %>
+          <div class="pain-slider">
+            <%= f.range_field :pain_level, min: 0, max: 10, value: 5, class: "form-range", id: "pain_level" %>
+            <div class="pain-labels">
+              <span>0 - Serein</span>
+              <span>5 - Modéré</span>
+              <span>10 - Intense</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="quiz-field">
+          <%= f.label :emotion_label, "Quelle émotion ressens-tu ?" %>
+          <%= f.select :emotion_label,
+              [["Tristesse", "tristesse"],
+               ["Colère", "colere"],
+               ["Culpabilité", "culpabilite"],
+               ["Soulagement", "soulagement"],
+               ["Confusion", "confusion"],
+               ["Anxiété", "anxiete"],
+               ["Espoir", "espoir"],
+               ["Indifférence", "indifference"]],
+              { prompt: "Sélectionne une option" },
+              class: "form-select" %>
+        </div>
+
+        <div class="quiz-field">
+          <%= f.label :raw_input, "Exprime-toi librement" %>
+          <%= f.text_area :raw_input, rows: 4, class: "form-control", placeholder: "Écris ce que tu ressens, sans filtre..." %>
+        </div>
+
+        <div class="quiz-field">
+          <%= f.label :main_sentiment, "En une phrase, quel est ton sentiment principal ?" %>
+          <%= f.text_area :main_sentiment, rows: 2, class: "form-control" %>
+        </div>
+      </div>
+
+      <div class="quiz-section">
+        <div class="quiz-section-title">
+          <i class="fas fa-comments"></i> Contact avec ton ex
+        </div>
+
+        <div class="quiz-field">
+          <%= f.label :ex_contact_frequency, "As-tu été en contact avec ton ex récemment ?" %>
+          <%= f.select :ex_contact_frequency,
+              [["Pas de contact", "jamais"],
+               ["Un peu", "rarement"],
+               ["Quelques échanges", "parfois"],
+               ["Beaucoup", "souvent"],
+               ["Constant", "quotidien"]],
+              { prompt: "Sélectionne une option" },
+              class: "form-select" %>
+        </div>
+
+        <div class="quiz-field">
+          <%= f.label :considered_reunion, "As-tu pensé à une réconciliation ?" %>
+          <div class="radio-group">
+            <div class="radio-option">
+              <%= f.radio_button :considered_reunion, true, id: "reunion_yes" %>
+              <%= f.label :considered_reunion, "Oui", for: "reunion_yes" %>
+            </div>
+            <div class="radio-option">
+              <%= f.radio_button :considered_reunion, false, id: "reunion_no" %>
+              <%= f.label :considered_reunion, "Non", for: "reunion_no" %>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="quiz-section">
+        <div class="quiz-section-title">
+          <i class="fas fa-moon"></i> Ton quotidien
+        </div>
+
+        <div class="quiz-field">
+          <%= f.label :ruminating_frequency, "Rumines-tu beaucoup en ce moment ?" %>
+          <%= f.select :ruminating_frequency,
+              [["Pas du tout", "jamais"],
+               ["Un peu", "rarement"],
+               ["Modérément", "parfois"],
+               ["Beaucoup", "souvent"],
+               ["Sans arrêt", "constamment"]],
+              { prompt: "Sélectionne une option" },
+              class: "form-select" %>
+        </div>
+
+        <div class="quiz-field">
+          <%= f.label :sleep_quality, "Comment as-tu dormi ?" %>
+          <%= f.select :sleep_quality,
+              [["Très mal", "tres_mauvais"],
+               ["Mal", "mauvais"],
+               ["Moyennement", "moyen"],
+               ["Bien", "bon"],
+               ["Très bien", "tres_bon"]],
+              { prompt: "Sélectionne une option" },
+              class: "form-select" %>
+        </div>
+
+        <div class="quiz-field">
+          <%= f.label :drugs, "As-tu consommé quelque chose ?" %>
+          <%= f.text_field :drugs, class: "form-control", placeholder: "Alcool, café, médicaments..." %>
+        </div>
+
+        <div class="quiz-field">
+          <%= f.label :habits_changed, "Des changements dans tes habitudes ?" %>
+          <%= f.text_area :habits_changed, rows: 2, class: "form-control" %>
+        </div>
+
+        <div class="quiz-field">
+          <%= f.label :support_level, "Te sens-tu soutenu(e) ?" %>
+          <%= f.select :support_level,
+              [["Pas du tout", "aucun"],
+               ["Peu", "peu"],
+               ["Moyennement", "modere"],
+               ["Bien", "bon"],
+               ["Très bien", "excellent"]],
+              { prompt: "Sélectionne une option" },
+              class: "form-select" %>
+        </div>
+      </div>
+
+      <div class="quiz-actions">
+        <%= f.submit "Enregistrer", class: "btn btn-primary" %>
+        <%= link_to "Annuler", states_path, class: "btn btn-secondary" %>
+      </div>
+    </div>
+  <% end %>
+</div>

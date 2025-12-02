@@ -9,4 +9,7 @@ Rails.application.routes.draw do
 
   # Defines the root path route ("/")
   # root "posts#index"
+
+  resources :initial_quizzes, only: [:new, :create, :show, :edit, :update]
+  resources :states, only: [:new, :create, :show, :index]
 end

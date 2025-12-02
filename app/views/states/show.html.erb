@@ -1,0 +1,123 @@
+<div class="state-show">
+  <div class="state-show-header">
+    <%= link_to states_path, class: "back-link" do %>
+      <i class="fas fa-arrow-left"></i>
+    <% end %>
+    <div class="header-content">
+      <h1>Mon état</h1>
+      <div class="date"><%= l(@state.created_at, format: :long) %></div>
+    </div>
+  </div>
+
+  <div class="state-detail-card">
+    <div class="state-summary">
+      <div class="summary-item">
+        <% pain = @state.pain_level || 0 %>
+        <div class="summary-value">
+          <span class="pain-badge <%= pain <= 3 ? 'low' : pain <= 6 ? 'medium' : 'high' %>">
+            <%= pain %>/10
+          </span>
+        </div>
+        <div class="summary-label">Douleur</div>
+      </div>
+      <div class="summary-item">
+        <div class="summary-value"><%= @state.emotion_label&.humanize || "-" %></div>
+        <div class="summary-label">Émotion</div>
+      </div>
+      <% if @state.grief_stage %>
+        <div class="summary-item">
+          <div class="summary-value"><%= @state.grief_stage.name %></div>
+          <div class="summary-label">Phase</div>
+        </div>
+      <% end %>
+      <div class="summary-item">
+        <div class="summary-value"><%= @state.time_of_day&.humanize || "-" %></div>
+        <div class="summary-label">Moment</div>
+      </div>
+    </div>
+
+    <% if @state.raw_input.present? %>
+      <div class="detail-section">
+        <div class="section-title">Ce que tu as exprimé</div>
+        <div class="raw-input-box">
+          <%= @state.raw_input %>
+        </div>
+      </div>
+    <% end %>
+
+    <% if @state.main_sentiment.present? %>
+      <div class="detail-section">
+        <div class="section-title">Sentiment principal</div>
+        <p><%= @state.main_sentiment %></p>
+      </div>
+    <% end %>
+
+    <div class="detail-section">
+      <div class="section-title">Détails</div>
+      <div class="details-grid">
+        <% if @state.trigger_source.present? %>
+          <div class="detail-item">
+            <div class="detail-label">Déclencheur</div>
+            <div class="detail-value"><%= @state.trigger_source.humanize %></div>
+          </div>
+        <% end %>
+
+        <% if @state.ex_contact_frequency.present? %>
+          <div class="detail-item">
+            <div class="detail-label">Contact avec l'ex</div>
+            <div class="detail-value"><%= @state.ex_contact_frequency.humanize %></div>
+          </div>
+        <% end %>
+
+        <div class="detail-item">
+          <div class="detail-label">Réconciliation envisagée</div>
+          <div class="detail-value"><%= @state.considered_reunion.nil? ? "-" : (@state.considered_reunion ? "Oui" : "Non") %></div>
+        </div>
+
+        <% if @state.ruminating_frequency.present? %>
+          <div class="detail-item">
+            <div class="detail-label">Rumination</div>
+            <div class="detail-value"><%= @state.ruminating_frequency.humanize %></div>
+          </div>
+        <% end %>
+
+        <% if @state.sleep_quality.present? %>
+          <div class="detail-item">
+            <div class="detail-label">Qualité du sommeil</div>
+            <div class="detail-value"><%= @state.sleep_quality.humanize %></div>
+          </div>
+        <% end %>
+
+        <% if @state.support_level.present? %>
+          <div class="detail-item">
+            <div class="detail-label">Niveau de soutien</div>
+            <div class="detail-value"><%= @state.support_level.humanize %></div>
+          </div>
+        <% end %>
+
+        <% if @state.drugs.present? %>
+          <div class="detail-item">
+            <div class="detail-label">Consommation</div>
+            <div class="detail-value"><%= @state.drugs %></div>
+          </div>
+        <% end %>
+      </div>
+    </div>
+
+    <% if @state.habits_changed.present? %>
+      <div class="detail-section">
+        <div class="section-title">Changements d'habitudes</div>
+        <p><%= @state.habits_changed %></p>
+      </div>
+    <% end %>
+  </div>
+
+  <div class="quiz-actions mt-4">
+    <%= link_to states_path, class: "btn btn-secondary" do %>
+      <i class="fas fa-list"></i> Retour à l'historique
+    <% end %>
+    <%= link_to new_state_path, class: "btn btn-primary" do %>
+      <i class="fas fa-plus"></i> Nouvel état
+    <% end %>
+  </div>
+</div>

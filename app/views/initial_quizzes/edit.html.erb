@@ -1,0 +1,189 @@
+<div class="quiz-container">
+  <div class="quiz-header">
+    <h1>Modifier mon questionnaire</h1>
+    <p>Met à jour tes informations si quelque chose a changé.</p>
+  </div>
+
+  <%= form_with model: @initial_quiz do |f| %>
+    <% if @initial_quiz.errors.any? %>
+      <div class="alert alert-danger mb-4">
+        <ul class="mb-0">
+          <% @initial_quiz.errors.full_messages.each do |message| %>
+            <li><%= message %></li>
+          <% end %>
+        </ul>
+      </div>
+    <% end %>
+
+    <div class="quiz-card">
+      <div class="quiz-section">
+        <div class="quiz-section-title">
+          <i class="fas fa-user"></i> À propos de toi
+        </div>
+
+        <div class="quiz-field">
+          <%= f.label :age, "Quel âge as-tu ?" %>
+          <%= f.number_field :age, min: 14, class: "form-control", placeholder: "Ton âge" %>
+        </div>
+      </div>
+
+      <div class="quiz-section">
+        <div class="quiz-section-title">
+          <i class="fas fa-heart-broken"></i> Ta relation
+        </div>
+
+        <div class="quiz-field">
+          <%= f.label :relation_end_date, "Quand ta relation s'est-elle terminée ?" %>
+          <%= f.date_field :relation_end_date, class: "form-control" %>
+        </div>
+
+        <div class="quiz-field">
+          <%= f.label :relation_duration, "Combien de temps a duré ta relation ? (en mois)" %>
+          <%= f.number_field :relation_duration, min: 0, class: "form-control", placeholder: "Durée en mois" %>
+        </div>
+
+        <div class="quiz-field">
+          <%= f.label :breakup_type, "Type de rupture" %>
+          <%= f.select :breakup_type,
+              [["Rupture amoureuse", "rupture_amoureuse"],
+               ["Divorce", "divorce"],
+               ["Décès", "deces"],
+               ["Autre", "autre"]],
+              { prompt: "Sélectionne une option" },
+              class: "form-select" %>
+        </div>
+
+        <div class="quiz-field">
+          <%= f.label :breakup_initiator, "Qui a initié la rupture ?" %>
+          <%= f.select :breakup_initiator,
+              [["Moi", "moi"],
+               ["Mon/ma partenaire", "partenaire"],
+               ["Mutuel", "mutuel"],
+               ["Non applicable", "na"]],
+              { prompt: "Sélectionne une option" },
+              class: "form-select" %>
+        </div>
+      </div>
+
+      <div class="quiz-section">
+        <div class="quiz-section-title">
+          <i class="fas fa-brain"></i> Ton état actuel
+        </div>
+
+        <div class="quiz-field">
+          <%= f.label :pain_level, "Niveau de douleur actuel" %>
+          <div class="pain-slider">
+            <%= f.range_field :pain_level, min: 0, max: 10, class: "form-range", id: "pain_level" %>
+            <div class="pain-labels">
+              <span>0 - Serein</span>
+              <span>5 - Modéré</span>
+              <span>10 - Intense</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="quiz-field">
+          <%= f.label :emotion_label, "Quelle émotion ressens-tu principalement ?" %>
+          <%= f.select :emotion_label,
+              [["Tristesse", "tristesse"],
+               ["Colère", "colere"],
+               ["Culpabilité", "culpabilite"],
+               ["Soulagement", "soulagement"],
+               ["Confusion", "confusion"],
+               ["Anxiété", "anxiete"]],
+              { prompt: "Sélectionne une option" },
+              class: "form-select" %>
+        </div>
+
+        <div class="quiz-field">
+          <%= f.label :main_sentiment, "Décris ce que tu ressens en quelques mots" %>
+          <%= f.text_area :main_sentiment, rows: 3, class: "form-control", placeholder: "Exprime-toi librement..." %>
+        </div>
+      </div>
+
+      <div class="quiz-section">
+        <div class="quiz-section-title">
+          <i class="fas fa-comments"></i> Contact avec ton ex
+        </div>
+
+        <div class="quiz-field">
+          <%= f.label :ex_contact_frequency, "À quelle fréquence es-tu en contact avec ton ex ?" %>
+          <%= f.select :ex_contact_frequency,
+              [["Jamais", "jamais"],
+               ["Rarement", "rarement"],
+               ["Parfois", "parfois"],
+               ["Souvent", "souvent"],
+               ["Tous les jours", "quotidien"]],
+              { prompt: "Sélectionne une option" },
+              class: "form-select" %>
+        </div>
+
+        <div class="quiz-field">
+          <%= f.label :considered_reunion, "As-tu envisagé une réconciliation ?" %>
+          <div class="radio-group">
+            <div class="radio-option">
+              <%= f.radio_button :considered_reunion, true, id: "reunion_yes" %>
+              <%= f.label :considered_reunion, "Oui", for: "reunion_yes" %>
+            </div>
+            <div class="radio-option">
+              <%= f.radio_button :considered_reunion, false, id: "reunion_no" %>
+              <%= f.label :considered_reunion, "Non", for: "reunion_no" %>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="quiz-section">
+        <div class="quiz-section-title">
+          <i class="fas fa-moon"></i> Ton quotidien
+        </div>
+
+        <div class="quiz-field">
+          <%= f.label :ruminating_frequency, "À quelle fréquence rumines-tu sur la relation ?" %>
+          <%= f.select :ruminating_frequency,
+              [["Jamais", "jamais"],
+               ["Rarement", "rarement"],
+               ["Parfois", "parfois"],
+               ["Souvent", "souvent"],
+               ["Constamment", "constamment"]],
+              { prompt: "Sélectionne une option" },
+              class: "form-select" %>
+        </div>
+
+        <div class="quiz-field">
+          <%= f.label :sleep_quality, "Comment est ton sommeil ?" %>
+          <%= f.select :sleep_quality,
+              [["Très mauvais", "tres_mauvais"],
+               ["Mauvais", "mauvais"],
+               ["Moyen", "moyen"],
+               ["Bon", "bon"],
+               ["Très bon", "tres_bon"]],
+              { prompt: "Sélectionne une option" },
+              class: "form-select" %>
+        </div>
+
+        <div class="quiz-field">
+          <%= f.label :habits_changed, "Quelles habitudes ont changé depuis la rupture ?" %>
+          <%= f.text_area :habits_changed, rows: 3, class: "form-control", placeholder: "Ex: alimentation, sport, sommeil, vie sociale..." %>
+        </div>
+
+        <div class="quiz-field">
+          <%= f.label :support_level, "Quel niveau de soutien as-tu autour de toi ?" %>
+          <%= f.select :support_level,
+              [["Aucun soutien", "aucun"],
+               ["Peu de soutien", "peu"],
+               ["Soutien modéré", "modere"],
+               ["Bon soutien", "bon"],
+               ["Excellent soutien", "excellent"]],
+              { prompt: "Sélectionne une option" },
+              class: "form-select" %>
+        </div>
+      </div>
+
+      <div class="quiz-actions">
+        <%= f.submit "Mettre à jour", class: "btn btn-primary" %>
+        <%= link_to "Annuler", @initial_quiz, class: "btn btn-secondary" %>
+      </div>
+    </div>
+  <% end %>
+</div>
