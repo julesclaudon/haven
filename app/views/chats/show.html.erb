@@ -1,0 +1,17 @@
+<div class="chat-container">
+  <div class="chat-header">
+    <h1>Conversation</h1>
+  </div>
+
+  <div class="chat-messages">
+    <% @messages.each do |message| %>
+      <div class="message <%= message.role %>">
+        <p><%= message.content %></p>
+      </div>
+    <% end %>
+  </div>
+
+  <div class="chat-input">
+    <!-- Formulaire de message à implémenter -->
+  </div>
+</div>

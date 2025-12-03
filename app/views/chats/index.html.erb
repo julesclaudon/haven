@@ -1,0 +1,26 @@
+<div class="chat-container">
+  <div class="chat-header">
+    <h1>Chat avec l'IA</h1>
+  </div>
+
+  <div class="chat-content">
+    <% if @chats.any? %>
+      <ul class="chat-list">
+        <% @chats.each do |chat| %>
+          <li>
+            <%= link_to chat, class: "chat-item" do %>
+              <i class="fa-solid fa-message"></i>
+              <span>Conversation du <%= chat.created_at.strftime("%d/%m/%Y") %></span>
+            <% end %>
+          </li>
+        <% end %>
+      </ul>
+    <% else %>
+      <p class="text-muted">Aucune conversation pour le moment.</p>
+    <% end %>
+
+    <%= link_to chats_path, method: :post, class: "btn-new-chat" do %>
+      <i class="fa-solid fa-plus"></i> Nouvelle conversation
+    <% end %>
+  </div>
+</div>
