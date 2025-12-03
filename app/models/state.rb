@@ -2,6 +2,7 @@ class State < ApplicationRecord
   belongs_to :user
   belongs_to :chat
   belongs_to :grief_stage
+  has_one :analysis, dependent: :destroy
 
   validates :pain_level, numericality: {
     only_integer: true,

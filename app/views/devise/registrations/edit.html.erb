@@ -1,0 +1,80 @@
+<div class="profile-container">
+  <div class="profile-header">
+    <h1>Mon Profil</h1>
+  </div>
+
+  <div class="profile-info-card">
+    <div class="profile-avatar">
+      <i class="fa-solid fa-user-circle"></i>
+    </div>
+    <div class="profile-details">
+      <h3><%= current_user.username || current_user.email.split('@').first %></h3>
+      <p><%= current_user.email %></p>
+    </div>
+  </div>
+
+  <div class="profile-section">
+    <h3><i class="fa-solid fa-gear"></i> Paramètres du compte</h3>
+
+    <%= simple_form_for(resource, as: resource_name, url: registration_path(resource_name), html: { method: :put, class: "profile-form" }) do |f| %>
+      <%= f.error_notification %>
+
+      <div class="form-inputs">
+        <%= f.input :username,
+                    label: "Pseudo",
+                    placeholder: "Ton pseudo",
+                    required: false %>
+
+        <%= f.input :email,
+                    label: "Adresse email",
+                    required: true,
+                    autofocus: true %>
+
+        <% if devise_mapping.confirmable? && resource.pending_reconfirmation? %>
+          <p class="text-warning">En attente de confirmation : <%= resource.unconfirmed_email %></p>
+        <% end %>
+
+        <hr class="profile-divider">
+
+        <p class="form-section-title">Changer le mot de passe</p>
+
+        <%= f.input :password,
+                    label: "Nouveau mot de passe",
+                    hint: "Laisse vide si tu ne veux pas le changer",
+                    required: false,
+                    input_html: { autocomplete: "new-password" } %>
+        <%= f.input :password_confirmation,
+                    label: "Confirmer le nouveau mot de passe",
+                    required: false,
+                    input_html: { autocomplete: "new-password" } %>
+
+        <hr class="profile-divider">
+
+        <%= f.input :current_password,
+                    label: "Mot de passe actuel",
+                    hint: "Requis pour confirmer les modifications",
+                    required: true,
+                    input_html: { autocomplete: "current-password" } %>
+      </div>
+
+      <div class="form-actions">
+        <%= f.button :submit, "Enregistrer les modifications", class: "btn-primary" %>
+      </div>
+    <% end %>
+  </div>
+
+  <div class="profile-section">
+    <h3><i class="fa-solid fa-right-from-bracket"></i> Déconnexion</h3>
+    <p>Tu veux te déconnecter de ton compte ?</p>
+    <%= button_to "Se déconnecter", destroy_user_session_path, method: :delete, class: "btn-secondary" %>
+  </div>
+
+  <div class="profile-section profile-danger">
+    <h3><i class="fa-solid fa-triangle-exclamation"></i> Zone de danger</h3>
+    <p>Cette action est irréversible. Toutes tes données seront supprimées.</p>
+    <%= button_to "Supprimer mon compte", registration_path(resource_name),
+        method: :delete,
+        class: "btn-danger",
+        data: { confirm: "Es-tu sûr de vouloir supprimer ton compte ? Cette action est irréversible.", turbo_confirm: "Es-tu sûr de vouloir supprimer ton compte ? Cette action est irréversible." } %>
+  </div>
+</div>

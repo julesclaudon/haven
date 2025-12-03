@@ -1,0 +1,190 @@
+// Styles pour Chats (Nos échanges)
+
+.chats-container {
+  max-width: 900px;
+  margin: 2rem auto;
+  padding: 0 1rem;
+  padding-bottom: 100px;
+}
+
+.chats-header {
+  margin-bottom: 2rem;
+
+  h1 {
+    color: $haven-primary;
+    font-family: $headings-font-family;
+    font-weight: 700;
+    margin: 0;
+  }
+}
+
+.chats-content {
+  background: white;
+  border-radius: 16px;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+  overflow: hidden;
+}
+
+.chats-list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.chat-item {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 1rem 1.5rem;
+  border-bottom: 1px solid $light-gray;
+  transition: background 0.2s ease;
+
+  &:last-child {
+    border-bottom: none;
+  }
+
+  &:hover {
+    background: rgba($haven-light, 0.5);
+  }
+}
+
+.chat-info {
+  flex: 1;
+}
+
+.chat-link {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  text-decoration: none;
+  color: inherit;
+
+  i {
+    font-size: 1.5rem;
+    color: $haven-primary;
+  }
+}
+
+.chat-details {
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+
+  .chat-date {
+    font-weight: 500;
+    color: $haven-dark;
+  }
+
+  .chat-stage {
+    font-size: 0.85rem;
+    color: $gray;
+  }
+}
+
+.btn-state-popup {
+  background: rgba($haven-secondary, 0.2);
+  border: none;
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: all 0.2s ease;
+
+  i {
+    color: $haven-primary;
+    font-size: 1rem;
+  }
+
+  &:hover {
+    background: $haven-secondary;
+
+    i {
+      color: white;
+    }
+  }
+}
+
+// État vide
+.chats-empty {
+  text-align: center;
+  padding: 4rem 2rem;
+
+  i {
+    font-size: 3rem;
+    color: $light-gray;
+    margin-bottom: 1rem;
+  }
+
+  p {
+    color: $gray;
+    margin: 0.5rem 0;
+
+    &:first-of-type {
+      font-weight: 600;
+      color: $haven-dark;
+    }
+  }
+}
+
+// Modal State avec iframe
+.state-modal {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.6);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 9999;
+  padding: 1rem;
+}
+
+.state-modal-content {
+  background: white;
+  border-radius: 16px;
+  position: relative;
+  width: 100%;
+  max-width: 700px;
+  max-height: 90vh;
+  overflow: hidden;
+  box-shadow: 0 10px 40px rgba(0, 0, 0, 0.2);
+}
+
+.state-modal-iframe {
+  padding: 0;
+
+  iframe {
+    width: 100%;
+    height: 80vh;
+    border: none;
+    border-radius: 0 0 16px 16px;
+  }
+}
+
+.state-modal-close {
+  position: absolute;
+  top: 10px;
+  right: 15px;
+  background: rgba(0, 0, 0, 0.1);
+  border: none;
+  width: 35px;
+  height: 35px;
+  border-radius: 50%;
+  font-size: 1.5rem;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 10;
+  transition: all 0.2s ease;
+  color: $haven-dark;
+
+  &:hover {
+    background: rgba(0, 0, 0, 0.2);
+  }
+}

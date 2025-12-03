@@ -7,18 +7,25 @@
   min-height: calc(100vh - 70px);
   padding: 20px;
   text-align: center;
+  padding-bottom: 100px;
 }
 
 .dashboard-header {
-  margin-bottom: 80px;
+  margin-bottom: 40px;
 }
 
 .dashboard-title {
   font-size: 24px;
   font-weight: 700;
   letter-spacing: 2px;
-  color: #000;
+  color: $haven-primary;
   margin: 0;
+}
+
+.dashboard-subtitle {
+  color: $gray;
+  font-size: 1rem;
+  margin-top: 0.5rem;
 }
 
 .dashboard-content {
@@ -52,4 +59,279 @@
     color: #fff;
     transform: scale(1.02);
   }
+}
+
+// Frise des 5 étapes du deuil
+.grief-timeline-card {
+  width: 100%;
+  max-width: 800px;
+  background: white;
+  border-radius: 16px;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+  padding: 2rem 2.5rem;
+  margin-bottom: 2rem;
+}
+
+.grief-timeline {
+  position: relative;
+  padding-top: 40px;
+}
+
+.grief-progress-bar {
+  position: relative;
+  height: 8px;
+  background: $light-gray;
+  border-radius: 4px;
+  margin-bottom: 30px;
+}
+
+.grief-progress-fill {
+  position: absolute;
+  left: 0;
+  top: 0;
+  height: 100%;
+  background: linear-gradient(90deg, $haven-secondary, $haven-primary);
+  border-radius: 4px;
+  transition: width 0.5s ease;
+}
+
+.grief-cursor {
+  position: absolute;
+  top: 50%;
+  transform: translate(-50%, -50%);
+  width: 30px;
+  height: 30px;
+  background: $haven-primary;
+  border-radius: 50%;
+  border: 3px solid white;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: left 0.5s ease, transform 0.2s ease;
+
+  .cursor-score {
+    color: white;
+    font-size: 0.7rem;
+    font-weight: 700;
+  }
+
+  &.clickable {
+    cursor: pointer;
+
+    &:hover {
+      transform: translate(-50%, -50%) scale(1.2);
+      box-shadow: 0 4px 12px rgba($haven-primary, 0.4);
+    }
+  }
+}
+
+.grief-stages {
+  position: relative;
+  display: flex;
+  justify-content: space-between;
+  margin-top: 10px;
+}
+
+.grief-stage-item {
+  position: absolute;
+  transform: translateX(-50%);
+  text-align: center;
+  cursor: pointer;
+  transition: all 0.2s ease;
+
+  &:hover, &.active {
+    .stage-dot {
+      background: $haven-primary;
+      transform: scale(1.3);
+    }
+
+    .stage-name {
+      color: $haven-primary;
+    }
+  }
+
+  &.active {
+    .stage-dot {
+      box-shadow: 0 0 0 4px rgba($haven-primary, 0.3);
+    }
+  }
+}
+
+.stage-dot {
+  width: 14px;
+  height: 14px;
+  background: $gray;
+  border-radius: 50%;
+  margin: 0 auto 8px;
+  transition: all 0.2s ease;
+}
+
+.stage-name {
+  font-size: 0.75rem;
+  color: $gray;
+  white-space: nowrap;
+  transition: color 0.2s ease;
+}
+
+// Modal grief stage
+.grief-modal {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.5);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 9999;
+  padding: 1rem;
+}
+
+.grief-modal-content {
+  background: white;
+  border-radius: 16px;
+  padding: 2rem;
+  max-width: 400px;
+  width: 100%;
+  position: relative;
+  box-shadow: 0 10px 40px rgba(0, 0, 0, 0.2);
+  text-align: left;
+}
+
+.grief-modal-close {
+  position: absolute;
+  top: 10px;
+  right: 15px;
+  background: none;
+  border: none;
+  font-size: 1.5rem;
+  cursor: pointer;
+  color: $gray;
+
+  &:hover {
+    color: $haven-dark;
+  }
+}
+
+.grief-modal-title {
+  color: $haven-primary;
+  margin-bottom: 1rem;
+  font-size: 1.25rem;
+}
+
+.grief-modal-desc {
+  color: $haven-dark;
+  line-height: 1.6;
+  margin: 0;
+}
+
+// Bouton Parler
+.dashboard-action {
+  margin-top: 1rem;
+}
+
+.btn-parler {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.75rem;
+  background: $haven-primary;
+  color: white;
+  padding: 1rem 2.5rem;
+  border-radius: 30px;
+  font-size: 1.1rem;
+  font-weight: 600;
+  text-decoration: none;
+  transition: all 0.2s ease;
+  box-shadow: 0 4px 15px rgba($haven-primary, 0.3);
+
+  &:hover {
+    background: darken($haven-primary, 8%);
+    color: white;
+    transform: translateY(-2px);
+    box-shadow: 0 6px 20px rgba($haven-primary, 0.4);
+  }
+
+  i {
+    font-size: 1.2rem;
+  }
+}
+
+// Modal analyse
+.analysis-modal {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.5);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 9999;
+  padding: 1rem;
+}
+
+.analysis-modal-content {
+  background: white;
+  border-radius: 16px;
+  padding: 2rem;
+  max-width: 450px;
+  width: 100%;
+  position: relative;
+  box-shadow: 0 10px 40px rgba(0, 0, 0, 0.2);
+  text-align: left;
+}
+
+.analysis-modal-close {
+  position: absolute;
+  top: 10px;
+  right: 15px;
+  background: none;
+  border: none;
+  font-size: 1.5rem;
+  cursor: pointer;
+  color: $gray;
+
+  &:hover {
+    color: $haven-dark;
+  }
+}
+
+.analysis-modal-header {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  margin-bottom: 1rem;
+}
+
+.analysis-score-badge {
+  background: linear-gradient(135deg, $haven-secondary, $haven-primary);
+  color: white;
+  font-weight: 700;
+  font-size: 1.25rem;
+  padding: 0.5rem 1rem;
+  border-radius: 20px;
+}
+
+.analysis-date {
+  color: $gray;
+  font-size: 0.9rem;
+}
+
+.analysis-modal-title {
+  color: $haven-primary;
+  margin-bottom: 1rem;
+  font-size: 1.1rem;
+}
+
+.analysis-modal-resume {
+  color: $haven-dark;
+  line-height: 1.7;
+  margin: 0;
+  background: $haven-light;
+  padding: 1rem;
+  border-radius: 10px;
+  border-left: 4px solid $haven-secondary;
 }

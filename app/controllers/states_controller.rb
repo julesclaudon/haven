@@ -1,5 +1,6 @@
 class StatesController < ApplicationController
   before_action :authenticate_user!
+  before_action :require_initial_quiz
   before_action :set_state, only: [:show]
 
   def index

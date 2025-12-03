@@ -1,26 +1,78 @@
-<div class="chat-container">
-  <div class="chat-header">
-    <h1>Chat avec l'IA</h1>
+<div class="chats-container">
+  <div class="chats-header">
+    <h1>Nos échanges</h1>
   </div>
 
-  <div class="chat-content">
+  <div class="chats-content">
     <% if @chats.any? %>
-      <ul class="chat-list">
+      <ul class="chats-list">
         <% @chats.each do |chat| %>
-          <li>
-            <%= link_to chat, class: "chat-item" do %>
-              <i class="fa-solid fa-message"></i>
-              <span>Conversation du <%= chat.created_at.strftime("%d/%m/%Y") %></span>
+          <li class="chat-item">
+            <div class="chat-info">
+              <%= link_to chat, class: "chat-link" do %>
+                <i class="fa-solid fa-message"></i>
+                <div class="chat-details">
+                  <span class="chat-date"><%= chat.created_at.strftime("%d/%m/%Y à %H:%M") %></span>
+                  <% if chat.state %>
+                    <span class="chat-stage"><%= chat.state.grief_stage&.name %></span>
+                  <% end %>
+                </div>
+              <% end %>
+            </div>
+            <% if chat.state %>
+              <button class="btn-state-popup" data-state-url="<%= state_path(chat.state) %>">
+                <i class="fa-solid fa-eye"></i>
+              </button>
             <% end %>
           </li>
         <% end %>
       </ul>
     <% else %>
-      <p class="text-muted">Aucune conversation pour le moment.</p>
-    <% end %>
-
-    <%= link_to chats_path, method: :post, class: "btn-new-chat" do %>
-      <i class="fa-solid fa-plus"></i> Nouvelle conversation
+      <div class="chats-empty">
+        <i class="fa-solid fa-comments"></i>
+        <p>Aucune conversation pour le moment.</p>
+        <p>Lance ta première discussion avec Haven.</p>
+      </div>
     <% end %>
   </div>
 </div>
+
+<!-- Modal State avec iframe -->
+<div class="state-modal" id="state-modal" style="display: none;">
+  <div class="state-modal-content state-modal-iframe">
+    <button class="state-modal-close" id="state-modal-close">&times;</button>
+    <iframe id="state-iframe" src="" frameborder="0"></iframe>
+  </div>
+</div>
+
+<script>
+document.addEventListener('turbo:load', function() {
+  const stateButtons = document.querySelectorAll('.btn-state-popup');
+  const modal = document.getElementById('state-modal');
+  const modalClose = document.getElementById('state-modal-close');
+  const iframe = document.getElementById('state-iframe');
+
+  if (!modal) return;
+
+  stateButtons.forEach(function(btn) {
+    btn.addEventListener('click', function(e) {
+      e.preventDefault();
+      const stateUrl = this.dataset.stateUrl;
+      iframe.src = stateUrl;
+      modal.style.display = 'flex';
+    });
+  });
+
+  modalClose.addEventListener('click', function() {
+    modal.style.display = 'none';
+    iframe.src = '';
+  });
+
+  modal.addEventListener('click', function(e) {
+    if (e.target === modal) {
+      modal.style.display = 'none';
+      iframe.src = '';
+    }
+  });
+});
+</script>

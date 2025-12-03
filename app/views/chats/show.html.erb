@@ -1,17 +1,29 @@
 <div class="chat-container">
   <div class="chat-header">
     <h1>Conversation</h1>
+    <%= link_to chats_path, class: "btn-back" do %>
+      <i class="fa-solid fa-arrow-left"></i> Retour
+    <% end %>
   </div>
 
-  <div class="chat-messages">
-    <% @messages.each do |message| %>
-      <div class="message <%= message.role %>">
-        <p><%= message.content %></p>
+  <div class="chat-messages" id="messages">
+    <% if @messages.empty? %>
+      <div class="chat-empty">
+        <p>Commence à discuter avec Haven...</p>
       </div>
+    <% else %>
+      <% @messages.each do |message| %>
+        <div class="message <%= message.role %>">
+          <p><%= message.content %></p>
+        </div>
+      <% end %>
     <% end %>
   </div>
 
   <div class="chat-input">
-    <!-- Formulaire de message à implémenter -->
+    <%= form_with model: [@chat, Message.new], local: true, class: "message-form" do |f| %>
+      <%= f.text_area :content, placeholder: "Écris ton message...", rows: 1, required: true, class: "message-input" %>
+      <%= f.submit "Envoyer", class: "btn-send" %>
+    <% end %>
   </div>
 </div>
