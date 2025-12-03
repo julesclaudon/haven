@@ -1,5 +1,6 @@
 class ChatsController < ApplicationController
   before_action :authenticate_user!
+  before_action :require_initial_quiz
   before_action :set_chat, only: %i[show]
 
   SYSTEM_PROMPT = <<~PROMPT
@@ -108,5 +109,11 @@ class ChatsController < ApplicationController
     when 18..21 then 'soir'
     else 'nuit'
     end
+  end
+
+  def require_initial_quiz
+    return if current_user.initial_quiz.present?
+
+    redirect_to new_initial_quiz_path, alert: "Veuillez d'abord remplir le questionnaire initial."
   end
 end
