@@ -1,0 +1,20 @@
+<div class="container">
+  <h1>Analyses</h1>
+
+  <div class="row">
+    <% @analyses.each do |analysis| %>
+      <div class="col-md-6 mb-4">
+        <div class="card">
+          <div class="card-body">
+            <h5 class="card-title">Analyse #<%= analysis.id %></h5>
+            <p class="card-text">
+              <strong>Score :</strong> <%= analysis.score %>
+            </p>
+            <p class="card-text"><%= truncate(analysis.resume, length: 150) %></p>
+            <%= link_to "Voir détails", analysis_path(analysis), class: "btn btn-primary" %>
+          </div>
+        </div>
+      </div>
+    <% end %>
+  </div>
+</div>
