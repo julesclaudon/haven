@@ -14,7 +14,7 @@ class State < ApplicationRecord
   }
 
   validates :trigger_source, inclusion: {
-    in: %w[médias sociaux mémoire message chanson lieu autre],
+    in: %w[instagram facebook linkedin tiktok snapchat twitter mémoire message chanson lieu photo objet rêve autre],
     allow_nil: true
   }
 end
