@@ -11,8 +11,8 @@
   margin-bottom: 2rem;
 
   h1 {
-    color: $primary;
-    font-family: $headers-font;
+    color: $haven-primary;
+    font-family: $headings-font-family;
     font-weight: 700;
     margin-bottom: 0.5rem;
   }
@@ -44,8 +44,8 @@
 }
 
 .quiz-section-title {
-  color: $primary;
-  font-family: $headers-font;
+  color: $haven-primary;
+  font-family: $headings-font-family;
   font-size: 1.1rem;
   font-weight: 600;
   margin-bottom: 1rem;
@@ -54,7 +54,7 @@
   gap: 0.5rem;
 
   i {
-    color: $secondary;
+    color: $haven-secondary;
   }
 }
 
@@ -63,7 +63,7 @@
 
   label {
     display: block;
-    color: $dark;
+    color: $haven-dark;
     font-weight: 500;
     margin-bottom: 0.5rem;
   }
@@ -76,8 +76,8 @@
     transition: all 0.2s ease;
 
     &:focus {
-      border-color: $primary;
-      box-shadow: 0 0 0 3px rgba($primary, 0.15);
+      border-color: $haven-primary;
+      box-shadow: 0 0 0 3px rgba($haven-primary, 0.15);
     }
   }
 
@@ -105,7 +105,7 @@
       height: 24px;
       border-radius: 50%;
       background: white;
-      border: 3px solid $primary;
+      border: 3px solid $haven-primary;
       cursor: pointer;
       box-shadow: 0 2px 6px rgba(0, 0, 0, 0.15);
     }
@@ -134,9 +134,9 @@
       display: none;
 
       &:checked + label {
-        background: $primary;
+        background: $haven-primary;
         color: white;
-        border-color: $primary;
+        border-color: $haven-primary;
       }
     }
 
@@ -150,8 +150,8 @@
       transition: all 0.2s ease;
 
       &:hover {
-        border-color: $primary;
-        background: rgba($primary, 0.05);
+        border-color: $haven-primary;
+        background: rgba($haven-primary, 0.05);
       }
     }
   }
@@ -166,15 +166,15 @@
   border-top: 1px solid $light-gray;
 
   .btn-primary {
-    background: $primary;
-    border-color: $primary;
+    background: $haven-primary;
+    border-color: $haven-primary;
     padding: 0.75rem 2rem;
     border-radius: 10px;
     font-weight: 600;
 
     &:hover {
-      background: darken($primary, 8%);
-      border-color: darken($primary, 8%);
+      background: darken($haven-primary, 8%);
+      border-color: darken($haven-primary, 8%);
     }
   }
 
@@ -200,7 +200,7 @@
   }
 
   .info-item {
-    background: $light;
+    background: $haven-light;
     padding: 1rem 1.25rem;
     border-radius: 10px;
 
@@ -212,12 +212,12 @@
 
     .info-value {
       font-weight: 600;
-      color: $dark;
+      color: $haven-dark;
     }
   }
 
   .info-text {
-    background: $light;
+    background: $haven-light;
     padding: 1.25rem;
     border-radius: 10px;
     margin-top: 1.5rem;
@@ -230,7 +230,7 @@
 
     p {
       margin: 0;
-      color: $dark;
+      color: $haven-dark;
       line-height: 1.6;
     }
   }

@@ -1,13 +1,6 @@
 // Define variables for your color scheme - Haven theme (apaisant)
 
-// Palette principale
-$primary: #6B8E9F;       // Bleu-gris apaisant
-$secondary: #A8C5B5;     // Vert sauge doux
-$accent: #E8B4A8;        // Rose pêche chaleureux
-$dark: #4A5568;          // Gris foncé doux
-$light: #F7F8FA;         // Blanc cassé
-
-// Couleurs fonctionnelles
+// Couleurs de base (utilisées par Bootstrap)
 $red: #E57373;
 $blue: #6B8E9F;
 $yellow: #FFD993;
@@ -15,6 +8,13 @@ $orange: #FFAB7B;
 $green: #81C995;
 $gray: #718096;
 $light-gray: #EDF2F7;
+
+// Palette Haven (définies AVANT bootstrap_variables)
+$haven-primary: #6B8E9F;
+$haven-secondary: #A8C5B5;
+$haven-accent: #E8B4A8;
+$haven-dark: #4A5568;
+$haven-light: #F7F8FA;
 
 // Couleurs d'état émotionnel
 $pain-low: #81C995;

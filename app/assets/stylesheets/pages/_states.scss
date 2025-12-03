@@ -15,8 +15,8 @@
   gap: 1rem;
 
   h1 {
-    color: $primary;
-    font-family: $headers-font;
+    color: $haven-primary;
+    font-family: $headings-font-family;
     font-weight: 700;
     margin: 0;
   }
@@ -84,7 +84,7 @@
 
     .state-emotion {
       font-weight: 600;
-      color: $dark;
+      color: $haven-dark;
     }
   }
 
@@ -101,7 +101,7 @@
       color: $gray;
 
       i {
-        color: $secondary;
+        color: $haven-secondary;
       }
     }
   }
@@ -127,7 +127,7 @@
   }
 
   h3 {
-    color: $dark;
+    color: $haven-dark;
     margin-bottom: 0.5rem;
   }
 
@@ -149,8 +149,8 @@
   margin-bottom: 2rem;
 
   h1 {
-    color: $primary;
-    font-family: $headers-font;
+    color: $haven-primary;
+    font-family: $headings-font-family;
     font-weight: 700;
   }
 
@@ -183,14 +183,14 @@
       font-size: 1.5rem;
 
       &:hover {
-        color: $primary;
+        color: $haven-primary;
       }
     }
 
     .header-content {
       h1 {
-        color: $primary;
-        font-family: $headers-font;
+        color: $haven-primary;
+        font-family: $headings-font-family;
         font-size: 1.5rem;
         margin: 0;
       }
@@ -225,7 +225,7 @@
       .summary-value {
         font-size: 1.5rem;
         font-weight: 700;
-        color: $primary;
+        color: $haven-primary;
       }
 
       .summary-label {
@@ -248,12 +248,12 @@
   }
 
   .raw-input-box {
-    background: $light;
+    background: $haven-light;
     padding: 1.25rem;
     border-radius: 10px;
-    border-left: 4px solid $secondary;
+    border-left: 4px solid $haven-secondary;
     font-style: italic;
-    color: $dark;
+    color: $haven-dark;
     line-height: 1.6;
   }
 
@@ -263,7 +263,7 @@
     gap: 1rem;
 
     .detail-item {
-      background: $light;
+      background: $haven-light;
       padding: 1rem;
       border-radius: 10px;
 
@@ -275,7 +275,7 @@
 
       .detail-value {
         font-weight: 500;
-        color: $dark;
+        color: $haven-dark;
       }
     }
   }
@@ -283,7 +283,7 @@
 
 // Bouton nouveau state
 .btn-new-state {
-  background: $primary;
+  background: $haven-primary;
   color: white;
   padding: 0.75rem 1.5rem;
   border-radius: 10px;
@@ -295,7 +295,7 @@
   transition: all 0.2s ease;
 
   &:hover {
-    background: darken($primary, 8%);
+    background: darken($haven-primary, 8%);
     color: white;
     transform: translateY(-1px);
   }
