@@ -43,205 +43,196 @@ end
 puts "✓ #{Archetype.count} archetypes created"
 
 # ============================================
-# Test Users
+# Test User
 # ============================================
-users_data = [
-  { email: "lucas@test.com", username: "Lucas", archetype_id: archetypes[0].id },
-  { email: "thomas@test.com", username: "Thomas", archetype_id: archetypes[1].id },
-  { email: "maxime@test.com", username: "Maxime", archetype_id: archetypes[3].id }
-]
-
-users = users_data.map do |data|
-  User.find_or_create_by!(email: data[:email]) do |user|
-    user.username = data[:username]
-    user.password = "password123"
-    user.archetype_id = data[:archetype_id]
-  end
+user = User.find_or_create_by!(email: "test@haven.com") do |u|
+  u.username = "TestUser"
+  u.password = "password123"
+  u.archetype_id = archetypes[3].id # Le Romantique
 end
 
-puts "✓ #{User.count} users created"
+puts "✓ 1 user created"
 
 # ============================================
-# Initial Quizzes
+# Initial Quiz
 # ============================================
-initial_quizzes_data = [
+initial_quiz = InitialQuiz.find_or_create_by!(user: user) do |quiz|
+  quiz.age = 25
+  quiz.relation_end_date = 3.months.ago
+  quiz.relation_duration = 24
+  quiz.pain_level = 7
+  quiz.breakup_type = "progressive"
+  quiz.breakup_initiator = "elle"
+  quiz.emotion_label = "tristesse"
+  quiz.main_sentiment = "Je pensais qu'on allait construire quelque chose ensemble. Je ne m'attendais pas à ce qu'elle parte."
+  quiz.ex_contact_frequency = "hebdomadaire"
+  quiz.considered_reunion = true
+  quiz.ruminating_frequency = "souvent"
+  quiz.sleep_quality = "mauvaise"
+  quiz.habits_changed = "J'ai du mal à me concentrer au travail, je sors moins"
+  quiz.support_level = "quelques amis"
+end
+
+puts "✓ 1 initial quiz created"
+
+# ============================================
+# Chats, States et Analyses - 5 sessions historiques
+# 1 chat = 1 state = 1 analyse
+# trigger_source: instagram | facebook | linkedin | tiktok | snapchat | twitter | mémoire | message | chanson | lieu | photo | objet | rêve | autre
+# ============================================
+sessions_data = [
+  # Session 1 - Il y a 3 mois - Phase de Déni (score ~10)
   {
-    user: users[0],
-    age: 24,
-    relation_end_date: 2.weeks.ago,
-    relation_duration: 36,
-    pain_level: 8,
-    breakup_type: "soudaine",
-    breakup_initiator: "elle",
-    emotion_label: "choc",
-    main_sentiment: "Je ne comprends pas ce qui s'est passé. Tout allait bien entre nous, ou du moins c'est ce que je pensais.",
-    ex_contact_frequency: "quotidien",
-    considered_reunion: true,
-    ruminating_frequency: "constamment",
-    sleep_quality: "très mauvaise",
-    habits_changed: "Je ne mange plus, je reste au lit, j'ai arrêté le sport",
-    support_level: "quelques amis"
+    created_at: 3.months.ago,
+    state: {
+      grief_stage: grief_stages[0], # Déni
+      pain_level: 9,
+      raw_input: "C'est juste une pause, elle a besoin de temps. On va se retrouver, j'en suis sûr. Elle m'a dit qu'elle m'aimait encore la semaine dernière.",
+      trigger_source: "message",
+      time_of_day: "nuit",
+      drugs: "alcool",
+      emotion_label: "confusion",
+      main_sentiment: "Elle va revenir, c'est évident",
+      ex_contact_frequency: "quotidien",
+      considered_reunion: true,
+      ruminating_frequency: "constamment",
+      sleep_quality: "très mauvaise",
+      habits_changed: "Je relis nos conversations en boucle",
+      support_level: "isolé"
+    },
+    analysis: {
+      score: 10,
+      resume: "L'utilisateur est en pleine phase de déni. Il refuse d'accepter la rupture et maintient l'espoir d'une réconciliation. Niveau de douleur très élevé (9/10), isolement social, troubles du sommeil. Il relit obsessionnellement les anciennes conversations. Priorité : l'aider à prendre conscience de la réalité progressivement."
+    }
   },
+  # Session 2 - Il y a 2 mois - Phase de Colère (score ~25)
   {
-    user: users[1],
-    age: 27,
-    relation_end_date: 2.months.ago,
-    relation_duration: 24,
-    pain_level: 6,
-    breakup_type: "progressive",
-    breakup_initiator: "mutuel",
-    emotion_label: "colère",
-    main_sentiment: "Elle m'a trompé et je lui ai tout donné. Je me sens trahi et idiot d'avoir autant investi.",
-    ex_contact_frequency: "hebdomadaire",
-    considered_reunion: false,
-    ruminating_frequency: "souvent",
-    sleep_quality: "mauvaise",
-    habits_changed: "Je bois plus qu'avant, je sors beaucoup pour oublier",
-    support_level: "famille proche"
+    created_at: 2.months.ago,
+    state: {
+      grief_stage: grief_stages[1], # Colère
+      pain_level: 8,
+      raw_input: "Je lui ai tout donné et elle m'a jeté comme une merde. 2 ans de ma vie pour ça. Je la déteste.",
+      trigger_source: "instagram",
+      time_of_day: "soir",
+      drugs: "aucun",
+      emotion_label: "rage",
+      main_sentiment: "Elle m'a trahi, je ne lui pardonnerai jamais",
+      ex_contact_frequency: "hebdomadaire",
+      considered_reunion: false,
+      ruminating_frequency: "souvent",
+      sleep_quality: "mauvaise",
+      habits_changed: "Je fais du sport pour évacuer la colère",
+      support_level: "quelques amis"
+    },
+    analysis: {
+      score: 25,
+      resume: "L'utilisateur est entré dans une phase de colère intense. Il exprime du ressentiment envers son ex et un sentiment de trahison. Le sport comme exutoire est positif. La douleur reste élevée (8/10) mais il commence à s'entourer. Il doit apprendre à canaliser sa colère de manière constructive."
+    }
   },
+  # Session 3 - Il y a 1 mois - Phase de Marchandage (score ~45)
   {
-    user: users[2],
-    age: 22,
-    relation_end_date: 4.months.ago,
-    relation_duration: 18,
-    pain_level: 4,
-    breakup_type: "progressive",
-    breakup_initiator: "moi",
-    emotion_label: "tristesse",
-    main_sentiment: "C'était la bonne décision mais elle me manque quand même. Je me demande si j'aurais pu faire mieux.",
-    ex_contact_frequency: "jamais",
-    considered_reunion: false,
-    ruminating_frequency: "parfois",
-    sleep_quality: "correcte",
-    habits_changed: "J'ai repris le sport, je vois plus mes amis",
-    support_level: "très entouré"
+    created_at: 1.month.ago,
+    state: {
+      grief_stage: grief_stages[2], # Marchandage
+      pain_level: 6,
+      raw_input: "Et si j'avais été plus présent ? Si j'avais fait plus attention à elle ? Peut-être que si je change, on pourrait réessayer...",
+      trigger_source: "photo",
+      time_of_day: "après-midi",
+      drugs: "aucun",
+      emotion_label: "regret",
+      main_sentiment: "J'aurais pu faire mieux, c'est peut-être ma faute",
+      ex_contact_frequency: "mensuel",
+      considered_reunion: true,
+      ruminating_frequency: "souvent",
+      sleep_quality: "correcte",
+      habits_changed: "Je réfléchis beaucoup à ce que j'aurais pu changer",
+      support_level: "quelques amis"
+    },
+    analysis: {
+      score: 45,
+      resume: "L'utilisateur traverse la phase de marchandage. Il se remet en question et cherche ce qu'il aurait pu faire différemment. C'est une étape nécessaire mais il ne doit pas s'enliser dans la culpabilité. La douleur diminue (6/10), le sommeil s'améliore. Il progresse."
+    }
+  },
+  # Session 4 - Il y a 2 semaines - Phase de Dépression (score ~55)
+  {
+    created_at: 2.weeks.ago,
+    state: {
+      grief_stage: grief_stages[3], # Dépression
+      pain_level: 7,
+      raw_input: "Je me sens vide. Rien ne me fait plaisir. Je ne sais pas si je vais m'en remettre un jour.",
+      trigger_source: "chanson",
+      time_of_day: "nuit",
+      drugs: "aucun",
+      emotion_label: "tristesse profonde",
+      main_sentiment: "Je suis perdu, tout me semble fade",
+      ex_contact_frequency: "jamais",
+      considered_reunion: false,
+      ruminating_frequency: "souvent",
+      sleep_quality: "mauvaise",
+      habits_changed: "Je reste beaucoup chez moi, j'ai moins d'énergie",
+      support_level: "famille proche"
+    },
+    analysis: {
+      score: 55,
+      resume: "L'utilisateur est dans une phase dépressive. Il ressent un vide et une perte de sens. C'est la phase la plus difficile mais aussi un signe qu'il accepte progressivement la réalité. Il s'appuie sur sa famille, ce qui est positif. Surveiller son moral et l'encourager à maintenir des activités."
+    }
+  },
+  # Session 5 - Aujourd'hui - Début d'Acceptation (score ~65)
+  {
+    created_at: Time.current,
+    state: {
+      grief_stage: grief_stages[4], # Acceptation
+      pain_level: 4,
+      raw_input: "J'ai passé un bon moment avec mes potes hier. J'ai pensé à elle mais ça m'a pas gâché la soirée. Je commence à me dire que je vais m'en sortir.",
+      trigger_source: "lieu",
+      time_of_day: "après-midi",
+      drugs: "aucun",
+      emotion_label: "espoir",
+      main_sentiment: "Je vais m'en sortir, je le sens",
+      ex_contact_frequency: "jamais",
+      considered_reunion: false,
+      ruminating_frequency: "parfois",
+      sleep_quality: "correcte",
+      habits_changed: "Je ressors, je reprends mes activités",
+      support_level: "très entouré"
+    },
+    analysis: {
+      score: 65,
+      resume: "L'utilisateur montre des signes encourageants d'acceptation. Il arrive à profiter de moments avec ses amis sans être submergé par la tristesse. La douleur a significativement diminué (4/10). Il reprend ses activités et son réseau social est solide. Il est sur la bonne voie vers la guérison."
+    }
   }
 ]
 
-initial_quizzes = initial_quizzes_data.map do |data|
-  InitialQuiz.find_or_create_by!(user: data[:user]) do |quiz|
-    quiz.assign_attributes(data.except(:user))
-  end
-end
+sessions_data.each do |session|
+  # Créer le chat
+  chat = Chat.create!(status: "completed")
+  chat.update_columns(created_at: session[:created_at], updated_at: session[:created_at])
 
-puts "✓ #{InitialQuiz.count} initial quizzes created"
+  # Créer le state
+  state = State.create!(
+    user: user,
+    chat: chat,
+    **session[:state]
+  )
+  state.update_columns(created_at: session[:created_at], updated_at: session[:created_at])
 
-# ============================================
-# Chats
-# ============================================
-chats = users.map do |user|
-  Chat.find_or_create_by!(id: user.id) do |chat|
-    chat.status = "active"
-  end
+  # Créer l'analyse
+  analysis = Analysis.create!(
+    state: state,
+    **session[:analysis]
+  )
+  analysis.update_columns(created_at: session[:created_at], updated_at: session[:created_at])
 end
 
 puts "✓ #{Chat.count} chats created"
-
-# ============================================
-# States
-# ============================================
-states_data = [
-  # Lucas - En phase de déni (score ~15)
-  # trigger_source: instagram | facebook | linkedin | tiktok | snapchat | twitter | mémoire | message | chanson | lieu | photo | objet | rêve | autre
-  {
-    user: users[0],
-    chat: chats[0],
-    grief_stage: grief_stages[0], # Déni
-    pain_level: 9,
-    raw_input: "Je suis sûr qu'elle va revenir. On a juste besoin d'une pause. Elle m'a dit qu'elle m'aimait il y a 3 semaines...",
-    trigger_source: "instagram",
-    time_of_day: "nuit",
-    drugs: "alcool",
-    emotion_label: "confusion",
-    main_sentiment: "Elle va revenir, j'en suis certain",
-    ex_contact_frequency: "quotidien",
-    considered_reunion: true,
-    ruminating_frequency: "constamment",
-    sleep_quality: "très mauvaise",
-    habits_changed: "Je vérifie mon téléphone toutes les 5 minutes",
-    support_level: "isolé"
-  },
-  # Thomas - En phase de colère (score ~35)
-  {
-    user: users[1],
-    chat: chats[1],
-    grief_stage: grief_stages[1], # Colère
-    pain_level: 7,
-    raw_input: "Comment elle a pu me faire ça ? Après tout ce que j'ai fait pour elle ! Je lui ai tout donné et voilà comment elle me remercie.",
-    trigger_source: "mémoire",
-    time_of_day: "soir",
-    drugs: "aucun",
-    emotion_label: "rage",
-    main_sentiment: "Je suis en colère contre elle et contre moi-même",
-    ex_contact_frequency: "hebdomadaire",
-    considered_reunion: false,
-    ruminating_frequency: "souvent",
-    sleep_quality: "mauvaise",
-    habits_changed: "Je fais du sport intensément pour évacuer",
-    support_level: "quelques amis"
-  },
-  # Maxime - En phase d'acceptation (score ~75)
-  {
-    user: users[2],
-    chat: chats[2],
-    grief_stage: grief_stages[4], # Acceptation
-    pain_level: 3,
-    raw_input: "Aujourd'hui j'ai croisé une fille qui lui ressemblait. Ça m'a fait un pincement mais j'ai continué ma journée normalement.",
-    trigger_source: "lieu",
-    time_of_day: "après-midi",
-    drugs: "aucun",
-    emotion_label: "sérénité",
-    main_sentiment: "J'avance, je suis sur la bonne voie",
-    ex_contact_frequency: "jamais",
-    considered_reunion: false,
-    ruminating_frequency: "rarement",
-    sleep_quality: "bonne",
-    habits_changed: "J'ai repris mes passions et je me sens mieux",
-    support_level: "très entouré"
-  }
-]
-
-states = states_data.map do |data|
-  State.create!(data)
-end
-
 puts "✓ #{State.count} states created"
-
-# ============================================
-# Analyses
-# ============================================
-analyses_data = [
-  {
-    state: states[0],
-    score: 15,
-    resume: "Lucas est actuellement en phase de déni. Il refuse d'accepter la fin de sa relation et maintient l'espoir d'une réconciliation malgré les signaux contraires. Son niveau de douleur est très élevé (9/10) et il présente des signes d'isolement social et de troubles du sommeil. Priorité : l'aider à prendre conscience de la réalité tout en validant ses émotions."
-  },
-  {
-    state: states[1],
-    score: 35,
-    resume: "Thomas traverse une phase de colère intense suite à une trahison. Il exprime beaucoup de ressentiment envers son ex-partenaire et une certaine culpabilité envers lui-même. Le sport lui sert d'exutoire ce qui est positif. Il a dépassé le déni mais doit travailler sur la gestion de sa colère pour éviter qu'elle ne devienne destructrice."
-  },
-  {
-    state: states[2],
-    score: 75,
-    resume: "Maxime progresse très bien dans son processus de deuil. Il a atteint la phase d'acceptation et montre des signes encourageants : reprise des activités, bon réseau social, capacité à gérer les triggers sans être submergé. Il peut encore ressentir de la nostalgie occasionnelle mais elle ne l'empêche plus d'avancer."
-  }
-]
-
-analyses_data.each do |data|
-  Analysis.find_or_create_by!(state: data[:state]) do |analysis|
-    analysis.score = data[:score]
-    analysis.resume = data[:resume]
-  end
-end
-
 puts "✓ #{Analysis.count} analyses created"
 
 puts "\n🌱 Seeding completed!"
-puts "   - #{User.count} users"
+puts "   - #{User.count} user (test@haven.com / password123)"
 puts "   - #{GriefStage.count} grief stages"
 puts "   - #{Archetype.count} archetypes"
-puts "   - #{InitialQuiz.count} initial quizzes"
-puts "   - #{Chat.count} chats"
-puts "   - #{State.count} states"
-puts "   - #{Analysis.count} analyses"
+puts "   - #{InitialQuiz.count} initial quiz"
+puts "   - #{Chat.count} chats (1 par session)"
+puts "   - #{State.count} states (1 par chat)"
+puts "   - #{Analysis.count} analyses (1 par state)"
