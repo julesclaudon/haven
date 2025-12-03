@@ -1,0 +1,116 @@
+<div class="chat-history-container">
+  <header class="history-header">
+    <h1>Historique</h1>
+    <%= link_to chats_path, class: "btn btn-primary" do %>
+      <i class="fa-solid fa-plus"></i> Nouvelle conversation
+    <% end %>
+  </header>
+
+  <div class="history-content">
+    <% if @chats.any? %>
+      <ul class="chat-list">
+        <% @chats.each do |chat| %>
+          <li>
+            <%= link_to chat, class: "chat-item" do %>
+              <i class="fa-solid fa-message"></i>
+              <div class="chat-info">
+                <span class="chat-title"><%= chat.status.presence || "Conversation" %></span>
+                <small class="chat-date"><%= chat.created_at.strftime('%d/%m/%Y à %H:%M') %></small>
+              </div>
+            <% end %>
+          </li>
+        <% end %>
+      </ul>
+    <% else %>
+      <div class="empty-state">
+        <i class="fa-solid fa-comments"></i>
+        <p>Aucune conversation pour le moment.</p>
+        <%= link_to "Commencer une conversation", chats_path, class: "btn btn-primary" %>
+      </div>
+    <% end %>
+  </div>
+</div>
+
+<style>
+.chat-history-container {
+  max-width: 600px;
+  margin: 0 auto;
+  padding: 2rem 1rem;
+}
+
+.history-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 2rem;
+}
+
+.history-header h1 {
+  font-size: 1.5rem;
+  font-weight: 700;
+  margin: 0;
+}
+
+.chat-list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.chat-list li {
+  margin-bottom: 0.75rem;
+}
+
+.chat-item {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  padding: 1rem;
+  background: #f5f5f5;
+  border-radius: 1rem;
+  text-decoration: none;
+  color: inherit;
+  transition: background 0.2s;
+}
+
+.chat-item:hover {
+  background: #e8e8e8;
+  text-decoration: none;
+  color: inherit;
+}
+
+.chat-item i {
+  font-size: 1.25rem;
+  color: #666;
+}
+
+.chat-info {
+  display: flex;
+  flex-direction: column;
+}
+
+.chat-title {
+  font-weight: 600;
+  color: #333;
+}
+
+.chat-date {
+  color: #888;
+  font-size: 0.85rem;
+}
+
+.empty-state {
+  text-align: center;
+  padding: 3rem 1rem;
+  color: #888;
+}
+
+.empty-state i {
+  font-size: 3rem;
+  margin-bottom: 1rem;
+}
+
+.empty-state p {
+  margin-bottom: 1.5rem;
+}
+</style>

@@ -1,6 +1,6 @@
-class ChatsController < ApplicationController
+class MessagesController < ApplicationController
   before_action :authenticate_user!
-  before_action :set_chat, only: %i[show]
+  before_action :set_chat
 
   SYSTEM_PROMPT = <<~PROMPT
     Tu es Haven, un compagnon bienveillant spécialisé dans l'accompagnement des personnes traversant une rupture amoureuse.
@@ -16,30 +16,16 @@ class ChatsController < ApplicationController
     }
   PROMPT
 
-  def index
-    # Page d'accueil pour créer une nouvelle conversation
-  end
-
-  def history
-    @chats = current_user.chats.distinct.order(created_at: :desc)
-  end
-
-  def show
-    @messages = @chat.messages.order(created_at: :asc)
-    @message = Message.new
-  end
-
   def create
-    @chat = Chat.create!(status: Chat::DEFAULT_TITLE)
+    return redirect_to @chat unless valid_message_params?
 
-    if params[:message].present? && params[:message][:content].present?
-      user_content = params[:message][:content]
+    user_content = params[:message][:content]
 
-      @chat.messages.create!(role: 'user', content: user_content)
-      @chat.generate_title_from_first_message
+    # Créer le message utilisateur
+    @chat.messages.create!(role: 'user', content: user_content)
 
-      process_ai_response(user_content)
-    end
+    # Appeler l'IA avec l'historique
+    process_ai_response(user_content)
 
     redirect_to @chat
   end
@@ -47,7 +33,11 @@ class ChatsController < ApplicationController
   private
 
   def set_chat
-    @chat = Chat.find(params[:id])
+    @chat = Chat.find(params[:chat_id])
+  end
+
+  def valid_message_params?
+    params[:message].present? && params[:message][:content].present?
   end
 
   def process_ai_response(user_content)

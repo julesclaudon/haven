@@ -1,17 +1,169 @@
-<div class="chat-container">
-  <div class="chat-header">
-    <h1>Conversation</h1>
-  </div>
+<div class="haven-conversation">
+  <header class="conversation-header">
+    <h1><%= @chat.status || "Nouveau chat" %></h1>
+    <button type="button" class="favorite-btn" id="favorite-btn">
+      <i class="fa-regular fa-star"></i>
+    </button>
+  </header>
 
-  <div class="chat-messages">
+  <div class="conversation-messages" id="messages">
     <% @messages.each do |message| %>
-      <div class="message <%= message.role %>">
-        <p><%= message.content %></p>
+      <div class="message-bubble <%= message.role %>">
+        <div class="message-sender">
+          <%= message.role == 'user' ? 'Vous' : 'Haven (IA)' %>
+        </div>
+        <div class="message-text">
+          <%= message.content %>
+        </div>
+        <div class="message-time">
+          <%= message.created_at.strftime("%d %b %H:%M") %>
+        </div>
       </div>
     <% end %>
   </div>
 
-  <div class="chat-input">
-    <!-- Formulaire de message à implémenter -->
+  <div class="conversation-input">
+    <%= form_with url: chat_messages_path(@chat), method: :post, local: true, class: "message-form" do |f| %>
+      <%= f.text_area :content,
+          name: "message[content]",
+          placeholder: "Écrivez votre message...",
+          class: "message-textarea",
+          rows: 3,
+          required: true %>
+      <%= f.submit "Create Message", class: "send-btn" %>
+    <% end %>
   </div>
 </div>
+
+<style>
+.haven-conversation {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+  background: linear-gradient(135deg, #1a1a2e 0%, #16213e 50%, #0f3460 100%);
+  color: #fff;
+}
+
+.conversation-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 1.5rem 2rem;
+  border-bottom: 1px solid rgba(255,255,255,0.1);
+}
+
+.conversation-header h1 {
+  font-size: 1.5rem;
+  font-weight: 600;
+  margin: 0;
+}
+
+.favorite-btn {
+  background: none;
+  border: none;
+  color: #fff;
+  font-size: 1.5rem;
+  cursor: pointer;
+  opacity: 0.7;
+  transition: opacity 0.2s;
+}
+
+.favorite-btn:hover {
+  opacity: 1;
+}
+
+.conversation-messages {
+  flex: 1;
+  padding: 2rem;
+  overflow-y: auto;
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+}
+
+.message-bubble {
+  max-width: 70%;
+  padding: 1rem 1.25rem;
+  border-radius: 1rem;
+  position: relative;
+}
+
+.message-bubble.user {
+  align-self: flex-end;
+  background: rgba(147, 112, 219, 0.8);
+  border-bottom-right-radius: 0.25rem;
+}
+
+.message-bubble.assistant {
+  align-self: flex-start;
+  background: rgba(233, 87, 120, 0.9);
+  border-bottom-left-radius: 0.25rem;
+}
+
+.message-sender {
+  font-size: 0.75rem;
+  font-weight: 700;
+  margin-bottom: 0.5rem;
+  opacity: 0.9;
+}
+
+.message-text {
+  font-size: 1rem;
+  line-height: 1.5;
+}
+
+.message-time {
+  font-size: 0.7rem;
+  opacity: 0.7;
+  margin-top: 0.5rem;
+  text-align: right;
+}
+
+.conversation-input {
+  padding: 1.5rem 2rem;
+  background: rgba(0,0,0,0.2);
+}
+
+.message-form {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.message-textarea {
+  width: 100%;
+  padding: 1rem;
+  border: none;
+  border-radius: 0.75rem;
+  background: rgba(50, 50, 80, 0.8);
+  color: #fff;
+  font-size: 1rem;
+  resize: none;
+  outline: none;
+}
+
+.message-textarea::placeholder {
+  color: rgba(255,255,255,0.5);
+}
+
+.message-textarea:focus {
+  background: rgba(60, 60, 100, 0.9);
+}
+
+.send-btn {
+  align-self: flex-end;
+  padding: 0.75rem 1.5rem;
+  background: rgba(233, 87, 120, 0.9);
+  color: #fff;
+  border: none;
+  border-radius: 0.5rem;
+  font-size: 1rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background 0.2s;
+}
+
+.send-btn:hover {
+  background: rgba(233, 87, 120, 1);
+}
+</style>
