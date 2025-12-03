@@ -1,13 +1,134 @@
 <div class="dashboard-container">
   <div class="dashboard-header">
-    <h1 class="dashboard-title">HAVEN</h1>
+    <h1 class="dashboard-title">Mon évolution</h1>
+    <p class="dashboard-subtitle">Bonjour <%= current_user.username || current_user.email.split('@').first %></p>
   </div>
 
-  <div class="dashboard-content">
-    <h2 class="dashboard-question">How are you feeling today ?</h2>
+  <!-- Frise des 5 étapes du deuil -->
+  <div class="grief-timeline-card">
+    <div class="grief-timeline">
+      <div class="grief-progress-bar">
+        <div class="grief-progress-fill" style="width: <%= @current_score %>%;"></div>
+        <div class="grief-cursor <%= 'clickable' if @latest_analysis %>"
+             id="score-cursor"
+             style="left: <%= @current_score %>%;"
+             <% if @latest_analysis %>
+             data-analysis-score="<%= @latest_analysis.score %>"
+             data-analysis-resume="<%= @latest_analysis.resume %>"
+             data-analysis-date="<%= l(@latest_analysis.created_at, format: :long) %>"
+             <% end %>>
+          <span class="cursor-score"><%= @current_score %></span>
+        </div>
+      </div>
 
-    <%= link_to new_state_path, class: "btn-open-up" do %>
-      OPEN UP
+      <div class="grief-stages">
+        <% @grief_stages.each_with_index do |stage, index| %>
+          <% stage_position = (index * 25) %>
+          <% is_current = @latest_state && @latest_state.grief_stage_id == stage.id %>
+          <div class="grief-stage-item <%= 'active' if is_current %>"
+               data-stage-id="<%= stage.id %>"
+               data-stage-name="<%= stage.name %>"
+               data-stage-desc="<%= stage.description %>"
+               style="left: <%= stage_position %>%;">
+            <div class="stage-dot"></div>
+            <span class="stage-name"><%= stage.name %></span>
+          </div>
+        <% end %>
+      </div>
+    </div>
+  </div>
+
+  <!-- Modal pour afficher la description de l'étape -->
+  <div class="grief-modal" id="grief-modal" style="display: none;">
+    <div class="grief-modal-content">
+      <button class="grief-modal-close" id="grief-modal-close">&times;</button>
+      <h3 class="grief-modal-title" id="grief-modal-title"></h3>
+      <p class="grief-modal-desc" id="grief-modal-desc"></p>
+    </div>
+  </div>
+
+  <!-- Modal pour afficher le résumé de l'analyse -->
+  <div class="analysis-modal" id="analysis-modal" style="display: none;">
+    <div class="analysis-modal-content">
+      <button class="analysis-modal-close" id="analysis-modal-close">&times;</button>
+      <div class="analysis-modal-header">
+        <div class="analysis-score-badge" id="analysis-modal-score"></div>
+        <span class="analysis-date" id="analysis-modal-date"></span>
+      </div>
+      <h3 class="analysis-modal-title">Dernière analyse</h3>
+      <p class="analysis-modal-resume" id="analysis-modal-resume"></p>
+    </div>
+  </div>
+
+  <!-- Bouton Parler -->
+  <div class="dashboard-action">
+    <%= link_to chats_path, method: :post, class: "btn-parler" do %>
+      <i class="fa-solid fa-comment"></i>
+      Parler
     <% end %>
   </div>
 </div>
+
+<script>
+document.addEventListener('turbo:load', function() {
+  // Modal des étapes du deuil
+  const stageItems = document.querySelectorAll('.grief-stage-item');
+  const griefModal = document.getElementById('grief-modal');
+  const griefModalTitle = document.getElementById('grief-modal-title');
+  const griefModalDesc = document.getElementById('grief-modal-desc');
+  const griefModalClose = document.getElementById('grief-modal-close');
+
+  if (griefModal) {
+    stageItems.forEach(function(item) {
+      item.addEventListener('click', function() {
+        const name = this.dataset.stageName;
+        const desc = this.dataset.stageDesc;
+        griefModalTitle.textContent = name;
+        griefModalDesc.textContent = desc;
+        griefModal.style.display = 'flex';
+      });
+    });
+
+    griefModalClose.addEventListener('click', function() {
+      griefModal.style.display = 'none';
+    });
+
+    griefModal.addEventListener('click', function(e) {
+      if (e.target === griefModal) {
+        griefModal.style.display = 'none';
+      }
+    });
+  }
+
+  // Modal de l'analyse (clic sur le score)
+  const scoreCursor = document.getElementById('score-cursor');
+  const analysisModal = document.getElementById('analysis-modal');
+  const analysisModalScore = document.getElementById('analysis-modal-score');
+  const analysisModalDate = document.getElementById('analysis-modal-date');
+  const analysisModalResume = document.getElementById('analysis-modal-resume');
+  const analysisModalClose = document.getElementById('analysis-modal-close');
+
+  if (scoreCursor && analysisModal && scoreCursor.dataset.analysisResume) {
+    scoreCursor.addEventListener('click', function() {
+      const score = this.dataset.analysisScore;
+      const resume = this.dataset.analysisResume;
+      const date = this.dataset.analysisDate;
+
+      analysisModalScore.textContent = score + '/100';
+      analysisModalDate.textContent = date;
+      analysisModalResume.textContent = resume;
+      analysisModal.style.display = 'flex';
+    });
+
+    analysisModalClose.addEventListener('click', function() {
+      analysisModal.style.display = 'none';
+    });
+
+    analysisModal.addEventListener('click', function(e) {
+      if (e.target === analysisModal) {
+        analysisModal.style.display = 'none';
+      }
+    });
+  }
+});
+</script>
