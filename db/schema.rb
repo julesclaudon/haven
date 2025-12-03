@@ -11,8 +11,11 @@
 # It's strongly recommended that you check this file into your version control system.
 
 ActiveRecord::Schema[7.1].define(version: 2025_12_02_134627) do
+  # These are extensions that must be enabled in order to support this database
+  enable_extension "plpgsql"
+
   create_table "analyses", force: :cascade do |t|
-    t.integer "state_id", null: false
+    t.bigint "state_id", null: false
     t.text "resume"
     t.integer "score"
     t.datetime "created_at", null: false
@@ -41,7 +44,7 @@ ActiveRecord::Schema[7.1].define(version: 2025_12_02_134627) do
   end
 
   create_table "initial_quizzes", force: :cascade do |t|
-    t.integer "user_id", null: false
+    t.bigint "user_id", null: false
     t.integer "age"
     t.date "relation_end_date"
     t.integer "relation_duration"
@@ -62,7 +65,7 @@ ActiveRecord::Schema[7.1].define(version: 2025_12_02_134627) do
   end
 
   create_table "messages", force: :cascade do |t|
-    t.integer "chat_id", null: false
+    t.bigint "chat_id", null: false
     t.string "role"
     t.text "content"
     t.string "message_type"
@@ -72,9 +75,9 @@ ActiveRecord::Schema[7.1].define(version: 2025_12_02_134627) do
   end
 
   create_table "states", force: :cascade do |t|
-    t.integer "user_id", null: false
-    t.integer "chat_id", null: false
-    t.integer "grief_stage_id", null: false
+    t.bigint "user_id", null: false
+    t.bigint "chat_id", null: false
+    t.bigint "grief_stage_id", null: false
     t.integer "pain_level"
     t.text "raw_input"
     t.string "trigger_source"
@@ -102,7 +105,7 @@ ActiveRecord::Schema[7.1].define(version: 2025_12_02_134627) do
     t.datetime "reset_password_sent_at"
     t.datetime "remember_created_at"
     t.string "username"
-    t.integer "archetype_id"
+    t.bigint "archetype_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["archetype_id"], name: "index_users_on_archetype_id"

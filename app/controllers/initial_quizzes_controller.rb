@@ -3,7 +3,6 @@ class InitialQuizzesController < ApplicationController
   before_action :set_initial_quiz, only: [:show, :edit, :update]
 
   def new
-    # un seul quiz par user
     if current_user.initial_quiz
       redirect_to current_user.initial_quiz, notice: "Tu as déjà rempli le questionnaire."
     else

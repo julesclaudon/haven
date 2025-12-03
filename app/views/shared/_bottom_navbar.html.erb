@@ -1,0 +1,25 @@
+<nav class="bottom-navbar">
+  <%= link_to dashboard_path, class: "bottom-nav-item #{current_page?(dashboard_path) ? 'active' : ''}" do %>
+    <i class="fa-solid fa-house"></i>
+    <span>Home</span>
+  <% end %>
+
+  <%= link_to states_path, class: "bottom-nav-item #{current_page?(states_path) ? 'active' : ''}" do %>
+    <i class="fa-solid fa-circle-check"></i>
+    <span>Mes états</span>
+  <% end %>
+
+  <%= link_to chats_path, class: "bottom-nav-item bottom-nav-center #{current_page?(chats_path) ? 'active' : ''}" do %>
+    <i class="fa-solid fa-sun"></i>
+  <% end %>
+
+  <%= link_to analyses_path, class: "bottom-nav-item #{current_page?(analyses_path) ? 'active' : ''}" do %>
+    <i class="fa-solid fa-chart-line"></i>
+    <span>Analyses</span>
+  <% end %>
+
+  <%= link_to edit_user_registration_path, class: "bottom-nav-item #{current_page?(edit_user_registration_path) ? 'active' : ''}" do %>
+    <i class="fa-solid fa-user"></i>
+    <span>Profil</span>
+  <% end %>
+</nav>
