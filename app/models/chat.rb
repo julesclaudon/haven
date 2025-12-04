@@ -1,7 +1,15 @@
 class Chat < ApplicationRecord
-  has_many :messages, dependent: :destroy
-  has_one :state, dependent: :destroy
-  has_one :user, through: :state
+  DEFAULT_TITLE = "Nouvelle conversation"
 
-  validates :status, inclusion: { in: %w[active completed], allow_nil: true }
+  has_many :messages, dependent: :destroy
+  has_many :states, dependent: :destroy
+  has_many :users, through: :states
+
+  def generate_title_from_first_message
+    first_message = messages.where(role: 'user').first
+    return unless first_message
+
+    new_title = first_message.content.truncate(50)
+    update(status: new_title)
+  end
 end

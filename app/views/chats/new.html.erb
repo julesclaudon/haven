@@ -1,0 +1,148 @@
+<div class="haven-chat-landing">
+  <header class="haven-header">
+    <h1 class="haven-logo">HAVEN</h1>
+  </header>
+
+  <main class="haven-main">
+    <h2 class="haven-title">Speak or type<br>your feelings</h2>
+
+    <%= form_with url: chats_path, method: :post, data: { turbo: false }, class: "haven-form" do |f| %>
+      <div class="haven-input-card">
+        <textarea name="message[content]"
+            placeholder="Exprime ce que tu ressens..."
+            class="haven-textarea"
+            rows="8"
+            required></textarea>
+      </div>
+
+      <div class="haven-actions">
+        <button type="button" class="haven-mic-btn" id="mic-btn">
+          <i class="fa-solid fa-microphone"></i>
+        </button>
+      </div>
+
+      <button type="submit" class="haven-submit-btn">Envoyer</button>
+    <% end %>
+  </main>
+</div>
+
+<style>
+.haven-chat-landing {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  min-height: 100vh;
+  padding: 2rem 1rem;
+  background: #fff;
+}
+
+.haven-header {
+  margin-bottom: 1.5rem;
+}
+
+.haven-logo {
+  font-size: 2rem;
+  font-weight: 800;
+  letter-spacing: 0.1em;
+  color: #000;
+}
+
+.haven-main {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 100%;
+  max-width: 400px;
+}
+
+.haven-title {
+  font-size: 1.75rem;
+  font-weight: 700;
+  text-align: center;
+  color: #000;
+  margin-bottom: 1.5rem;
+  line-height: 1.3;
+}
+
+.haven-form {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.haven-input-card {
+  width: 100%;
+  background: #f0f0f0;
+  border-radius: 1.5rem;
+  padding: 1.5rem;
+  margin-bottom: 1.5rem;
+}
+
+.haven-textarea {
+  width: 100%;
+  min-height: 250px;
+  border: none;
+  background: transparent;
+  font-size: 1.1rem;
+  color: #333;
+  resize: none;
+  outline: none;
+}
+
+.haven-textarea::placeholder {
+  color: #666;
+  font-weight: 500;
+}
+
+.haven-actions {
+  margin-bottom: 1rem;
+}
+
+.haven-mic-btn {
+  width: 56px;
+  height: 56px;
+  border-radius: 50%;
+  border: 2px solid #ddd;
+  background: #fff;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.2s;
+}
+
+.haven-mic-btn:hover {
+  border-color: #000;
+}
+
+.haven-mic-btn i {
+  font-size: 1.5rem;
+  color: #333;
+}
+
+.haven-mic-btn.recording {
+  border-color: #e74c3c;
+  background: #fdeaea;
+}
+
+.haven-mic-btn.recording i {
+  color: #e74c3c;
+}
+
+.haven-submit-btn {
+  padding: 0.75rem 2rem;
+  font-size: 1rem;
+  font-weight: 600;
+  background: #000;
+  color: #fff;
+  border: none;
+  border-radius: 2rem;
+  cursor: pointer;
+  transition: opacity 0.2s;
+}
+
+.haven-submit-btn:hover {
+  opacity: 0.8;
+}
+</style>

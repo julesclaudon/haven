@@ -15,7 +15,10 @@ Rails.application.routes.draw do
   resources :initial_quizzes, only: [:new, :create, :show, :edit, :update]
   resources :states, only: [:new, :create, :show, :index]
   resources :analyses, only: [:index, :show]
-  resources :chats, only: [:index, :show, :create] do
+  resources :chats, only: [:index, :new, :show, :create] do
+    collection do
+      get :history
+    end
     resources :messages, only: [:create]
   end
   resource :dashboard, only: :show

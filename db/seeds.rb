@@ -198,7 +198,7 @@ puts "✓ #{InitialQuiz.count} initial quizzes created"
 
 # Clear existing states and chats for clean seed
 State.where(user: users[0]).destroy_all
-Chat.left_joins(:state).where(states: { id: nil }).destroy_all
+Chat.left_joins(:states).where(states: { id: nil }).destroy_all
 
 lucas_journey = [
   # Chat 1 - Initial shock (2 weeks ago)

@@ -7,4 +7,5 @@ class User < ApplicationRecord
   belongs_to :archetype, optional: true
   has_one :initial_quiz, dependent: :destroy
   has_many :states, dependent: :destroy
+  has_many :chats, through: :states
 end
