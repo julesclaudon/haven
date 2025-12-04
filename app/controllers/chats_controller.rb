@@ -18,11 +18,7 @@ class ChatsController < ApplicationController
   PROMPT
 
   def index
-    # Page d'accueil pour créer une nouvelle conversation
-  end
-
-  def history
-    @chats = current_user.chats.distinct.order(created_at: :desc)
+    @chats = current_user.chats.order(created_at: :desc)
   end
 
   def show
@@ -31,7 +27,7 @@ class ChatsController < ApplicationController
   end
 
   def create
-    @chat = Chat.create!(status: Chat::DEFAULT_TITLE)
+    @chat = current_user.chats.create!(status: Chat::DEFAULT_TITLE)
 
     if params[:message].present? && params[:message][:content].present?
       user_content = params[:message][:content]
@@ -48,7 +44,7 @@ class ChatsController < ApplicationController
   private
 
   def set_chat
-    @chat = Chat.find(params[:id])
+    @chat = current_user.chats.find(params[:id])
   end
 
   def process_ai_response(user_content)

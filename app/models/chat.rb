@@ -3,6 +3,7 @@ class Chat < ApplicationRecord
 
   has_many :messages, dependent: :destroy
   has_many :states, dependent: :destroy
+  has_many :users, through: :states
 
   def generate_title_from_first_message
     first_message = messages.where(role: 'user').first

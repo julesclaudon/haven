@@ -33,11 +33,15 @@ class MessagesController < ApplicationController
   private
 
   def set_chat
-    @chat = Chat.find(params[:chat_id])
+    @chat = current_user.chats.find(params[:chat_id])
   end
 
   def valid_message_params?
     params[:message].present? && params[:message][:content].present?
+  end
+
+  def message_params
+    params.require(:message).permit(:content)
   end
 
   def process_ai_response(user_content)

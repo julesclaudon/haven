@@ -15,7 +15,7 @@ class InitialQuizzesController < ApplicationController
     @initial_quiz.user = current_user
 
     if @initial_quiz.save
-      redirect_to @initial_quiz, notice: "Quiz initial enregistré avec succès."
+      redirect_to dashboard_path, notice: "Bienvenue sur Haven ! Ton profil a été créé."
     else
       render :new, status: :unprocessable_entity
     end

@@ -1,20 +1,90 @@
-<div class="container">
-  <h1>Analyses</h1>
+<div class="analyse-container">
+  <div class="analyse-header">
+    <h1>Mon Analyse</h1>
+  </div>
 
-  <div class="row">
-    <% @analyses.each do |analysis| %>
-      <div class="col-md-6 mb-4">
-        <div class="card">
-          <div class="card-body">
-            <h5 class="card-title">Analyse #<%= analysis.id %></h5>
-            <p class="card-text">
-              <strong>Score :</strong> <%= analysis.score %>
-            </p>
-            <p class="card-text"><%= truncate(analysis.resume, length: 150) %></p>
-            <%= link_to "Voir détails", analysis_path(analysis), class: "btn btn-primary" %>
-          </div>
+  <!-- Section Archétype : 2 cards côte à côte -->
+  <% if @archetype %>
+    <div class="archetype-section">
+      <div class="archetype-image-card">
+        <div class="archetype-image-wrapper">
+          <% archetype_icon = case @archetype.archetype_name
+             when "Le Chevalier" then "fa-shield-halved"
+             when "Le Sauveur" then "fa-hand-holding-heart"
+             when "L'Indépendant" then "fa-person-walking"
+             when "Le Romantique" then "fa-heart"
+             when "L'Anxieux" then "fa-cloud-bolt"
+             when "Le Caméléon" then "fa-masks-theater"
+             when "Le Perfectionniste" then "fa-bullseye"
+             when "Le Fusionnel" then "fa-link"
+             when "Le Stratège" then "fa-chess"
+             when "L'Intense" then "fa-fire"
+             else "fa-user"
+             end %>
+          <i class="fa-solid <%= archetype_icon %> archetype-icon"></i>
         </div>
+        <h3 class="archetype-name"><%= @archetype.archetype_name %></h3>
+      </div>
+      <div class="archetype-desc-card">
+        <div class="archetype-desc-header">
+          <i class="fa-solid fa-masks-theater"></i>
+          <span>Ton archétype relationnel</span>
+        </div>
+        <p class="archetype-description"><%= @archetype.archetype_desc %></p>
+      </div>
+    </div>
+  <% else %>
+    <div class="archetype-empty-section">
+      <div class="archetype-empty-card">
+        <i class="fa-solid fa-question-circle"></i>
+        <h3>Archétype non défini</h3>
+        <p>Continue à échanger avec Haven pour qu'on puisse identifier ton archétype relationnel.</p>
+      </div>
+    </div>
+  <% end %>
+
+  <!-- Graphique des émotions -->
+  <div class="emotions-chart-card">
+    <h3 class="chart-title">Tes émotions dominantes</h3>
+    <p class="chart-subtitle">Basé sur tes 20 derniers états</p>
+
+    <% if @top_emotions.any? %>
+      <div class="emotions-bars">
+        <% @top_emotions.each do |emotion, percentage| %>
+          <div class="emotion-bar-item">
+            <div class="emotion-label"><%= emotion.humanize %></div>
+            <div class="emotion-bar-wrapper">
+              <div class="emotion-bar" style="width: <%= percentage %>%;" data-percentage="<%= percentage %>"></div>
+            </div>
+            <div class="emotion-percentage"><%= percentage %>%</div>
+          </div>
+        <% end %>
+      </div>
+    <% else %>
+      <div class="emotions-empty">
+        <i class="fa-solid fa-chart-simple"></i>
+        <p>Pas encore assez de données pour analyser tes émotions.</p>
       </div>
     <% end %>
   </div>
+
+  <!-- Historique des analyses -->
+  <% if @analyses.any? %>
+    <div class="analyses-history-card">
+      <h3>Historique des analyses</h3>
+      <ul class="analyses-list">
+        <% @analyses.limit(5).each do |analysis| %>
+          <li class="analysis-item">
+            <%= link_to analysis_path(analysis), class: "analysis-link" do %>
+              <div class="analysis-info">
+                <span class="analysis-score"><%= analysis.score %>/100</span>
+                <span class="analysis-date"><%= analysis.created_at.strftime('%d/%m/%Y') %></span>
+              </div>
+              <i class="fa-solid fa-chevron-right"></i>
+            <% end %>
+          </li>
+        <% end %>
+      </ul>
+    </div>
+  <% end %>
 </div>
