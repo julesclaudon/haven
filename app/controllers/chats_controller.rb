@@ -21,13 +21,27 @@ class ChatsController < ApplicationController
     @chats = current_user.chats.order(created_at: :desc)
   end
 
+  def new
+    @chat = Chat.new
+  end
+
   def show
     @messages = @chat.messages.order(created_at: :asc)
     @message = Message.new
   end
 
   def create
-    @chat = current_user.chats.create!(status: Chat::DEFAULT_TITLE)
+    @chat = Chat.create!(status: Chat::DEFAULT_TITLE)
+
+    # Créer un state pour lier l'utilisateur au chat
+    current_user.states.create!(
+      chat: @chat,
+      grief_stage: GriefStage.first,
+      pain_level: 5,
+      raw_input: "",
+      trigger_source: 'autre',
+      time_of_day: current_time_of_day
+    )
 
     if params[:message].present? && params[:message][:content].present?
       user_content = params[:message][:content]
