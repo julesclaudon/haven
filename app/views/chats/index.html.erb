@@ -19,7 +19,7 @@
               <% end %>
             </div>
             <% if chat.states.any? %>
-              <button class="btn-state-popup" data-state-url="<%= state_path(chat.states.last) %>">
+              <button class="btn-state-popup" data-state-url="<%= state_path(chat.states.last, iframe: true) %>">
                 <i class="fa-solid fa-eye"></i>
               </button>
             <% end %>
