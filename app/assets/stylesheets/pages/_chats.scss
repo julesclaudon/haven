@@ -70,14 +70,38 @@
   flex-direction: column;
   gap: 0.25rem;
 
+  .chat-title-row {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    flex-wrap: wrap;
+  }
+
   .chat-date {
     font-weight: 500;
     color: $haven-dark;
   }
 
+  .chat-badge-closed {
+    background: rgba($pain-low, 0.15);
+    color: darken($pain-low, 15%);
+    padding: 0.15rem 0.5rem;
+    border-radius: 0.75rem;
+    font-size: 0.7rem;
+    font-weight: 600;
+  }
+
   .chat-stage {
     font-size: 0.85rem;
     color: $gray;
+  }
+}
+
+.chat-item.chat-closed {
+  background: rgba($haven-light, 0.5);
+
+  .chat-link i {
+    color: $pain-low;
   }
 }
 

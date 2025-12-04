@@ -6,12 +6,17 @@
     <% if @chats.any? %>
       <ul class="chats-list">
         <% @chats.each do |chat| %>
-          <li class="chat-item">
+          <li class="chat-item <%= 'chat-closed' if chat.closed? %>">
             <div class="chat-info">
               <%= link_to chat, class: "chat-link" do %>
                 <i class="fa-solid fa-message"></i>
                 <div class="chat-details">
-                  <span class="chat-date"><%= chat.created_at.strftime("%d/%m/%Y à %H:%M") %></span>
+                  <div class="chat-title-row">
+                    <span class="chat-date"><%= chat.created_at.strftime("%d/%m/%Y à %H:%M") %></span>
+                    <% if chat.closed? %>
+                      <span class="chat-badge-closed">Terminée</span>
+                    <% end %>
+                  </div>
                   <% if chat.states.any? %>
                     <span class="chat-stage"><%= chat.states.last.grief_stage&.name %></span>
                   <% end %>
@@ -49,22 +54,43 @@ document.addEventListener('turbo:load', function() {
   const modalClose = document.getElementById('state-modal-close');
   const iframe = document.getElementById('state-iframe');
   if (!modal) return;
+
+  // Fonction pour ouvrir la modal
+  function openModal(stateUrl) {
+    iframe.src = stateUrl;
+    modal.style.display = 'flex';
+  }
+
+  // Fonction pour fermer la modal
+  function closeModal() {
+    modal.style.display = 'none';
+    iframe.src = '';
+    // Nettoyer l'URL si on avait un paramètre open_state_id
+    if (window.history.replaceState) {
+      const url = new URL(window.location);
+      url.searchParams.delete('open_state_id');
+      window.history.replaceState({}, '', url);
+    }
+  }
+
+  // Ouvrir automatiquement si open_state_id est présent
+  <% if @open_state_id.present? %>
+    const autoOpenUrl = "<%= state_path(@open_state_id, iframe: true) %>";
+    openModal(autoOpenUrl);
+  <% end %>
+
   stateButtons.forEach(function(btn) {
     btn.addEventListener('click', function(e) {
       e.preventDefault();
-      const stateUrl = this.dataset.stateUrl;
-      iframe.src = stateUrl;
-      modal.style.display = 'flex';
+      openModal(this.dataset.stateUrl);
     });
   });
-  modalClose.addEventListener('click', function() {
-    modal.style.display = 'none';
-    iframe.src = '';
-  });
+
+  modalClose.addEventListener('click', closeModal);
+
   modal.addEventListener('click', function(e) {
     if (e.target === modal) {
-      modal.style.display = 'none';
-      iframe.src = '';
+      closeModal();
     }
   });
 });

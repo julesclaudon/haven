@@ -23,6 +23,7 @@ class StatesController < ApplicationController
   end
 
   def show
+    @after_close = params[:after_close].present?
     render layout: "iframe" if params[:iframe]
   end
 

@@ -1,12 +1,25 @@
-<div class="haven-conversation">
+<div class="haven-conversation" data-controller="chat" data-chat-closed-value="<%= @chat.closed? %>">
   <header class="conversation-header">
-    <h1><%= @chat.status || "Nouveau chat" %></h1>
     <%= link_to chats_path, class: "back-btn" do %>
       <i class="fa-solid fa-arrow-left"></i>
     <% end %>
+    <div class="header-title-section">
+      <h1><%= @chat.display_title %></h1>
+      <% if @chat.closed? %>
+        <span class="badge-closed">Terminée</span>
+      <% end %>
+    </div>
+    <% unless @chat.closed? %>
+      <button type="button" class="finish-btn" data-action="click->chat#confirmClose" data-chat-url="<%= close_chat_path(@chat) %>">
+        <i class="fa-solid fa-check"></i>
+        Terminer
+      </button>
+    <% else %>
+      <div class="header-spacer"></div>
+    <% end %>
   </header>
 
-  <div class="conversation-messages" id="messages">
+  <div class="conversation-messages" id="messages" data-chat-target="messages">
     <% if @messages.empty? %>
       <div class="chat-empty">
         <p>Commence à discuter avec Haven...</p>
@@ -28,24 +41,49 @@
     <% end %>
   </div>
 
-  <div class="conversation-input">
-    <%= form_with url: chat_messages_path(@chat), method: :post, local: true, class: "message-form" do |f| %>
-      <%= f.text_area :content,
-          name: "message[content]",
-          placeholder: "Écrivez votre message...",
-          class: "message-textarea",
-          rows: 3,
-          required: true %>
-      <%= f.submit "Envoyer", class: "send-btn" %>
-    <% end %>
+  <% unless @chat.closed? %>
+    <div class="conversation-input">
+      <%= form_with url: chat_messages_path(@chat), method: :post, local: true, class: "message-form", data: { chat_target: "form", action: "submit->chat#handleSubmit" } do |f| %>
+        <%= f.text_area :content,
+            name: "message[content]",
+            placeholder: "Écrivez votre message...",
+            class: "message-textarea",
+            rows: 1,
+            required: true,
+            data: { chat_target: "textarea", action: "keydown->chat#handleKeydown input->chat#autoResize" } %>
+        <button type="submit" class="send-btn" data-chat-target="submitBtn">
+          <i class="fa-solid fa-paper-plane"></i>
+        </button>
+      <% end %>
+    </div>
+  <% else %>
+    <div class="conversation-closed-notice">
+      <i class="fa-solid fa-lock"></i>
+      Cette conversation est terminée
+    </div>
+  <% end %>
+
+  <!-- Modal de confirmation -->
+  <div class="confirm-modal" id="confirm-modal" data-chat-target="confirmModal">
+  <div class="confirm-modal-content">
+    <div class="confirm-modal-icon">
+      <i class="fa-solid fa-check-circle"></i>
+    </div>
+    <h2>Terminer cette conversation ?</h2>
+    <p>Tu pourras toujours la consulter, mais tu ne pourras plus envoyer de messages.</p>
+    <div class="confirm-modal-actions">
+      <button type="button" class="btn-cancel" data-action="click->chat#cancelClose">Annuler</button>
+      <button type="button" class="btn-confirm" data-action="click->chat#executeClose">Terminer</button>
+    </div>
   </div>
+</div>
 </div>
 
 <style>
 .haven-conversation {
   display: flex;
   flex-direction: column;
-  min-height: 100vh;
+  height: 100vh;
   background: linear-gradient(135deg, #1a1a2e 0%, #16213e 50%, #0f3460 100%);
   color: #fff;
 }
@@ -54,38 +92,92 @@
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding: 1.5rem 2rem;
+  padding: 1rem 1.5rem;
   border-bottom: 1px solid rgba(255,255,255,0.1);
+  gap: 1rem;
+}
+
+.header-title-section {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  min-width: 0;
 }
 
 .conversation-header h1 {
-  font-size: 1.5rem;
+  font-size: 1.1rem;
   font-weight: 600;
   margin: 0;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.badge-closed {
+  background: rgba(129, 201, 149, 0.2);
+  color: #81C995;
+  padding: 0.25rem 0.75rem;
+  border-radius: 1rem;
+  font-size: 0.75rem;
+  font-weight: 600;
+  white-space: nowrap;
 }
 
 .back-btn {
   background: none;
   border: none;
   color: #fff;
-  font-size: 1.25rem;
+  font-size: 1.1rem;
   cursor: pointer;
   opacity: 0.7;
   transition: opacity 0.2s;
   text-decoration: none;
+  padding: 0.5rem;
 }
 
 .back-btn:hover {
   opacity: 1;
+  color: #fff;
+}
+
+.header-spacer {
+  width: 80px;
+}
+
+.finish-btn {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.5rem 1rem;
+  background: #81C995;
+  color: #1a1a2e;
+  border: none;
+  border-radius: 0.5rem;
+  font-size: 0.9rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s;
+  white-space: nowrap;
+}
+
+.finish-btn:hover {
+  background: #6ab580;
+  transform: translateY(-1px);
+}
+
+.finish-btn i {
+  font-size: 0.85rem;
 }
 
 .conversation-messages {
   flex: 1;
-  padding: 2rem;
+  padding: 1.5rem;
   overflow-y: auto;
   display: flex;
   flex-direction: column;
-  gap: 1.5rem;
+  gap: 1rem;
+  scroll-behavior: smooth;
 }
 
 .chat-empty {
@@ -95,10 +187,22 @@
 }
 
 .message-bubble {
-  max-width: 70%;
-  padding: 1rem 1.25rem;
+  max-width: 80%;
+  padding: 0.875rem 1rem;
   border-radius: 1rem;
   position: relative;
+  animation: fadeIn 0.3s ease;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
 }
 
 .message-bubble.user {
@@ -114,45 +218,66 @@
 }
 
 .message-sender {
-  font-size: 0.75rem;
+  font-size: 0.7rem;
   font-weight: 700;
-  margin-bottom: 0.5rem;
+  margin-bottom: 0.35rem;
   opacity: 0.9;
 }
 
 .message-text {
-  font-size: 1rem;
+  font-size: 0.95rem;
   line-height: 1.5;
+  white-space: pre-wrap;
 }
 
 .message-time {
-  font-size: 0.7rem;
+  font-size: 0.65rem;
   opacity: 0.7;
-  margin-top: 0.5rem;
+  margin-top: 0.35rem;
   text-align: right;
 }
 
+/* Curseur clignotant pour le streaming */
+.typing-indicator {
+  display: inline-block;
+  width: 8px;
+  height: 16px;
+  background: currentColor;
+  margin-left: 2px;
+  animation: blink 1s infinite;
+}
+
+@keyframes blink {
+  0%, 50% { opacity: 1; }
+  51%, 100% { opacity: 0; }
+}
+
 .conversation-input {
-  padding: 1.5rem 2rem;
-  background: rgba(0,0,0,0.2);
+  padding: 1rem 1.5rem;
+  padding-bottom: calc(1rem + env(safe-area-inset-bottom, 0));
+  background: rgba(0,0,0,0.3);
+  border-top: 1px solid rgba(255,255,255,0.1);
 }
 
 .message-form {
   display: flex;
-  flex-direction: column;
-  gap: 1rem;
+  align-items: flex-end;
+  gap: 0.75rem;
 }
 
 .message-textarea {
-  width: 100%;
-  padding: 1rem;
+  flex: 1;
+  padding: 0.75rem 1rem;
   border: none;
-  border-radius: 0.75rem;
+  border-radius: 1.5rem;
   background: rgba(50, 50, 80, 0.8);
   color: #fff;
-  font-size: 1rem;
+  font-size: 0.95rem;
   resize: none;
   outline: none;
+  max-height: 120px;
+  line-height: 1.4;
+  overflow-y: auto;
 }
 
 .message-textarea::placeholder {
@@ -164,19 +289,175 @@
 }
 
 .send-btn {
-  align-self: flex-end;
-  padding: 0.75rem 1.5rem;
+  width: 44px;
+  height: 44px;
+  padding: 0;
   background: rgba(233, 87, 120, 0.9);
   color: #fff;
   border: none;
-  border-radius: 0.5rem;
+  border-radius: 50%;
   font-size: 1rem;
-  font-weight: 600;
   cursor: pointer;
-  transition: background 0.2s;
+  transition: all 0.2s;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
 }
 
 .send-btn:hover {
   background: rgba(233, 87, 120, 1);
+  transform: scale(1.05);
+}
+
+.send-btn:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+  transform: none;
+}
+
+.conversation-closed-notice {
+  padding: 1rem 1.5rem;
+  padding-bottom: calc(1rem + env(safe-area-inset-bottom, 0));
+  background: rgba(0,0,0,0.3);
+  border-top: 1px solid rgba(255,255,255,0.1);
+  text-align: center;
+  color: rgba(255,255,255,0.6);
+  font-size: 0.9rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+}
+
+/* Modal de confirmation */
+.confirm-modal {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.7);
+  display: none;
+  align-items: center;
+  justify-content: center;
+  z-index: 9999;
+  padding: 1rem;
+}
+
+.confirm-modal.active {
+  display: flex;
+}
+
+.confirm-modal-content {
+  background: #fff;
+  border-radius: 1rem;
+  padding: 2rem;
+  max-width: 400px;
+  width: 100%;
+  text-align: center;
+  animation: modalSlideIn 0.3s ease;
+}
+
+@keyframes modalSlideIn {
+  from {
+    opacity: 0;
+    transform: scale(0.9) translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1) translateY(0);
+  }
+}
+
+.confirm-modal-icon {
+  width: 60px;
+  height: 60px;
+  background: rgba(129, 201, 149, 0.15);
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 0 auto 1rem;
+}
+
+.confirm-modal-icon i {
+  font-size: 1.75rem;
+  color: #81C995;
+}
+
+.confirm-modal-content h2 {
+  color: #1a1a2e;
+  font-size: 1.25rem;
+  margin: 0 0 0.5rem;
+}
+
+.confirm-modal-content p {
+  color: #666;
+  font-size: 0.9rem;
+  margin: 0 0 1.5rem;
+  line-height: 1.5;
+}
+
+.confirm-modal-actions {
+  display: flex;
+  gap: 0.75rem;
+  justify-content: center;
+}
+
+.btn-cancel {
+  padding: 0.75rem 1.5rem;
+  background: #f0f0f0;
+  color: #666;
+  border: none;
+  border-radius: 0.5rem;
+  font-size: 0.9rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.btn-cancel:hover {
+  background: #e0e0e0;
+}
+
+.btn-confirm {
+  padding: 0.75rem 1.5rem;
+  background: #81C995;
+  color: #fff;
+  border: none;
+  border-radius: 0.5rem;
+  font-size: 0.9rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.btn-confirm:hover {
+  background: #6ab580;
+}
+
+/* Responsive adjustments */
+@media (max-width: 480px) {
+  .conversation-header {
+    padding: 0.875rem 1rem;
+  }
+
+  .conversation-header h1 {
+    font-size: 1rem;
+  }
+
+  .finish-btn {
+    padding: 0.4rem 0.75rem;
+    font-size: 0.85rem;
+  }
+
+  .conversation-messages {
+    padding: 1rem;
+  }
+
+  .message-bubble {
+    max-width: 85%;
+  }
 }
 </style>
