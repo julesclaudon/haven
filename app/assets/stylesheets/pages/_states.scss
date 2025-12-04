@@ -276,6 +276,23 @@
         font-size: 1.5rem;
         font-weight: 700;
         color: $haven-primary;
+
+        .score-diff-badge {
+          display: inline-block;
+          padding: 0.25rem 0.75rem;
+          border-radius: 1rem;
+          font-size: 1.1rem;
+
+          &.positive {
+            background: linear-gradient(135deg, $pain-low, darken($pain-low, 10%));
+            color: white;
+          }
+
+          &.neutral {
+            background: rgba($gray, 0.2);
+            color: $gray;
+          }
+        }
       }
 
       .summary-label {
@@ -328,6 +345,98 @@
         color: $haven-dark;
       }
     }
+  }
+}
+
+// Section analyse avec résumé et score
+.analysis-resume {
+  background: linear-gradient(135deg, rgba($haven-primary, 0.05) 0%, rgba($haven-secondary, 0.08) 100%);
+  padding: 1.25rem;
+  border-radius: 12px;
+  margin-bottom: 1.5rem;
+
+  .section-title {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    color: $haven-primary;
+    font-weight: 600;
+
+    i {
+      font-size: 1rem;
+    }
+  }
+
+  .resume-box {
+    background: white;
+    padding: 1rem;
+    border-radius: 8px;
+    margin-top: 0.75rem;
+    color: $haven-dark;
+    line-height: 1.6;
+    font-size: 0.95rem;
+  }
+
+  .score-display {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    margin-top: 1rem;
+    padding-top: 1rem;
+    border-top: 1px solid rgba($haven-primary, 0.1);
+
+    .score-label {
+      font-size: 0.8rem;
+      color: $gray;
+      white-space: nowrap;
+    }
+
+    .score-bar {
+      flex: 1;
+      height: 8px;
+      background: rgba($haven-primary, 0.15);
+      border-radius: 4px;
+      overflow: hidden;
+
+      .score-fill {
+        height: 100%;
+        background: linear-gradient(90deg, $haven-secondary, $haven-primary);
+        border-radius: 4px;
+        transition: width 0.5s ease;
+      }
+    }
+
+    .score-value {
+      font-weight: 700;
+      color: $haven-primary;
+      font-size: 0.9rem;
+      min-width: 40px;
+      text-align: right;
+    }
+  }
+}
+
+// Section archétype
+.archetype-section {
+  .section-title {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+
+    i {
+      color: $haven-secondary;
+    }
+  }
+
+  .archetype-badge {
+    display: inline-block;
+    background: linear-gradient(135deg, $haven-primary, darken($haven-primary, 10%));
+    color: white;
+    padding: 0.5rem 1.25rem;
+    border-radius: 2rem;
+    font-weight: 600;
+    font-size: 0.95rem;
+    margin-top: 0.5rem;
   }
 }
 
