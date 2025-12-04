@@ -1,7 +1,17 @@
 <div class="state-show">
+  <% if @after_close %>
+    <div class="state-close-success">
+      <div class="success-icon">
+        <i class="fas fa-heart"></i>
+      </div>
+      <h2>Conversation terminée</h2>
+      <p>Merci d'avoir partagé ce que tu ressens. Voici un résumé de ton état émotionnel.</p>
+    </div>
+  <% end %>
+
   <div class="state-show-header">
     <% unless params[:iframe] %>
-      <%= link_to states_path, class: "back-link" do %>
+      <%= link_to (@after_close ? chats_path : states_path), class: "back-link" do %>
         <i class="fas fa-arrow-left"></i>
       <% end %>
     <% end %>

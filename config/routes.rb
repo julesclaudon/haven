@@ -19,6 +19,9 @@ Rails.application.routes.draw do
     collection do
       get :history
     end
+    member do
+      post :close
+    end
     resources :messages, only: [:create]
   end
   resource :dashboard, only: :show

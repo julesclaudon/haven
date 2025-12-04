@@ -1,7 +1,7 @@
 class ChatsController < ApplicationController
   before_action :authenticate_user!
   before_action :require_initial_quiz
-  before_action :set_chat, only: %i[show]
+  before_action :set_chat, only: %i[show close]
 
   SYSTEM_PROMPT = <<~PROMPT
     Tu es Haven, un compagnon bienveillant spécialisé dans l'accompagnement des personnes traversant une rupture amoureuse.
@@ -19,6 +19,7 @@ class ChatsController < ApplicationController
 
   def index
     @chats = current_user.chats.order(created_at: :desc)
+    @open_state_id = params[:open_state_id]
   end
 
   def new
@@ -28,6 +29,12 @@ class ChatsController < ApplicationController
   def show
     @messages = @chat.messages.order(created_at: :asc)
     @message = Message.new
+  end
+
+  def close
+    @chat.close!
+    last_state = @chat.states.last
+    redirect_to chats_path(open_state_id: last_state&.id)
   end
 
   def create
