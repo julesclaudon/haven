@@ -36,8 +36,8 @@ class MessagesController < ApplicationController
     response = ruby_llm_chat.with_instructions(mini_prompt).ask(user_content)
     response_content = response.content
 
-    # Gestion de l'urgence
-    if response_content.include?("[URGENCE]")
+    # Gestion de l'urgence : sortie vide ou [URGENCE]
+    if response_content.blank? || response_content.include?("[URGENCE]")
       handle_emergency_response
       return
     end
