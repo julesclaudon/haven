@@ -43,6 +43,135 @@
     </div>
   <% end %>
 
+  <!-- Insights Cards -->
+  <div class="insights-section">
+    <h2 class="insights-title">Tes insights</h2>
+
+    <div class="insights-grid">
+      <!-- Évolution de la douleur -->
+      <% if @pain_trend %>
+        <div class="insight-card <%= @pain_trend < 0 ? 'positive' : @pain_trend > 0 ? 'negative' : 'neutral' %>">
+          <div class="insight-icon">
+            <i class="fa-solid <%= @pain_trend < 0 ? 'fa-arrow-trend-down' : @pain_trend > 0 ? 'fa-arrow-trend-up' : 'fa-minus' %>"></i>
+          </div>
+          <div class="insight-content">
+            <div class="insight-value"><%= @pain_trend.abs %> pts</div>
+            <div class="insight-label">
+              <% if @pain_trend < 0 %>
+                Ta douleur a diminué
+              <% elsif @pain_trend > 0 %>
+                Ta douleur a augmenté
+              <% else %>
+                Ta douleur est stable
+              <% end %>
+            </div>
+            <div class="insight-detail">De <%= @first_pain %>/10 à <%= @last_pain %>/10</div>
+          </div>
+        </div>
+      <% end %>
+
+      <!-- Progression du score -->
+      <% if @score_trend %>
+        <div class="insight-card <%= @score_trend > 0 ? 'positive' : @score_trend < 0 ? 'negative' : 'neutral' %>">
+          <div class="insight-icon">
+            <i class="fa-solid <%= @score_trend > 0 ? 'fa-arrow-trend-up' : @score_trend < 0 ? 'fa-arrow-trend-down' : 'fa-minus' %>"></i>
+          </div>
+          <div class="insight-content">
+            <div class="insight-value">+<%= @score_trend.abs %> pts</div>
+            <div class="insight-label">
+              <% if @score_trend > 0 %>
+                Ton score progresse
+              <% elsif @score_trend < 0 %>
+                Ton score a baissé
+              <% else %>
+                Ton score est stable
+              <% end %>
+            </div>
+            <div class="insight-detail">De <%= @first_score %> à <%= @last_score %>/100</div>
+          </div>
+        </div>
+      <% end %>
+
+      <!-- Top déclencheur -->
+      <% if @top_triggers.any? %>
+        <div class="insight-card neutral">
+          <div class="insight-icon">
+            <i class="fa-solid fa-bolt"></i>
+          </div>
+          <div class="insight-content">
+            <div class="insight-value"><%= @top_triggers.keys.first&.humanize %></div>
+            <div class="insight-label">Ton déclencheur principal</div>
+            <div class="insight-detail">
+              <% @top_triggers.first(3).each do |trigger, count| %>
+                <span class="trigger-tag"><%= trigger.humanize %> (<%= count %>)</span>
+              <% end %>
+            </div>
+          </div>
+        </div>
+      <% end %>
+
+      <!-- Moment difficile -->
+      <% if @worst_time %>
+        <div class="insight-card neutral">
+          <div class="insight-icon">
+            <i class="fa-solid fa-clock"></i>
+          </div>
+          <div class="insight-content">
+            <div class="insight-value"><%= @worst_time.humanize %></div>
+            <div class="insight-label">Ton moment le plus difficile</div>
+            <div class="insight-detail">
+              <% @time_of_day_stats.each do |time, count| %>
+                <span class="time-tag"><%= time.humanize %>: <%= count %></span>
+              <% end %>
+            </div>
+          </div>
+        </div>
+      <% end %>
+
+      <!-- Contact avec l'ex -->
+      <% if @first_contact && @last_contact && @first_contact != @last_contact %>
+        <div class="insight-card positive">
+          <div class="insight-icon">
+            <i class="fa-solid fa-phone-slash"></i>
+          </div>
+          <div class="insight-content">
+            <div class="insight-value"><%= @last_contact.humanize %></div>
+            <div class="insight-label">Contact avec ton ex</div>
+            <div class="insight-detail">Passé de "<%= @first_contact.humanize %>" à "<%= @last_contact.humanize %>"</div>
+          </div>
+        </div>
+      <% end %>
+
+      <!-- Réconciliation -->
+      <% if @reunion_percentage %>
+        <div class="insight-card <%= @reunion_percentage >= 50 ? 'positive' : 'neutral' %>">
+          <div class="insight-icon">
+            <i class="fa-solid fa-heart-crack"></i>
+          </div>
+          <div class="insight-content">
+            <div class="insight-value"><%= @reunion_percentage %>%</div>
+            <div class="insight-label">Tu n'envisages plus la réconciliation</div>
+            <div class="insight-detail">Sur <%= @reunion_total %> réflexions</div>
+          </div>
+        </div>
+      <% end %>
+
+      <!-- Contexte relation -->
+      <% if @relation_duration && @days_since_breakup %>
+        <div class="insight-card neutral">
+          <div class="insight-icon">
+            <i class="fa-solid fa-calendar-days"></i>
+          </div>
+          <div class="insight-content">
+            <div class="insight-value"><%= @relation_duration %> mois</div>
+            <div class="insight-label">Durée de ta relation</div>
+            <div class="insight-detail"><%= @days_since_breakup %> jours depuis la rupture</div>
+          </div>
+        </div>
+      <% end %>
+    </div>
+  </div>
+
   <!-- Graphique des émotions -->
   <div class="emotions-chart-card">
     <h3 class="chart-title">Tes émotions dominantes</h3>
