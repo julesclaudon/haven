@@ -23,7 +23,11 @@ class ChatsController < ApplicationController
     @chat.close!
     run_analysis_prompt
     last_state = @chat.states.last
-    redirect_to chats_path(open_state_id: last_state&.id)
+
+    respond_to do |format|
+      format.html { redirect_to chats_path(open_state_id: last_state&.id) }
+      format.json { render json: { success: true, state_id: last_state&.id } }
+    end
   end
 
   def create

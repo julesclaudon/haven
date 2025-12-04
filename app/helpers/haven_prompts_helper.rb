@@ -173,43 +173,77 @@ module HavenPromptsHelper
       - Le profil relationnel précédent : #{previous_profile || 'null'}
 
       Ta mission : produire une analyse complète, structurée, et factuelle de l'état émotionnel final de l'utilisateur.
-      Tu remplis au maximum les champs grâce aux informations disponibles.
-      Si une information manque → tu laisses une chaîne vide ou null (pas d'invention).
 
-      1) Déterminer l'étape du deuil (globale)
+      ⚠️ RÈGLE CRITIQUE : Ne remplis un champ QUE si l'information est EXPLICITEMENT mentionnée dans la conversation.
+      Si tu ne trouves pas l'info → tu mets null ou "" (chaîne vide).
+      Tu n'inventes JAMAIS. Tu ne déduis PAS. Tu ne supposes PAS.
 
-      Choisir UNE seule étape, celle qui représente le mieux la position émotionnelle globale de l'utilisateur à la fin :
-      - déni
-      - colère
+      === CHAMPS À REMPLIR ===
+
+      1) pain_level (integer 0-10)
+      Niveau de douleur émotionnelle ressenti.
+      - 0-3 : douleur légère, gérable
+      - 4-6 : douleur modérée, présente
+      - 7-10 : douleur intense, envahissante
+      → Ne remplis QUE si l'utilisateur exprime clairement son niveau de souffrance.
+
+      2) raw_input (string)
+      Résumé en 1-2 phrases de ce que l'utilisateur a partagé/exprimé durant la conversation.
+      Ce qu'il a voulu dire, le cœur de son message.
+
+      3) emotion_label (string) - VALEURS EXACTES :
+      #{emotion_label_values.map { |v| "- #{v}" }.join("\n      ")}
+      → Choisis UNE seule émotion dominante.
+
+      4) main_sentiment (string)
+      Une phrase décrivant le sentiment principal ressenti (ex: "Il se sent abandonné et incompris").
+
+      5) trigger_source (string) - VALEURS EXACTES :
+      #{trigger_source_values.map { |v| "- #{v}" }.join("\n      ")}
+      → Ne remplis QUE si l'utilisateur mentionne EXPLICITEMENT ce qui a déclenché son état.
+      → Si pas mentionné clairement → laisse vide "".
+
+      6) time_of_day (string) - VALEURS EXACTES :
+      #{time_of_day_values.map { |v| "- #{v}" }.join("\n      ")}
+      → Ne remplis QUE si l'utilisateur mentionne EXPLICITEMENT le moment de la journée.
+
+      7) ex_contact_frequency (string) - VALEURS EXACTES :
+      #{ex_contact_frequency_values.map { |v| "- #{v}" }.join("\n      ")}
+      → Ne remplis QUE si l'utilisateur parle de ses contacts avec son ex.
+
+      8) considered_reunion (boolean ou null)
+      - true : l'utilisateur envisage/espère une réconciliation
+      - false : l'utilisateur ne veut pas se remettre ensemble
+      - null : non mentionné dans la conversation
+
+      9) ruminating_frequency (string) - VALEURS EXACTES :
+      #{ruminating_frequency_values.map { |v| "- #{v}" }.join("\n      ")}
+      → Ne remplis QUE si l'utilisateur parle de ses pensées récurrentes/obsessionnelles.
+
+      10) sleep_quality (string) - VALEURS EXACTES :
+      #{sleep_quality_values.map { |v| "- #{v}" }.join("\n      ")}
+      → Ne remplis QUE si l'utilisateur mentionne son sommeil.
+
+      11) support_level (string) - VALEURS EXACTES :
+      #{support_level_values.map { |v| "- #{v}" }.join("\n      ")}
+      → Ne remplis QUE si l'utilisateur parle de son entourage/soutien.
+
+      12) habits_changed (string)
+      Description libre des changements d'habitudes mentionnés (sport, alimentation, sorties, travail...).
+      → Ne remplis QUE si explicitement mentionné.
+
+      13) drugs (string) - VALEURS EXACTES :
+      #{drugs_values.map { |v| "- #{v}" }.join("\n      ")}
+      → Ne remplis QUE si l'utilisateur mentionne sa consommation.
+
+      14) grief_stage (string) - VALEURS EXACTES :
+      - deni
+      - colere
       - marchandage
-      - dépression
+      - depression
       - acceptation
 
-      2) Déterminer l'émotion principale
-
-      Choisir UNE émotion dominante pour l'ensemble de la conversation :
-      - colère
-      - tristesse
-      - manque
-      - espoir / illusions
-      - confusion
-      - culpabilité
-
-      Tu peux ajouter plusieurs émotions secondaires si pertinentes.
-
-      3) Intensité émotionnelle globale
-
-      Échelle 0 à 10 :
-      0 = détaché
-      10 = charge émotionnelle maximale
-
-      Il s'agit d'un niveau ressenti général, pas seulement du dernier message.
-
-      4) Identifier le profil relationnel profond
-
-      Si previous_profile existe → tu le gardes, sauf contradiction majeure dans la conversation.
-
-      Sinon, tu choisis parmi les 10 archétypes relationnels :
+      15) profil_relationnel (string) - VALEURS EXACTES :
       - Le Chevalier
       - Le Sauveur
       - L'Indépendant
@@ -220,30 +254,19 @@ module HavenPromptsHelper
       - Le Fusionnel
       - Le Stratège
       - L'Intense
+      → Si previous_profile existe (#{previous_profile || 'null'}), garde-le sauf contradiction majeure.
 
-      Tu ne changes pas de profil sans très forte justification.
+      16) score (integer 0-100)
+      Score de progression émotionnelle.
+      - Doit être >= #{previous_score || 0} (jamais en baisse)
+      - Petite évolution → +1 à +3
+      - Prise de conscience → +3 à +5
+      - Signe d'acceptation → +4 à +8
 
-      5) Score émotionnel (progression, jamais en baisse)
+      17) resume (string)
+      UNE phrase synthétique décrivant l'état émotionnel et l'évolution durant cette conversation.
 
-      Le nouveau score doit respecter :
-      - score >= #{previous_score || 0}
-      - 0 <= score <= 100
-      - refléter la progression émotionnelle, pas la douleur brute
-
-      Recommandations :
-      - petite évolution → +1 à +3
-      - étape difficile (colère, dépression) → +0 à +2
-      - prise de conscience → +3 à +5
-      - signe d'acceptation → +4 à +8
-
-      6) Résumé synthétique
-
-      Une phrase unique, simple, claire, décrivant :
-      - l'évolution générale pendant la conversation
-      - l'état émotionnel final de l'utilisateur
-      - Aucune interprétation excessive.
-
-      7) JSON strict (structure finale)
+      === JSON STRICT ===
 
       Tu dois répondre UNIQUEMENT avec un JSON valide, sans texte avant ou après :
 
@@ -266,13 +289,52 @@ module HavenPromptsHelper
         "score": 0,
         "resume": ""
       }
-
-      Règles supplémentaires :
-      - Tu remplis ce que tu peux.
-      - Tu laisses vide ("") ou null quand tu n'as pas assez d'éléments.
-      - Tu n'inventes jamais d'informations.
-      - Uniquement du JSON.
     PROMPT
+  end
+
+  # === VALEURS AUTORISÉES POUR LES CHAMPS ===
+
+  def emotion_label_values
+    %w[colere tristesse manque espoir confusion culpabilite anxiete soulagement resignation]
+  end
+
+  def trigger_source_values
+    %w[instagram facebook reseaux_sociaux photo souvenir musique lieu ami_commun message_ex nouvelle_relation anniversaire objet reve solitude alcool]
+  end
+
+  def time_of_day_values
+    %w[matin apres_midi soir nuit reveil]
+  end
+
+  def ex_contact_frequency_values
+    %w[aucun_contact contact_rare contact_occasionnel contact_frequent contact_quotidien]
+  end
+
+  def ruminating_frequency_values
+    %w[jamais rarement parfois souvent tout_le_temps]
+  end
+
+  def sleep_quality_values
+    %w[tres_bon bon moyen mauvais tres_mauvais insomnie]
+  end
+
+  def support_level_values
+    %w[tres_entoure entoure peu_entoure isole]
+  end
+
+  def drugs_values
+    %w[aucun alcool_occasionnel alcool_frequent cannabis medicaments autres]
+  end
+
+  # Valeurs considérées comme "non pertinentes" à ne pas afficher
+  def non_relevant_values
+    %w[autre non_detecte inconnu non_mentionne non_specifie]
+  end
+
+  # Helper pour vérifier si une valeur est pertinente (à utiliser dans les vues)
+  def relevant_value?(value)
+    return false if value.blank?
+    !non_relevant_values.include?(value.to_s.downcase.parameterize(separator: '_'))
   end
 
   private

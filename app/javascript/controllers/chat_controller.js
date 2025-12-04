@@ -1,16 +1,76 @@
 import { Controller } from "@hotwired/stimulus"
 
 export default class extends Controller {
-  static targets = ["messages", "textarea", "form", "submitBtn", "confirmModal"]
+  static targets = ["messages", "textarea", "form", "submitBtn", "confirmModal", "modalTitle", "modalText", "modalIcon"]
   static values = { closed: Boolean }
 
   closeUrl = null
+  pendingNavigation = null
 
   connect() {
     this.scrollToBottom()
     if (this.hasTextareaTarget) {
       this.autoResize()
     }
+
+    // Intercepter les clics sur les liens de navigation si le chat est ouvert
+    if (!this.closedValue) {
+      this.interceptNavigation()
+    }
+  }
+
+  disconnect() {
+    // Nettoyer les event listeners
+    if (this.navigationHandler) {
+      document.removeEventListener("click", this.navigationHandler)
+    }
+  }
+
+  // Intercepter tous les liens de navigation
+  interceptNavigation() {
+    this.navigationHandler = (event) => {
+      const link = event.target.closest("a")
+      if (!link) return
+
+      // Ignorer les liens du même chat ou les liens externes
+      const href = link.getAttribute("href")
+      if (!href || href.startsWith("#") || href.startsWith("javascript:")) return
+
+      // Ignorer le bouton retour (back-btn) - il est géré séparément
+      if (link.classList.contains("back-btn")) {
+        event.preventDefault()
+        this.showNavigationModal(href)
+        return
+      }
+
+      // Intercepter les liens de la navbar et autres navigations internes
+      if (link.closest(".bottom-navbar") || link.closest(".bottom-nav-item")) {
+        event.preventDefault()
+        this.showNavigationModal(href)
+        return
+      }
+    }
+
+    document.addEventListener("click", this.navigationHandler)
+  }
+
+  // Afficher la modale pour navigation
+  showNavigationModal(destinationUrl) {
+    this.pendingNavigation = destinationUrl
+    this.closeUrl = this.element.querySelector("[data-chat-url]")?.dataset.chatUrl
+
+    // Mettre à jour le contenu de la modale
+    if (this.hasModalTitleTarget) {
+      this.modalTitleTarget.textContent = "Quitter la conversation ?"
+    }
+    if (this.hasModalTextTarget) {
+      this.modalTextTarget.textContent = "En quittant maintenant, la conversation sera terminée et analysée. Tu pourras toujours la consulter ensuite."
+    }
+    if (this.hasModalIconTarget) {
+      this.modalIconTarget.innerHTML = '<i class="fa-solid fa-door-open"></i>'
+    }
+
+    this.confirmModalTarget.classList.add("active")
   }
 
   // Gestion de l'envoi avec Enter (Shift+Enter pour nouvelle ligne)
@@ -59,17 +119,34 @@ export default class extends Controller {
   cancelClose() {
     this.confirmModalTarget.classList.remove("active")
     this.closeUrl = null
+    this.pendingNavigation = null
+
+    // Restaurer le contenu par défaut de la modale
+    if (this.hasModalTitleTarget) {
+      this.modalTitleTarget.textContent = "Terminer cette conversation ?"
+    }
+    if (this.hasModalTextTarget) {
+      this.modalTextTarget.textContent = "Tu pourras toujours la consulter, mais tu ne pourras plus envoyer de messages."
+    }
+    if (this.hasModalIconTarget) {
+      this.modalIconTarget.innerHTML = '<i class="fa-solid fa-check-circle"></i>'
+    }
   }
 
   // Exécuter la fermeture
   executeClose() {
     if (this.closeUrl) {
-      // Créer un formulaire pour POST
+      // Si on a une navigation en attente, on doit fermer puis rediriger
+      if (this.pendingNavigation) {
+        this.closeAndNavigate()
+        return
+      }
+
+      // Sinon, comportement standard : fermer et laisser le serveur rediriger
       const form = document.createElement("form")
       form.method = "POST"
       form.action = this.closeUrl
 
-      // Ajouter le token CSRF
       const csrfToken = document.querySelector("meta[name='csrf-token']")?.content
       if (csrfToken) {
         const csrfInput = document.createElement("input")
@@ -81,6 +158,28 @@ export default class extends Controller {
 
       document.body.appendChild(form)
       form.submit()
+    }
+  }
+
+  // Fermer le chat puis naviguer vers la destination
+  async closeAndNavigate() {
+    const csrfToken = document.querySelector("meta[name='csrf-token']")?.content
+
+    try {
+      const response = await fetch(this.closeUrl, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          "X-CSRF-Token": csrfToken,
+          "Accept": "application/json"
+        }
+      })
+
+      // Que la requête réussisse ou non, on navigue vers la destination
+      window.location.href = this.pendingNavigation
+    } catch (error) {
+      // En cas d'erreur, naviguer quand même
+      window.location.href = this.pendingNavigation
     }
   }
 }
