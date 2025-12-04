@@ -22,32 +22,78 @@
   </div>
 
   <div class="state-detail-card">
-    <div class="state-summary">
-      <div class="summary-item">
-        <% pain = @state.pain_level || 0 %>
-        <div class="summary-value">
-          <span class="pain-badge <%= pain <= 3 ? 'low' : pain <= 6 ? 'medium' : 'high' %>">
-            <%= pain %>/10
-          </span>
-        </div>
-        <div class="summary-label">Douleur</div>
-      </div>
-      <div class="summary-item">
-        <div class="summary-value"><%= @state.emotion_label&.humanize || "-" %></div>
-        <div class="summary-label">Émotion</div>
-      </div>
-      <% if @state.grief_stage %>
-        <div class="summary-item">
-          <div class="summary-value"><%= @state.grief_stage.name %></div>
-          <div class="summary-label">Phase</div>
-        </div>
-      <% end %>
-      <div class="summary-item">
-        <div class="summary-value"><%= @state.time_of_day&.humanize || "-" %></div>
-        <div class="summary-label">Moment</div>
-      </div>
-    </div>
+    <%# Résumé principal - toujours affiché si au moins un élément existe %>
+    <% if @state.pain_level.present? || @state.emotion_label.present? || @state.grief_stage.present? || @state.time_of_day.present? || @score_diff.present? %>
+      <div class="state-summary">
+        <% if @state.pain_level.present? %>
+          <div class="summary-item">
+            <% pain = @state.pain_level %>
+            <div class="summary-value">
+              <span class="pain-badge <%= pain <= 3 ? 'low' : pain <= 6 ? 'medium' : 'high' %>">
+                <%= pain %>/10
+              </span>
+            </div>
+            <div class="summary-label">Douleur</div>
+          </div>
+        <% end %>
 
+        <% if @state.emotion_label.present? %>
+          <div class="summary-item">
+            <div class="summary-value"><%= @state.emotion_label.humanize %></div>
+            <div class="summary-label">Émotion</div>
+          </div>
+        <% end %>
+
+        <% if @state.grief_stage.present? %>
+          <div class="summary-item">
+            <div class="summary-value"><%= @state.grief_stage.name %></div>
+            <div class="summary-label">Phase</div>
+          </div>
+        <% end %>
+
+        <% if @state.time_of_day.present? %>
+          <div class="summary-item">
+            <div class="summary-value"><%= @state.time_of_day.humanize %></div>
+            <div class="summary-label">Moment</div>
+          </div>
+        <% end %>
+
+        <% if @score_diff.present? %>
+          <div class="summary-item">
+            <div class="summary-value">
+              <span class="score-diff-badge <%= @score_diff > 0 ? 'positive' : 'neutral' %>">
+                <%= @score_diff > 0 ? "+#{@score_diff}" : @score_diff %>%
+              </span>
+            </div>
+            <div class="summary-label">Progression</div>
+          </div>
+        <% end %>
+      </div>
+    <% end %>
+
+    <%# Résumé de l'analyse (si disponible) %>
+    <% if @state.analysis&.resume.present? %>
+      <div class="detail-section analysis-resume">
+        <div class="section-title">
+          <i class="fas fa-brain"></i>
+          Analyse
+        </div>
+        <div class="resume-box">
+          <%= @state.analysis.resume %>
+        </div>
+        <% if @state.analysis.score.present? %>
+          <div class="score-display">
+            <span class="score-label">Progression</span>
+            <div class="score-bar">
+              <div class="score-fill" style="width: <%= @state.analysis.score %>%"></div>
+            </div>
+            <span class="score-value"><%= @state.analysis.score %>%</span>
+          </div>
+        <% end %>
+      </div>
+    <% end %>
+
+    <%# Ce que l'utilisateur a exprimé %>
     <% if @state.raw_input.present? %>
       <div class="detail-section">
         <div class="section-title">Ce que tu as exprimé</div>
@@ -57,6 +103,7 @@
       </div>
     <% end %>
 
+    <%# Sentiment principal %>
     <% if @state.main_sentiment.present? %>
       <div class="detail-section">
         <div class="section-title">Sentiment principal</div>
@@ -64,62 +111,89 @@
       </div>
     <% end %>
 
-    <div class="detail-section">
-      <div class="section-title">Détails</div>
-      <div class="details-grid">
-        <% if @state.trigger_source.present? %>
-          <div class="detail-item">
-            <div class="detail-label">Déclencheur</div>
-            <div class="detail-value"><%= @state.trigger_source.humanize %></div>
-          </div>
-        <% end %>
+    <%# Grille de détails - seulement si au moins un élément existe %>
+    <% details_present = @state.trigger_source.present? ||
+                         @state.ex_contact_frequency.present? ||
+                         !@state.considered_reunion.nil? ||
+                         @state.ruminating_frequency.present? ||
+                         @state.sleep_quality.present? ||
+                         @state.support_level.present? ||
+                         @state.drugs.present? %>
 
-        <% if @state.ex_contact_frequency.present? %>
-          <div class="detail-item">
-            <div class="detail-label">Contact avec l'ex</div>
-            <div class="detail-value"><%= @state.ex_contact_frequency.humanize %></div>
-          </div>
-        <% end %>
+    <% if details_present %>
+      <div class="detail-section">
+        <div class="section-title">Détails</div>
+        <div class="details-grid">
+          <% if @state.trigger_source.present? %>
+            <div class="detail-item">
+              <div class="detail-label">Déclencheur</div>
+              <div class="detail-value"><%= @state.trigger_source.humanize %></div>
+            </div>
+          <% end %>
 
-        <div class="detail-item">
-          <div class="detail-label">Réconciliation envisagée</div>
-          <div class="detail-value"><%= @state.considered_reunion.nil? ? "-" : (@state.considered_reunion ? "Oui" : "Non") %></div>
+          <% if @state.ex_contact_frequency.present? %>
+            <div class="detail-item">
+              <div class="detail-label">Contact avec l'ex</div>
+              <div class="detail-value"><%= @state.ex_contact_frequency.humanize %></div>
+            </div>
+          <% end %>
+
+          <% unless @state.considered_reunion.nil? %>
+            <div class="detail-item">
+              <div class="detail-label">Réconciliation envisagée</div>
+              <div class="detail-value"><%= @state.considered_reunion ? "Oui" : "Non" %></div>
+            </div>
+          <% end %>
+
+          <% if @state.ruminating_frequency.present? %>
+            <div class="detail-item">
+              <div class="detail-label">Rumination</div>
+              <div class="detail-value"><%= @state.ruminating_frequency.humanize %></div>
+            </div>
+          <% end %>
+
+          <% if @state.sleep_quality.present? %>
+            <div class="detail-item">
+              <div class="detail-label">Qualité du sommeil</div>
+              <div class="detail-value"><%= @state.sleep_quality.humanize %></div>
+            </div>
+          <% end %>
+
+          <% if @state.support_level.present? %>
+            <div class="detail-item">
+              <div class="detail-label">Niveau de soutien</div>
+              <div class="detail-value"><%= @state.support_level.humanize %></div>
+            </div>
+          <% end %>
+
+          <% if @state.drugs.present? %>
+            <div class="detail-item">
+              <div class="detail-label">Consommation</div>
+              <div class="detail-value"><%= @state.drugs %></div>
+            </div>
+          <% end %>
         </div>
-
-        <% if @state.ruminating_frequency.present? %>
-          <div class="detail-item">
-            <div class="detail-label">Rumination</div>
-            <div class="detail-value"><%= @state.ruminating_frequency.humanize %></div>
-          </div>
-        <% end %>
-
-        <% if @state.sleep_quality.present? %>
-          <div class="detail-item">
-            <div class="detail-label">Qualité du sommeil</div>
-            <div class="detail-value"><%= @state.sleep_quality.humanize %></div>
-          </div>
-        <% end %>
-
-        <% if @state.support_level.present? %>
-          <div class="detail-item">
-            <div class="detail-label">Niveau de soutien</div>
-            <div class="detail-value"><%= @state.support_level.humanize %></div>
-          </div>
-        <% end %>
-
-        <% if @state.drugs.present? %>
-          <div class="detail-item">
-            <div class="detail-label">Consommation</div>
-            <div class="detail-value"><%= @state.drugs %></div>
-          </div>
-        <% end %>
       </div>
-    </div>
+    <% end %>
 
+    <%# Changements d'habitudes %>
     <% if @state.habits_changed.present? %>
       <div class="detail-section">
         <div class="section-title">Changements d'habitudes</div>
         <p><%= @state.habits_changed %></p>
+      </div>
+    <% end %>
+
+    <%# Archétype utilisateur (si disponible) %>
+    <% if @state.user.archetype.present? %>
+      <div class="detail-section archetype-section">
+        <div class="section-title">
+          <i class="fas fa-user-circle"></i>
+          Ton profil relationnel
+        </div>
+        <div class="archetype-badge">
+          <%= @state.user.archetype.archetype_name %>
+        </div>
       </div>
     <% end %>
   </div>

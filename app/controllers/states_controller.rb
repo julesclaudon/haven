@@ -24,6 +24,18 @@ class StatesController < ApplicationController
 
   def show
     @after_close = params[:after_close].present?
+
+    # Calculer la progression par rapport au state précédent
+    if @state.analysis&.score.present?
+      previous_state = current_user.states
+                                   .joins(:analysis)
+                                   .where("states.created_at < ?", @state.created_at)
+                                   .order(created_at: :desc)
+                                   .first
+      previous_score = previous_state&.analysis&.score || 0
+      @score_diff = @state.analysis.score - previous_score
+    end
+
     render layout: "iframe" if params[:iframe]
   end
 

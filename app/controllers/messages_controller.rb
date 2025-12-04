@@ -1,30 +1,19 @@
 class MessagesController < ApplicationController
+  include HavenPromptsHelper
+
   before_action :authenticate_user!
   before_action :set_chat
 
-  SYSTEM_PROMPT = <<~PROMPT
-    Tu es Haven, un compagnon bienveillant spécialisé dans l'accompagnement des personnes traversant une rupture amoureuse.
-    Réponds avec empathie et compréhension. Pose des questions ouvertes pour mieux comprendre l'état émotionnel de l'utilisateur.
-
-    Retourne UNIQUEMENT un JSON valide avec ces clés :
-    {
-      "message": "Ta réponse empathique ici",
-      "emotion_label": "l'émotion détectée (tristesse, colère, confusion, espoir, etc.)",
-      "pain_level": un entier entre 1 et 10,
-      "grief_stage": "denial|anger|bargaining|depression|acceptance",
-      "detected": true ou false si tu as pu analyser l'état émotionnel
-    }
-  PROMPT
-
   def create
     return redirect_to @chat unless valid_message_params?
+    return redirect_to @chat if @chat.closed?
 
     user_content = params[:message][:content]
 
     # Créer le message utilisateur
     @chat.messages.create!(role: 'user', content: user_content)
 
-    # Appeler l'IA avec l'historique
+    # Appeler l'IA avec le mini-prompt
     process_ai_response(user_content)
 
     redirect_to @chat
@@ -40,23 +29,20 @@ class MessagesController < ApplicationController
     params[:message].present? && params[:message][:content].present?
   end
 
-  def message_params
-    params.require(:message).permit(:content)
-  end
-
   def process_ai_response(user_content)
     ruby_llm_chat = RubyLLM.chat
     build_conversation_history(ruby_llm_chat)
 
-    response = ruby_llm_chat.with_instructions(SYSTEM_PROMPT).ask(user_content)
-    parsed = JSON.parse(response.content) rescue {}
+    response = ruby_llm_chat.with_instructions(mini_prompt).ask(user_content)
+    response_content = response.content
 
-    if parsed["detected"]
-      @chat.messages.create!(role: "assistant", content: parsed["message"])
-      create_user_state(parsed, user_content)
-    else
-      @chat.messages.create!(role: "assistant", content: response.content)
+    # Gestion de l'urgence
+    if response_content.include?("[URGENCE]")
+      handle_emergency_response
+      return
     end
+
+    @chat.messages.create!(role: "assistant", content: response_content)
   end
 
   def build_conversation_history(ruby_llm_chat)
@@ -65,42 +51,11 @@ class MessagesController < ApplicationController
     end
   end
 
-  def create_user_state(parsed, user_content)
-    grief_stage = find_grief_stage(parsed["grief_stage"])
-    return unless grief_stage
-
-    pain_level = parsed["pain_level"].to_i.clamp(0, 10) rescue 5
-
-    current_user.states.create(
-      chat: @chat,
-      grief_stage: grief_stage,
-      pain_level: pain_level,
-      emotion_label: parsed["emotion_label"],
-      raw_input: user_content,
-      time_of_day: current_time_of_day,
-      trigger_source: 'autre'
-    )
-  end
-
-  def find_grief_stage(stage_key)
-    stage_mapping = {
-      'denial' => 'Déni',
-      'anger' => 'Colère',
-      'bargaining' => 'Marchandage',
-      'depression' => 'Dépression',
-      'acceptance' => 'Acceptation'
-    }
-    stage_name = stage_mapping[stage_key] || 'Déni'
-    GriefStage.find_by(name: stage_name) || GriefStage.first
-  end
-
-  def current_time_of_day
-    hour = Time.current.hour
-    case hour
-    when 5..11 then 'matin'
-    when 12..17 then 'après-midi'
-    when 18..21 then 'soir'
-    else 'nuit'
-    end
+  def handle_emergency_response
+    emergency_message = "Je sens que tu traverses un moment vraiment difficile. " \
+                        "Si tu as des pensées sombres, je t'encourage à appeler le 3114 " \
+                        "(numéro national de prévention du suicide). " \
+                        "Tu n'es pas seul, et il y a des gens formés pour t'écouter."
+    @chat.messages.create!(role: "assistant", content: emergency_message)
   end
 end
