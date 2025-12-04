@@ -111,65 +111,67 @@
       </div>
     <% end %>
 
-    <%# Grille de détails - seulement si au moins un élément existe %>
-    <% details_present = @state.trigger_source.present? ||
-                         @state.ex_contact_frequency.present? ||
-                         !@state.considered_reunion.nil? ||
-                         @state.ruminating_frequency.present? ||
-                         @state.sleep_quality.present? ||
-                         @state.support_level.present? ||
-                         @state.drugs.present? %>
+    <%# Grille de détails - seulement si au moins un élément pertinent existe %>
+    <% has_trigger = relevant_value?(@state.trigger_source) %>
+    <% has_ex_contact = relevant_value?(@state.ex_contact_frequency) %>
+    <% has_reunion = !@state.considered_reunion.nil? %>
+    <% has_ruminating = relevant_value?(@state.ruminating_frequency) %>
+    <% has_sleep = relevant_value?(@state.sleep_quality) %>
+    <% has_support = relevant_value?(@state.support_level) %>
+    <% has_drugs = relevant_value?(@state.drugs) && @state.drugs != "aucun" %>
+
+    <% details_present = has_trigger || has_ex_contact || has_reunion || has_ruminating || has_sleep || has_support || has_drugs %>
 
     <% if details_present %>
       <div class="detail-section">
         <div class="section-title">Détails</div>
         <div class="details-grid">
-          <% if @state.trigger_source.present? %>
+          <% if has_trigger %>
             <div class="detail-item">
               <div class="detail-label">Déclencheur</div>
               <div class="detail-value"><%= @state.trigger_source.humanize %></div>
             </div>
           <% end %>
 
-          <% if @state.ex_contact_frequency.present? %>
+          <% if has_ex_contact %>
             <div class="detail-item">
               <div class="detail-label">Contact avec l'ex</div>
               <div class="detail-value"><%= @state.ex_contact_frequency.humanize %></div>
             </div>
           <% end %>
 
-          <% unless @state.considered_reunion.nil? %>
+          <% if has_reunion %>
             <div class="detail-item">
               <div class="detail-label">Réconciliation envisagée</div>
               <div class="detail-value"><%= @state.considered_reunion ? "Oui" : "Non" %></div>
             </div>
           <% end %>
 
-          <% if @state.ruminating_frequency.present? %>
+          <% if has_ruminating %>
             <div class="detail-item">
               <div class="detail-label">Rumination</div>
               <div class="detail-value"><%= @state.ruminating_frequency.humanize %></div>
             </div>
           <% end %>
 
-          <% if @state.sleep_quality.present? %>
+          <% if has_sleep %>
             <div class="detail-item">
               <div class="detail-label">Qualité du sommeil</div>
               <div class="detail-value"><%= @state.sleep_quality.humanize %></div>
             </div>
           <% end %>
 
-          <% if @state.support_level.present? %>
+          <% if has_support %>
             <div class="detail-item">
               <div class="detail-label">Niveau de soutien</div>
               <div class="detail-value"><%= @state.support_level.humanize %></div>
             </div>
           <% end %>
 
-          <% if @state.drugs.present? %>
+          <% if has_drugs %>
             <div class="detail-item">
               <div class="detail-label">Consommation</div>
-              <div class="detail-value"><%= @state.drugs %></div>
+              <div class="detail-value"><%= @state.drugs.humanize %></div>
             </div>
           <% end %>
         </div>

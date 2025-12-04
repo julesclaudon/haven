@@ -65,18 +65,18 @@
 
   <!-- Modal de confirmation -->
   <div class="confirm-modal" id="confirm-modal" data-chat-target="confirmModal">
-  <div class="confirm-modal-content">
-    <div class="confirm-modal-icon">
-      <i class="fa-solid fa-check-circle"></i>
-    </div>
-    <h2>Terminer cette conversation ?</h2>
-    <p>Tu pourras toujours la consulter, mais tu ne pourras plus envoyer de messages.</p>
-    <div class="confirm-modal-actions">
-      <button type="button" class="btn-cancel" data-action="click->chat#cancelClose">Annuler</button>
-      <button type="button" class="btn-confirm" data-action="click->chat#executeClose">Terminer</button>
+    <div class="confirm-modal-content">
+      <div class="confirm-modal-icon" data-chat-target="modalIcon">
+        <i class="fa-solid fa-check-circle"></i>
+      </div>
+      <h2 data-chat-target="modalTitle">Terminer cette conversation ?</h2>
+      <p data-chat-target="modalText">Tu pourras toujours la consulter, mais tu ne pourras plus envoyer de messages.</p>
+      <div class="confirm-modal-actions">
+        <button type="button" class="btn-cancel" data-action="click->chat#cancelClose">Annuler</button>
+        <button type="button" class="btn-confirm" data-action="click->chat#executeClose">Confirmer</button>
+      </div>
     </div>
   </div>
-</div>
 </div>
 
 <style>
