@@ -1,7 +1,30 @@
 <div class="dashboard-container">
-  <div class="dashboard-header">
-    <h1 class="dashboard-title">Mon évolution</h1>
-    <p class="dashboard-subtitle">Bonjour <%= current_user.username || current_user.email.split('@').first %></p>
+  <!-- Logo -->
+  <div class="dashboard-logo">
+    <h1 class="haven-logo">HAVEN</h1>
+  </div>
+
+  <!-- Greeting -->
+  <div class="dashboard-greeting">
+    <h2>Bonjour <%= current_user.username || current_user.email.split('@').first %></h2>
+  </div>
+
+  <!-- 3 Stats Cards -->
+  <div class="dashboard-cards">
+    <div class="stat-card">
+      <div class="stat-value"><%= @days_since_breakup %></div>
+      <div class="stat-label">jours depuis la rupture</div>
+    </div>
+
+    <div class="stat-card sentiment-card">
+      <div class="stat-sentiment"><%= @latest_state&.main_sentiment || "Pas encore d'échange" %></div>
+      <div class="stat-label">Comment tu te sentais lors de notre dernier échange</div>
+    </div>
+
+    <div class="stat-card">
+      <div class="stat-value"><%= @total_chats %></div>
+      <div class="stat-label">échanges</div>
+    </div>
   </div>
 
   <!-- Frise des 5 étapes du deuil -->
@@ -60,17 +83,56 @@
     </div>
   </div>
 
-  <!-- Bouton Parler -->
-  <div class="dashboard-action">
-    <%= link_to new_chat_path, class: "btn-parler" do %>
-      <i class="fa-solid fa-comment"></i>
-      Parler
+  <!-- Chat Input Bar -->
+  <div class="chat-input-container">
+    <%= form_with url: chats_path, method: :post, class: "chat-input-form" do |f| %>
+      <div class="chat-input-wrapper">
+        <%= f.text_field :message, placeholder: "Démarrer un échange...", class: "chat-input-field", autocomplete: "off" %>
+        <button type="button" class="chat-mic-btn" id="mic-btn">
+          <i class="fa-solid fa-microphone"></i>
+        </button>
+        <button type="submit" class="chat-send-btn">
+          <i class="fa-solid fa-paper-plane"></i>
+        </button>
+      </div>
     <% end %>
   </div>
 </div>
 
 <script>
 document.addEventListener('turbo:load', function() {
+  // Microphone
+  const micBtn = document.getElementById('mic-btn');
+  const inputField = document.querySelector('.chat-input-field');
+
+  if (micBtn && 'webkitSpeechRecognition' in window) {
+    const recognition = new webkitSpeechRecognition();
+    recognition.lang = 'fr-FR';
+    recognition.continuous = false;
+    recognition.interimResults = false;
+
+    micBtn.addEventListener('click', function() {
+      micBtn.classList.add('listening');
+      recognition.start();
+    });
+
+    recognition.onresult = function(event) {
+      const transcript = event.results[0][0].transcript;
+      inputField.value = transcript;
+      micBtn.classList.remove('listening');
+    };
+
+    recognition.onerror = function() {
+      micBtn.classList.remove('listening');
+    };
+
+    recognition.onend = function() {
+      micBtn.classList.remove('listening');
+    };
+  } else if (micBtn) {
+    micBtn.style.display = 'none';
+  }
+
   // Modal des étapes du deuil
   const stageItems = document.querySelectorAll('.grief-stage-item');
   const griefModal = document.getElementById('grief-modal');

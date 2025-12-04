@@ -3,61 +3,86 @@
   display: flex;
   flex-direction: column;
   align-items: center;
-  justify-content: center;
   min-height: calc(100vh - 70px);
-  padding: 20px;
+  padding: 30px 20px;
+  padding-bottom: 120px;
+}
+
+// Logo
+.dashboard-logo {
+  margin-bottom: 20px;
+
+  .haven-logo {
+    font-family: $headings-font-family;
+    font-size: 2.5rem;
+    font-weight: 700;
+    letter-spacing: 8px;
+    color: $haven-primary;
+    margin: 0;
+  }
+}
+
+// Greeting
+.dashboard-greeting {
+  margin-bottom: 30px;
   text-align: center;
-  padding-bottom: 100px;
+
+  h2 {
+    font-size: 1.5rem;
+    font-weight: 600;
+    color: $haven-dark;
+    margin: 0;
+  }
 }
 
-.dashboard-header {
+// Stats Cards
+.dashboard-cards {
+  display: flex;
+  gap: 15px;
+  width: 100%;
+  max-width: 900px;
   margin-bottom: 40px;
+
+  @media (max-width: 768px) {
+    flex-direction: column;
+  }
 }
 
-.dashboard-title {
-  font-size: 24px;
-  font-weight: 700;
-  letter-spacing: 2px;
-  color: $haven-primary;
-  margin: 0;
-}
-
-.dashboard-subtitle {
-  color: $gray;
-  font-size: 1rem;
-  margin-top: 0.5rem;
-}
-
-.dashboard-content {
+.stat-card {
+  flex: 1;
+  background: white;
+  border-radius: 16px;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+  padding: 1.5rem;
+  text-align: center;
   display: flex;
   flex-direction: column;
-  align-items: center;
-}
+  justify-content: center;
+  min-height: 120px;
 
-.dashboard-question {
-  font-size: 28px;
-  font-weight: 700;
-  color: #000;
-  margin-bottom: 40px;
-  line-height: 1.3;
-}
+  .stat-value {
+    font-size: 2.5rem;
+    font-weight: 700;
+    color: $haven-primary;
+    line-height: 1;
+    margin-bottom: 0.5rem;
+  }
 
-.btn-open-up {
-  display: inline-block;
-  background: #000;
-  color: #fff;
-  padding: 14px 32px;
-  border-radius: 25px;
-  font-size: 14px;
-  font-weight: 600;
-  letter-spacing: 1px;
-  text-decoration: none;
-  transition: all 0.2s ease;
+  .stat-label {
+    font-size: 0.85rem;
+    color: $gray;
+    line-height: 1.3;
+  }
 
-  &:hover {
-    background: #333;
-    color: #fff;
-    transform: scale(1.02);
+  &.sentiment-card {
+    .stat-sentiment {
+      font-size: 1rem;
+      font-weight: 500;
+      color: $haven-dark;
+      line-height: 1.4;
+      margin-bottom: 0.75rem;
+      font-style: italic;
+    }
   }
 }
 
@@ -69,7 +94,7 @@
   border-radius: 16px;
   box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
   padding: 2rem 2.5rem;
-  margin-bottom: 2rem;
+  margin-bottom: 30px;
 }
 
 .grief-timeline {
@@ -174,91 +199,96 @@
   transition: color 0.2s ease;
 }
 
-// Modal grief stage
-.grief-modal {
-  position: fixed;
-  top: 0;
-  left: 0;
+// Chat Input
+.chat-input-container {
   width: 100%;
-  height: 100%;
-  background: rgba(0, 0, 0, 0.5);
+  max-width: 600px;
+  margin-top: auto;
+}
+
+.chat-input-form {
+  width: 100%;
+}
+
+.chat-input-wrapper {
+  display: flex;
+  align-items: center;
+  background: white;
+  border-radius: 30px;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+  padding: 8px 8px 8px 20px;
+  gap: 8px;
+}
+
+.chat-input-field {
+  flex: 1;
+  border: none;
+  outline: none;
+  font-size: 1rem;
+  color: $haven-dark;
+  background: transparent;
+
+  &::placeholder {
+    color: $gray;
+  }
+}
+
+.chat-mic-btn,
+.chat-send-btn {
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  border: none;
   display: flex;
   align-items: center;
   justify-content: center;
-  z-index: 9999;
-  padding: 1rem;
-}
-
-.grief-modal-content {
-  background: white;
-  border-radius: 16px;
-  padding: 2rem;
-  max-width: 400px;
-  width: 100%;
-  position: relative;
-  box-shadow: 0 10px 40px rgba(0, 0, 0, 0.2);
-  text-align: left;
-}
-
-.grief-modal-close {
-  position: absolute;
-  top: 10px;
-  right: 15px;
-  background: none;
-  border: none;
-  font-size: 1.5rem;
   cursor: pointer;
-  color: $gray;
+  transition: all 0.2s ease;
 
-  &:hover {
-    color: $haven-dark;
+  i {
+    font-size: 1rem;
   }
 }
 
-.grief-modal-title {
+.chat-mic-btn {
+  background: $haven-light;
   color: $haven-primary;
-  margin-bottom: 1rem;
-  font-size: 1.25rem;
+
+  &:hover {
+    background: darken($haven-light, 5%);
+  }
+
+  &.listening {
+    background: $haven-primary;
+    color: white;
+    animation: pulse 1.5s infinite;
+  }
 }
 
-.grief-modal-desc {
-  color: $haven-dark;
-  line-height: 1.6;
-  margin: 0;
-}
-
-// Bouton Parler
-.dashboard-action {
-  margin-top: 1rem;
-}
-
-.btn-parler {
-  display: inline-flex;
-  align-items: center;
-  gap: 0.75rem;
+.chat-send-btn {
   background: $haven-primary;
   color: white;
-  padding: 1rem 2.5rem;
-  border-radius: 30px;
-  font-size: 1.1rem;
-  font-weight: 600;
-  text-decoration: none;
-  transition: all 0.2s ease;
-  box-shadow: 0 4px 15px rgba($haven-primary, 0.3);
 
   &:hover {
     background: darken($haven-primary, 8%);
-    color: white;
-    transform: translateY(-2px);
-    box-shadow: 0 6px 20px rgba($haven-primary, 0.4);
-  }
-
-  i {
-    font-size: 1.2rem;
+    transform: scale(1.05);
   }
 }
 
-// Modal analyse
+@keyframes pulse {
+  0% {
+    box-shadow: 0 0 0 0 rgba($haven-primary, 0.4);
+  }
+  70% {
+    box-shadow: 0 0 0 10px rgba($haven-primary, 0);
+  }
+  100% {
+    box-shadow: 0 0 0 0 rgba($haven-primary, 0);
+  }
+}
+
+// Keep modal styles for other pages that might use them
+.grief-modal,
 .analysis-modal {
   position: fixed;
   top: 0;
@@ -273,17 +303,19 @@
   padding: 1rem;
 }
 
+.grief-modal-content,
 .analysis-modal-content {
   background: white;
   border-radius: 16px;
   padding: 2rem;
-  max-width: 450px;
+  max-width: 400px;
   width: 100%;
   position: relative;
   box-shadow: 0 10px 40px rgba(0, 0, 0, 0.2);
   text-align: left;
 }
 
+.grief-modal-close,
 .analysis-modal-close {
   position: absolute;
   top: 10px;
@@ -297,6 +329,19 @@
   &:hover {
     color: $haven-dark;
   }
+}
+
+.grief-modal-title,
+.analysis-modal-title {
+  color: $haven-primary;
+  margin-bottom: 1rem;
+  font-size: 1.25rem;
+}
+
+.grief-modal-desc {
+  color: $haven-dark;
+  line-height: 1.6;
+  margin: 0;
 }
 
 .analysis-modal-header {
@@ -318,12 +363,6 @@
 .analysis-date {
   color: $gray;
   font-size: 0.9rem;
-}
-
-.analysis-modal-title {
-  color: $haven-primary;
-  margin-bottom: 1rem;
-  font-size: 1.1rem;
 }
 
 .analysis-modal-resume {

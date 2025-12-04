@@ -9,5 +9,15 @@ class DashboardsController < ApplicationController
     @latest_state = @states.first
     @latest_analysis = @latest_state&.analysis
     @current_score = @latest_analysis&.score || 0
+
+    # Days since breakup
+    @days_since_breakup = if @initial_quiz&.relation_end_date
+                            (Date.current - @initial_quiz.relation_end_date.to_date).to_i
+                          else
+                            0
+                          end
+
+    # Total chats count
+    @total_chats = current_user.chats.count
   end
 end
