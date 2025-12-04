@@ -130,6 +130,131 @@
   }
 }
 
+// Section Insights
+.insights-section {
+  margin-bottom: 2rem;
+}
+
+.insights-title {
+  color: $haven-primary;
+  font-family: $headings-font-family;
+  font-weight: 700;
+  font-size: 1.25rem;
+  margin: 0 0 1rem;
+}
+
+.insights-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 1rem;
+}
+
+.insight-card {
+  background: white;
+  border-radius: 16px;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+  padding: 1.25rem;
+  display: flex;
+  gap: 1rem;
+  border-left: 4px solid $gray;
+  transition: all 0.2s ease;
+
+  &:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 25px rgba(0, 0, 0, 0.12);
+  }
+
+  &.positive {
+    border-left-color: $pain-low;
+
+    .insight-icon {
+      background: rgba($pain-low, 0.15);
+      color: darken($pain-low, 15%);
+    }
+
+    .insight-value {
+      color: darken($pain-low, 15%);
+    }
+  }
+
+  &.negative {
+    border-left-color: $pain-high;
+
+    .insight-icon {
+      background: rgba($pain-high, 0.15);
+      color: $pain-high;
+    }
+
+    .insight-value {
+      color: $pain-high;
+    }
+  }
+
+  &.neutral {
+    border-left-color: $haven-secondary;
+
+    .insight-icon {
+      background: rgba($haven-secondary, 0.15);
+      color: $haven-secondary;
+    }
+
+    .insight-value {
+      color: $haven-primary;
+    }
+  }
+}
+
+.insight-icon {
+  width: 50px;
+  height: 50px;
+  border-radius: 12px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+
+  i {
+    font-size: 1.25rem;
+  }
+}
+
+.insight-content {
+  flex: 1;
+  min-width: 0;
+}
+
+.insight-value {
+  font-size: 1.5rem;
+  font-weight: 700;
+  line-height: 1.2;
+  margin-bottom: 0.25rem;
+}
+
+.insight-label {
+  color: $haven-dark;
+  font-weight: 500;
+  font-size: 0.9rem;
+  margin-bottom: 0.35rem;
+}
+
+.insight-detail {
+  color: $gray;
+  font-size: 0.8rem;
+  line-height: 1.4;
+}
+
+.trigger-tag,
+.time-tag {
+  display: inline-block;
+  background: $haven-light;
+  color: $haven-dark;
+  padding: 0.15rem 0.5rem;
+  border-radius: 10px;
+  font-size: 0.75rem;
+  margin-right: 0.35rem;
+  margin-top: 0.25rem;
+}
+
 // Graphique des émotions
 .emotions-chart-card {
   background: white;
