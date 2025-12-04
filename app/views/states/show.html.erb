@@ -1,7 +1,9 @@
 <div class="state-show">
   <div class="state-show-header">
-    <%= link_to states_path, class: "back-link" do %>
-      <i class="fas fa-arrow-left"></i>
+    <% unless params[:iframe] %>
+      <%= link_to states_path, class: "back-link" do %>
+        <i class="fas fa-arrow-left"></i>
+      <% end %>
     <% end %>
     <div class="header-content">
       <h1>Mon état</h1>
@@ -112,12 +114,14 @@
     <% end %>
   </div>
 
-  <div class="quiz-actions mt-4">
-    <%= link_to states_path, class: "btn btn-secondary" do %>
-      <i class="fas fa-list"></i> Retour à l'historique
-    <% end %>
-    <%= link_to new_state_path, class: "btn btn-primary" do %>
-      <i class="fas fa-plus"></i> Nouvel état
-    <% end %>
-  </div>
+  <% unless params[:iframe] %>
+    <div class="quiz-actions mt-4">
+      <%= link_to states_path, class: "btn btn-secondary" do %>
+        <i class="fas fa-list"></i> Retour à l'historique
+      <% end %>
+      <%= link_to new_state_path, class: "btn btn-primary" do %>
+        <i class="fas fa-plus"></i> Nouvel état
+      <% end %>
+    </div>
+  <% end %>
 </div>

@@ -23,6 +23,7 @@ class StatesController < ApplicationController
   end
 
   def show
+    render layout: "iframe" if params[:iframe]
   end
 
   private
