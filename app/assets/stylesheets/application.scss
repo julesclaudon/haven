@@ -7,6 +7,9 @@
 @import "bootstrap";
 @import "font-awesome";
 
+// Theme system (doit être après Bootstrap)
+@import "config/theme";
+
 // Your CSS partials
 @import "components/index";
 @import "pages/index";

@@ -1,4 +1,4 @@
-// Styles pour Analyses - Stoic Theme
+// Styles pour Analyses - Stoic Theme (avec CSS Custom Properties)
 
 .analyse-container {
   max-width: 900px;
@@ -11,7 +11,7 @@
   margin-bottom: 2rem;
 
   h1 {
-    color: $stoic-text-primary;
+    color: var(--stoic-text-primary);
     font-family: $headings-font-family;
     font-weight: 700;
     margin: 0;
@@ -31,9 +31,9 @@
 }
 
 .archetype-image-card {
-  background: $stoic-surface;
+  background: var(--stoic-surface);
   border-radius: 12px;
-  border: 1px solid $stoic-border;
+  border: 1px solid var(--stoic-border);
   padding: 1.5rem;
   display: flex;
   flex-direction: column;
@@ -48,8 +48,8 @@
   border-radius: 50%;
   overflow: hidden;
   margin-bottom: 1rem;
-  background: $stoic-elevated;
-  border: 2px solid $stoic-border;
+  background: var(--stoic-elevated);
+  border: 2px solid var(--stoic-border);
   display: flex;
   align-items: center;
   justify-content: center;
@@ -62,21 +62,21 @@
 
   .archetype-icon {
     font-size: 4rem;
-    color: $stoic-accent;
+    color: var(--stoic-accent);
   }
 }
 
 .archetype-image-card .archetype-name {
-  color: $stoic-text-primary;
+  color: var(--stoic-text-primary);
   font-size: 1.25rem;
   font-weight: 700;
   margin: 0;
 }
 
 .archetype-desc-card {
-  background: $stoic-surface;
+  background: var(--stoic-surface);
   border-radius: 12px;
-  border: 1px solid $stoic-border;
+  border: 1px solid var(--stoic-border);
   padding: 1.5rem;
   display: flex;
   flex-direction: column;
@@ -87,7 +87,7 @@
   align-items: center;
   gap: 0.75rem;
   margin-bottom: 1rem;
-  color: $stoic-accent-bronze;
+  color: var(--stoic-accent-bronze);
   font-weight: 600;
 
   i {
@@ -96,7 +96,7 @@
 }
 
 .archetype-description {
-  color: $stoic-text-secondary;
+  color: var(--stoic-text-secondary);
   line-height: 1.7;
   margin: 0;
   flex: 1;
@@ -108,25 +108,25 @@
 }
 
 .archetype-empty-card {
-  background: $stoic-surface;
+  background: var(--stoic-surface);
   border-radius: 12px;
-  border: 1px solid $stoic-border;
+  border: 1px solid var(--stoic-border);
   padding: 3rem;
   text-align: center;
 
   i {
     font-size: 3rem;
-    color: $stoic-text-muted;
+    color: var(--stoic-text-muted);
     margin-bottom: 1rem;
   }
 
   h3 {
-    color: $stoic-text-primary;
+    color: var(--stoic-text-primary);
     margin-bottom: 0.5rem;
   }
 
   p {
-    color: $stoic-text-secondary;
+    color: var(--stoic-text-secondary);
     margin: 0;
   }
 }
@@ -137,16 +137,16 @@
 }
 
 .archetype-locked-card {
-  background: $stoic-surface;
+  background: var(--stoic-surface);
   border-radius: 12px;
-  border: 1px solid $stoic-border;
+  border: 1px solid var(--stoic-border);
   padding: 2rem;
   text-align: center;
 
   .locked-icon {
     width: 80px;
     height: 80px;
-    background: $stoic-elevated;
+    background: var(--stoic-elevated);
     border-radius: 50%;
     display: flex;
     align-items: center;
@@ -155,18 +155,18 @@
 
     i {
       font-size: 2rem;
-      color: $stoic-text-muted;
+      color: var(--stoic-text-muted);
     }
   }
 
   h3 {
-    color: $stoic-text-primary;
+    color: var(--stoic-text-primary);
     font-size: 1.25rem;
     margin: 0 0 0.5rem;
   }
 
   .locked-subtitle {
-    color: $stoic-text-secondary;
+    color: var(--stoic-text-secondary);
     margin: 0 0 1.5rem;
   }
 }
@@ -187,17 +187,17 @@
     align-items: center;
     gap: 0.5rem;
     margin-bottom: 0.5rem;
-    color: $stoic-text-secondary;
+    color: var(--stoic-text-secondary);
     font-size: 0.85rem;
 
     i {
-      color: $stoic-accent-bronze;
+      color: var(--stoic-accent-bronze);
     }
   }
 
   .progress-bar-wrapper {
     height: 8px;
-    background: $stoic-border;
+    background: var(--stoic-border);
     border-radius: 4px;
     overflow: hidden;
     margin-bottom: 0.25rem;
@@ -205,13 +205,13 @@
 
   .progress-bar {
     height: 100%;
-    background: linear-gradient(90deg, $stoic-accent, $stoic-accent-bronze);
+    background: linear-gradient(90deg, var(--stoic-accent), var(--stoic-accent-bronze));
     border-radius: 4px;
     transition: width 0.5s ease;
   }
 
   .progress-text {
-    color: $stoic-text-primary;
+    color: var(--stoic-text-primary);
     font-size: 0.85rem;
     font-weight: 600;
     text-align: right;
@@ -219,21 +219,21 @@
 }
 
 .archetype-preview {
-  background: $stoic-elevated;
+  background: var(--stoic-elevated);
   border-radius: 8px;
   padding: 1rem 1.5rem;
   display: inline-flex;
   align-items: center;
   gap: 0.75rem;
-  color: $stoic-text-secondary;
+  color: var(--stoic-text-secondary);
   font-size: 0.9rem;
 
   i {
-    color: $stoic-accent;
+    color: var(--stoic-accent);
   }
 
   strong {
-    color: $stoic-accent;
+    color: var(--stoic-accent);
   }
 }
 
@@ -243,7 +243,7 @@
 }
 
 .insights-title {
-  color: $stoic-text-primary;
+  color: var(--stoic-text-primary);
   font-family: $headings-font-family;
   font-weight: 700;
   font-size: 1.25rem;
@@ -257,55 +257,55 @@
 }
 
 .insight-card {
-  background: $stoic-surface;
+  background: var(--stoic-surface);
   border-radius: 10px;
-  border: 1px solid $stoic-border;
+  border: 1px solid var(--stoic-border);
   padding: 1.25rem;
   display: flex;
   gap: 1rem;
-  border-left: 3px solid $stoic-text-muted;
+  border-left: 3px solid var(--stoic-text-muted);
   transition: all 0.2s ease;
 
   &:hover {
-    border-color: $stoic-accent;
+    border-color: var(--stoic-accent);
   }
 
   &.positive {
-    border-left-color: $pain-low;
+    border-left-color: var(--pain-low);
 
     .insight-icon {
-      background: rgba($pain-low, 0.1);
-      color: $pain-low;
+      background: rgba(127, 176, 105, 0.1);
+      color: var(--pain-low);
     }
 
     .insight-value {
-      color: $pain-low;
+      color: var(--pain-low);
     }
   }
 
   &.negative {
-    border-left-color: $pain-high;
+    border-left-color: var(--pain-high);
 
     .insight-icon {
-      background: rgba($pain-high, 0.1);
-      color: $pain-high;
+      background: rgba(224, 122, 107, 0.1);
+      color: var(--pain-high);
     }
 
     .insight-value {
-      color: $pain-high;
+      color: var(--pain-high);
     }
   }
 
   &.neutral {
-    border-left-color: $stoic-accent-bronze;
+    border-left-color: var(--stoic-accent-bronze);
 
     .insight-icon {
-      background: rgba($stoic-accent-bronze, 0.1);
-      color: $stoic-accent-bronze;
+      background: rgba(232, 192, 120, 0.1);
+      color: var(--stoic-accent-bronze);
     }
 
     .insight-value {
-      color: $stoic-text-primary;
+      color: var(--stoic-text-primary);
     }
   }
 }
@@ -337,14 +337,14 @@
 }
 
 .insight-label {
-  color: $stoic-text-primary;
+  color: var(--stoic-text-primary);
   font-weight: 500;
   font-size: 0.9rem;
   margin-bottom: 0.35rem;
 }
 
 .insight-detail {
-  color: $stoic-text-secondary;
+  color: var(--stoic-text-secondary);
   font-size: 0.8rem;
   line-height: 1.4;
 }
@@ -352,8 +352,8 @@
 .trigger-tag,
 .time-tag {
   display: inline-block;
-  background: $stoic-elevated;
-  color: $stoic-text-secondary;
+  background: var(--stoic-elevated);
+  color: var(--stoic-text-secondary);
   padding: 0.15rem 0.5rem;
   border-radius: 4px;
   font-size: 0.75rem;
@@ -363,22 +363,22 @@
 
 // Graphique des émotions
 .emotions-chart-card {
-  background: $stoic-surface;
+  background: var(--stoic-surface);
   border-radius: 12px;
-  border: 1px solid $stoic-border;
+  border: 1px solid var(--stoic-border);
   padding: 1.5rem;
   margin-bottom: 2rem;
 }
 
 .chart-title {
-  color: $stoic-text-primary;
+  color: var(--stoic-text-primary);
   font-size: 1.1rem;
   font-weight: 700;
   margin: 0 0 0.25rem;
 }
 
 .chart-subtitle {
-  color: $stoic-text-secondary;
+  color: var(--stoic-text-secondary);
   font-size: 0.85rem;
   margin: 0 0 1.5rem;
 }
@@ -397,7 +397,7 @@
 }
 
 .emotion-label {
-  color: $stoic-text-primary;
+  color: var(--stoic-text-primary);
   font-weight: 500;
   font-size: 0.9rem;
   text-align: right;
@@ -405,21 +405,21 @@
 
 .emotion-bar-wrapper {
   height: 20px;
-  background: $stoic-border;
+  background: var(--stoic-border);
   border-radius: 4px;
   overflow: hidden;
 }
 
 .emotion-bar {
   height: 100%;
-  background: $stoic-accent;
+  background: var(--stoic-accent);
   border-radius: 4px;
   transition: width 0.8s ease;
   min-width: 5%;
 }
 
 .emotion-percentage {
-  color: $stoic-text-primary;
+  color: var(--stoic-text-primary);
   font-weight: 700;
   font-size: 0.9rem;
 }
@@ -430,25 +430,25 @@
 
   i {
     font-size: 2.5rem;
-    color: $stoic-text-muted;
+    color: var(--stoic-text-muted);
     margin-bottom: 1rem;
   }
 
   p {
-    color: $stoic-text-secondary;
+    color: var(--stoic-text-secondary);
     margin: 0;
   }
 }
 
 // Historique des analyses
 .analyses-history-card {
-  background: $stoic-surface;
+  background: var(--stoic-surface);
   border-radius: 12px;
-  border: 1px solid $stoic-border;
+  border: 1px solid var(--stoic-border);
   padding: 1.5rem;
 
   h3 {
-    color: $stoic-text-primary;
+    color: var(--stoic-text-primary);
     font-size: 1.1rem;
     font-weight: 700;
     margin: 0 0 1rem;
@@ -462,7 +462,7 @@
 }
 
 .analysis-item {
-  border-bottom: 1px solid $stoic-border;
+  border-bottom: 1px solid var(--stoic-border);
 
   &:last-child {
     border-bottom: none;
@@ -482,12 +482,12 @@
     padding-left: 0.5rem;
 
     i {
-      color: $stoic-accent;
+      color: var(--stoic-accent);
     }
   }
 
   i {
-    color: $stoic-text-muted;
+    color: var(--stoic-text-muted);
     transition: color 0.2s ease;
   }
 }
@@ -499,8 +499,8 @@
 }
 
 .analysis-score {
-  background: $stoic-accent;
-  color: $stoic-text-primary;
+  background: var(--stoic-accent);
+  color: white;
   font-weight: 700;
   padding: 0.35rem 0.75rem;
   border-radius: 6px;
@@ -508,6 +508,6 @@
 }
 
 .analysis-date {
-  color: $stoic-text-secondary;
+  color: var(--stoic-text-secondary);
   font-size: 0.9rem;
 }

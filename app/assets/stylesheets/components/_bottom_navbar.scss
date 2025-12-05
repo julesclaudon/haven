@@ -1,11 +1,11 @@
-// Bottom Navigation Bar - Stoic Theme
+// Bottom Navigation Bar - Stoic Theme (avec CSS Custom Properties pour dark/light mode)
 .bottom-navbar {
   position: fixed;
   bottom: 0;
   left: 0;
   right: 0;
-  background: $stoic-surface;
-  border-top: 1px solid $stoic-border;
+  background: var(--stoic-surface);
+  border-top: 1px solid var(--stoic-border);
   display: flex;
   justify-content: space-around;
   align-items: center;
@@ -20,7 +20,7 @@
   align-items: center;
   justify-content: center;
   text-decoration: none;
-  color: $stoic-text-muted;
+  color: var(--stoic-text-muted);
   font-size: 10px;
   padding: 4px 12px;
   transition: color 0.2s ease;
@@ -36,7 +36,7 @@
 
   &:hover,
   &.active {
-    color: $stoic-text-primary;
+    color: var(--stoic-text-primary);
   }
 }
 
@@ -46,7 +46,7 @@
 
   i {
     font-size: 28px;
-    color: $stoic-accent;
+    color: var(--stoic-accent);
   }
 
   span {
@@ -55,14 +55,14 @@
 
   &:hover i,
   &.active i {
-    color: $stoic-accent-hover;
+    color: var(--stoic-accent-hover);
   }
 }
 
 // Body padding when bottom navbar is present
 body.has-bottom-navbar {
   padding-bottom: 70px;
-  background: $stoic-bg;
+  background: var(--stoic-bg);
 
   .main-content {
     min-height: calc(100vh - 70px);

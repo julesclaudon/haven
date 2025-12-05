@@ -1,4 +1,4 @@
-// Styles pour Chats (Nos échanges) - Stoic Theme
+// Styles pour Chats (Nos échanges) - Stoic Theme (avec CSS Custom Properties)
 
 .chats-container {
   max-width: 900px;
@@ -11,7 +11,7 @@
   margin-bottom: 2rem;
 
   h1 {
-    color: $stoic-text-primary;
+    color: var(--stoic-text-primary);
     font-family: $headings-font-family;
     font-weight: 700;
     margin: 0;
@@ -19,9 +19,9 @@
 }
 
 .chats-content {
-  background: $stoic-surface;
+  background: var(--stoic-surface);
   border-radius: 12px;
-  border: 1px solid $stoic-border;
+  border: 1px solid var(--stoic-border);
   overflow: hidden;
 }
 
@@ -36,7 +36,7 @@
   align-items: center;
   justify-content: space-between;
   padding: 1rem 1.5rem;
-  border-bottom: 1px solid $stoic-border;
+  border-bottom: 1px solid var(--stoic-border);
   transition: background 0.2s ease;
 
   &:last-child {
@@ -44,7 +44,7 @@
   }
 
   &:hover {
-    background: $stoic-elevated;
+    background: var(--stoic-elevated);
   }
 }
 
@@ -61,7 +61,7 @@
 
   i {
     font-size: 1.5rem;
-    color: $stoic-accent;
+    color: var(--stoic-accent);
   }
 }
 
@@ -79,12 +79,12 @@
 
   .chat-date {
     font-weight: 500;
-    color: $stoic-text-primary;
+    color: var(--stoic-text-primary);
   }
 
   .chat-badge-closed {
-    background: rgba($pain-low, 0.15);
-    color: $pain-low;
+    background: rgba(127, 176, 105, 0.15);
+    color: var(--pain-low);
     padding: 0.15rem 0.5rem;
     border-radius: 4px;
     font-size: 0.7rem;
@@ -93,27 +93,31 @@
 
   .chat-title {
     font-size: 0.95rem;
-    color: $stoic-text-primary;
+    color: var(--stoic-text-primary);
     font-weight: 500;
   }
 
   .chat-stage {
     font-size: 0.85rem;
-    color: $stoic-text-secondary;
+    color: var(--stoic-text-secondary);
   }
 }
 
 .chat-item.chat-closed {
-  background: rgba($stoic-elevated, 0.5);
+  background: rgba(46, 42, 39, 0.3);
 
   .chat-link i {
-    color: $pain-low;
+    color: var(--pain-low);
   }
 }
 
+[data-theme="light"] .chat-item.chat-closed {
+  background: rgba(237, 231, 220, 0.5);
+}
+
 .btn-state-popup {
-  background: $stoic-elevated;
-  border: 1px solid $stoic-border;
+  background: var(--stoic-elevated);
+  border: 1px solid var(--stoic-border);
   width: 40px;
   height: 40px;
   border-radius: 8px;
@@ -124,16 +128,16 @@
   transition: all 0.2s ease;
 
   i {
-    color: $stoic-text-secondary;
+    color: var(--stoic-text-secondary);
     font-size: 1rem;
   }
 
   &:hover {
-    background: $stoic-accent;
-    border-color: $stoic-accent;
+    background: var(--stoic-accent);
+    border-color: var(--stoic-accent);
 
     i {
-      color: $stoic-text-primary;
+      color: white;
     }
   }
 }
@@ -145,17 +149,17 @@
 
   i {
     font-size: 3rem;
-    color: $stoic-text-muted;
+    color: var(--stoic-text-muted);
     margin-bottom: 1rem;
   }
 
   p {
-    color: $stoic-text-secondary;
+    color: var(--stoic-text-secondary);
     margin: 0.5rem 0;
 
     &:first-of-type {
       font-weight: 600;
-      color: $stoic-text-primary;
+      color: var(--stoic-text-primary);
     }
   }
 }
@@ -167,7 +171,7 @@
   left: 0;
   width: 100%;
   height: 100%;
-  background: rgba($stoic-bg, 0.85);
+  background: rgba(26, 24, 22, 0.85);
   display: flex;
   align-items: center;
   justify-content: center;
@@ -176,10 +180,14 @@
   backdrop-filter: blur(4px);
 }
 
+[data-theme="light"] .state-modal {
+  background: rgba(245, 240, 232, 0.85);
+}
+
 .state-modal-content {
-  background: $stoic-surface;
+  background: var(--stoic-surface);
   border-radius: 12px;
-  border: 1px solid $stoic-border;
+  border: 1px solid var(--stoic-border);
   position: relative;
   width: 100%;
   max-width: 700px;
@@ -195,7 +203,7 @@
     height: 80vh;
     border: none;
     border-radius: 0 0 12px 12px;
-    background: $stoic-bg;
+    background: var(--stoic-bg);
   }
 }
 
@@ -203,8 +211,8 @@
   position: absolute;
   top: 10px;
   right: 15px;
-  background: $stoic-elevated;
-  border: 1px solid $stoic-border;
+  background: var(--stoic-elevated);
+  border: 1px solid var(--stoic-border);
   width: 35px;
   height: 35px;
   border-radius: 8px;
@@ -215,11 +223,11 @@
   justify-content: center;
   z-index: 10;
   transition: all 0.2s ease;
-  color: $stoic-text-secondary;
+  color: var(--stoic-text-secondary);
 
   &:hover {
-    background: $stoic-accent;
-    border-color: $stoic-accent;
-    color: $stoic-text-primary;
+    background: var(--stoic-accent);
+    border-color: var(--stoic-accent);
+    color: white;
   }
 }
