@@ -69,25 +69,21 @@ class ChatsController < ApplicationController
       { role: 'user', content: user_content }
     ]
 
-    uri = URI('https://api.openai.com/v1/chat/completions')
-    request = Net::HTTP::Post.new(uri)
-    request['Content-Type'] = 'application/json'
-    request['Authorization'] = "Bearer #{ENV['OPENAI_API_KEY']}"
+    response = HTTParty.post(
+      'https://api.openai.com/v1/chat/completions',
+      headers: {
+        'Content-Type' => 'application/json',
+        'Authorization' => "Bearer #{ENV['OPENAI_API_KEY']}"
+      },
+      body: {
+        model: 'gpt-4.1',
+        messages: messages,
+        max_tokens: 400,
+        temperature: 0.7
+      }.to_json
+    )
 
-    request.body = {
-      model: 'gpt-4.1',
-      messages: messages,
-      max_tokens: 400,
-      temperature: 0.7
-    }.to_json
-
-    response = Net::HTTP.start(uri.hostname, uri.port, use_ssl: true) do |http|
-      http.request(request)
-    end
-
-    result = JSON.parse(response.body)
-    response_content = result.dig('choices', 0, 'message', 'content')
-
+    response_content = response.dig('choices', 0, 'message', 'content')
     @chat.messages.create!(role: "assistant", content: response_content)
   end
 
