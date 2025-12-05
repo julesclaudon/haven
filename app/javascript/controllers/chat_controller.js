@@ -90,10 +90,13 @@ export default class extends Controller {
     textarea.style.height = Math.min(textarea.scrollHeight, 120) + "px"
   }
 
-  // Scroll vers le bas
+  // Scroll fluide vers le bas
   scrollToBottom() {
     if (this.hasMessagesTarget) {
-      this.messagesTarget.scrollTop = this.messagesTarget.scrollHeight
+      this.messagesTarget.scrollTo({
+        top: this.messagesTarget.scrollHeight,
+        behavior: 'smooth'
+      })
     }
   }
 
@@ -157,11 +160,16 @@ export default class extends Controller {
     bubble.className = "message-bubble assistant"
     bubble.innerHTML = `
       <div class="message-sender">Haven (IA)</div>
-      <div class="message-text"><span class="typing-indicator"></span></div>
+      <div class="message-text">${this.typingIndicatorHtml()}</div>
       <div class="message-time">${this.formatTime(new Date())}</div>
     `
     this.messagesTarget.appendChild(bubble)
     return bubble
+  }
+
+  // HTML pour l'indicateur de frappe (3 points)
+  typingIndicatorHtml() {
+    return '<span class="typing-indicator"><span class="dot"></span><span class="dot"></span><span class="dot"></span></span>'
   }
 
   // Retirer le curseur clignotant
@@ -211,8 +219,8 @@ export default class extends Controller {
           try {
             const text = JSON.parse(data)
             fullText += text
-            // Mettre à jour le texte en gardant le curseur
-            textElement.innerHTML = this.escapeHtml(fullText) + '<span class="typing-indicator"></span>'
+            // Mettre à jour le texte en gardant l'indicateur de frappe
+            textElement.innerHTML = this.escapeHtml(fullText) + this.typingIndicatorHtml()
             this.scrollToBottom()
           } catch (e) {
             // Ignorer les erreurs de parsing

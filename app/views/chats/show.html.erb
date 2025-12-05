@@ -197,17 +197,43 @@
   padding: 0.875rem 1rem;
   border-radius: 1rem;
   position: relative;
-  animation: fadeIn 0.3s ease;
+  opacity: 0;
+  animation-duration: 0.25s;
+  animation-timing-function: ease-out;
+  animation-fill-mode: forwards;
 }
 
-@keyframes fadeIn {
+/* Animation pour les messages Haven (depuis la gauche) */
+.message-bubble.assistant {
+  animation-name: slideInLeft;
+  animation-duration: 0.3s;
+}
+
+/* Animation pour les messages utilisateur (depuis la droite) */
+.message-bubble.user {
+  animation-name: slideInRight;
+  animation-duration: 0.2s;
+}
+
+@keyframes slideInLeft {
   from {
     opacity: 0;
-    transform: translateY(10px);
+    transform: translateX(-20px);
   }
   to {
     opacity: 1;
-    transform: translateY(0);
+    transform: translateX(0);
+  }
+}
+
+@keyframes slideInRight {
+  from {
+    opacity: 0;
+    transform: translateX(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
   }
 }
 
@@ -247,19 +273,43 @@
   text-align: right;
 }
 
-/* Curseur clignotant pour le streaming */
+/* Indicateur de frappe - 3 points qui rebondissent */
 .typing-indicator {
-  display: inline-block;
-  width: 8px;
-  height: 16px;
-  background: #C4923A;
-  margin-left: 2px;
-  animation: blink 1s infinite;
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  padding: 4px 0;
 }
 
-@keyframes blink {
-  0%, 50% { opacity: 1; }
-  51%, 100% { opacity: 0; }
+.typing-indicator .dot {
+  width: 8px;
+  height: 8px;
+  background: #A06F2E;
+  border-radius: 50%;
+  animation: bounce 1.4s ease-in-out infinite;
+}
+
+.typing-indicator .dot:nth-child(1) {
+  animation-delay: 0s;
+}
+
+.typing-indicator .dot:nth-child(2) {
+  animation-delay: 0.2s;
+}
+
+.typing-indicator .dot:nth-child(3) {
+  animation-delay: 0.4s;
+}
+
+@keyframes bounce {
+  0%, 60%, 100% {
+    transform: translateY(0);
+    opacity: 0.4;
+  }
+  30% {
+    transform: translateY(-8px);
+    opacity: 1;
+  }
 }
 
 .conversation-input {
