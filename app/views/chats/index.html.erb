@@ -17,6 +17,7 @@
                       <span class="chat-badge-closed">Terminée</span>
                     <% end %>
                   </div>
+                  <span class="chat-title"><%= chat.display_title %></span>
                   <% if chat.states.any? %>
                     <span class="chat-stage"><%= chat.states.last.grief_stage&.name %></span>
                   <% end %>

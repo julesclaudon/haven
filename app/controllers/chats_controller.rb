@@ -22,6 +22,7 @@ class ChatsController < ApplicationController
   def close
     @chat.close!
     run_analysis_prompt
+    GenerateChatTitleJob.perform_later(@chat.id)
     last_state = @chat.states.last
 
     respond_to do |format|

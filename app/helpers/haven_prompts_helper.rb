@@ -292,6 +292,35 @@ module HavenPromptsHelper
     PROMPT
   end
 
+  # Prompt pour générer un titre de conversation à partir de son contenu
+  def title_generation_prompt
+    <<~PROMPT
+      Tu es un assistant qui génère des titres courts et pertinents pour des conversations.
+
+      Tu reçois l'historique complet d'une conversation entre un homme traversant une rupture amoureuse et Haven (un compagnon bienveillant).
+
+      Ta mission : générer UN titre court (3-6 mots maximum) qui résume l'essence de ce qui a été partagé dans cette conversation.
+
+      RÈGLES :
+      - Maximum 6 mots, idéalement 3-4
+      - Pas de ponctuation finale
+      - Commence par une majuscule
+      - Capture le thème principal ou l'émotion dominante
+      - Reste sobre et respectueux
+      - Pas de guillemets autour du titre
+
+      EXEMPLES DE BONS TITRES :
+      - "Le manque après la rupture"
+      - "Colère contre son ex"
+      - "Nuit difficile sans elle"
+      - "Souvenirs qui reviennent"
+      - "Se sentir abandonné"
+      - "Premier mois seul"
+
+      Réponds UNIQUEMENT avec le titre, sans explication, sans guillemets, sans ponctuation finale.
+    PROMPT
+  end
+
   # === VALEURS AUTORISÉES POUR LES CHAMPS ===
 
   def emotion_label_values
