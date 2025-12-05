@@ -217,6 +217,80 @@ module HavenPromptsHelper
     PROMPT
   end
 
+  # Prompt pour générer un titre de conversation à partir de son contenu
+  def title_generation_prompt
+    <<~PROMPT
+      Tu es un assistant qui génère des titres courts et pertinents pour des conversations.
+
+      Tu reçois l'historique complet d'une conversation entre un homme traversant une rupture amoureuse et Haven (un compagnon bienveillant).
+
+      Ta mission : générer UN titre court (3-6 mots maximum) qui résume l'essence de ce qui a été partagé dans cette conversation.
+
+      RÈGLES :
+      - Maximum 6 mots, idéalement 3-4
+      - Pas de ponctuation finale
+      - Commence par une majuscule
+      - Capture le thème principal ou l'émotion dominante
+      - Reste sobre et respectueux
+      - Pas de guillemets autour du titre
+
+      EXEMPLES DE BONS TITRES :
+      - "Le manque après la rupture"
+      - "Colère contre son ex"
+      - "Nuit difficile sans elle"
+      - "Souvenirs qui reviennent"
+      - "Se sentir abandonné"
+      - "Premier mois seul"
+
+      Réponds UNIQUEMENT avec le titre, sans explication, sans guillemets, sans ponctuation finale.
+    PROMPT
+  end
+
+  # === VALEURS AUTORISÉES POUR LES CHAMPS ===
+
+  def emotion_label_values
+    %w[colere tristesse manque espoir confusion culpabilite anxiete soulagement resignation]
+  end
+
+  def trigger_source_values
+    %w[instagram facebook reseaux_sociaux photo souvenir musique lieu ami_commun message_ex nouvelle_relation anniversaire objet reve solitude alcool]
+  end
+
+  def time_of_day_values
+    %w[matin apres_midi soir nuit reveil]
+  end
+
+  def ex_contact_frequency_values
+    %w[aucun_contact contact_rare contact_occasionnel contact_frequent contact_quotidien]
+  end
+
+  def ruminating_frequency_values
+    %w[jamais rarement parfois souvent tout_le_temps]
+  end
+
+  def sleep_quality_values
+    %w[tres_bon bon moyen mauvais tres_mauvais insomnie]
+  end
+
+  def support_level_values
+    %w[tres_entoure entoure peu_entoure isole]
+  end
+
+  def drugs_values
+    %w[aucun alcool_occasionnel alcool_frequent cannabis medicaments autres]
+  end
+
+  # Valeurs considérées comme "non pertinentes" à ne pas afficher
+  def non_relevant_values
+    %w[autre non_detecte inconnu non_mentionne non_specifie]
+  end
+
+  # Helper pour vérifier si une valeur est pertinente (à utiliser dans les vues)
+  def relevant_value?(value)
+    return false if value.blank?
+    !non_relevant_values.include?(value.to_s.downcase.parameterize(separator: '_'))
+  end
+
   private
 
   def build_user_context(quiz)

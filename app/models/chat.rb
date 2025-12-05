@@ -25,6 +25,16 @@ class Chat < ApplicationRecord
     update!(status: new_status)
   end
 
+  def update_title_after_close(new_title)
+    return if new_title.blank?
+
+    if closed?
+      update!(status: "#{CLOSED_PREFIX}#{new_title}")
+    else
+      update!(status: new_title)
+    end
+  end
+
   def display_title
     return DEFAULT_TITLE if status.blank?
 
