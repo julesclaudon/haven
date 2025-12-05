@@ -84,11 +84,11 @@
   </div>
 
   <!-- Chat Input Bar -->
-  <div class="chat-input-container">
-    <%= form_with url: chats_path, method: :post, class: "chat-input-form" do |f| %>
+  <div class="chat-input-container" data-controller="speech" data-speech-auto-submit-value="false">
+    <%= form_with url: chats_path, method: :post, class: "chat-input-form", data: { speech_target: "form" } do |f| %>
       <div class="chat-input-wrapper">
-        <%= f.text_field :message, placeholder: "Démarrer un échange...", class: "chat-input-field", autocomplete: "off" %>
-        <button type="button" class="chat-mic-btn" id="mic-btn">
+        <%= f.text_field :message, placeholder: "Démarrer un échange...", class: "chat-input-field", autocomplete: "off", data: { speech_target: "input" } %>
+        <button type="button" class="chat-mic-btn" data-speech-target="button" data-action="click->speech#toggle">
           <i class="fa-solid fa-microphone"></i>
         </button>
         <button type="submit" class="chat-send-btn">
@@ -101,38 +101,6 @@
 
 <script>
 document.addEventListener('turbo:load', function() {
-  // Microphone
-  const micBtn = document.getElementById('mic-btn');
-  const inputField = document.querySelector('.chat-input-field');
-
-  if (micBtn && 'webkitSpeechRecognition' in window) {
-    const recognition = new webkitSpeechRecognition();
-    recognition.lang = 'fr-FR';
-    recognition.continuous = false;
-    recognition.interimResults = false;
-
-    micBtn.addEventListener('click', function() {
-      micBtn.classList.add('listening');
-      recognition.start();
-    });
-
-    recognition.onresult = function(event) {
-      const transcript = event.results[0][0].transcript;
-      inputField.value = transcript;
-      micBtn.classList.remove('listening');
-    };
-
-    recognition.onerror = function() {
-      micBtn.classList.remove('listening');
-    };
-
-    recognition.onend = function() {
-      micBtn.classList.remove('listening');
-    };
-  } else if (micBtn) {
-    micBtn.style.display = 'none';
-  }
-
   // Modal des étapes du deuil
   const stageItems = document.querySelectorAll('.grief-stage-item');
   const griefModal = document.getElementById('grief-modal');

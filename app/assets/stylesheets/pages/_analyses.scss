@@ -1,4 +1,4 @@
-// Styles pour Analyses
+// Styles pour Analyses - Stoic Theme
 
 .analyse-container {
   max-width: 900px;
@@ -11,7 +11,7 @@
   margin-bottom: 2rem;
 
   h1 {
-    color: $haven-primary;
+    color: $stoic-text-primary;
     font-family: $headings-font-family;
     font-weight: 700;
     margin: 0;
@@ -31,9 +31,9 @@
 }
 
 .archetype-image-card {
-  background: white;
-  border-radius: 16px;
-  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+  background: $stoic-surface;
+  border-radius: 12px;
+  border: 1px solid $stoic-border;
   padding: 1.5rem;
   display: flex;
   flex-direction: column;
@@ -48,7 +48,8 @@
   border-radius: 50%;
   overflow: hidden;
   margin-bottom: 1rem;
-  background: linear-gradient(135deg, $haven-light, lighten($haven-secondary, 20%));
+  background: $stoic-elevated;
+  border: 2px solid $stoic-border;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -61,21 +62,21 @@
 
   .archetype-icon {
     font-size: 4rem;
-    color: $haven-primary;
+    color: $stoic-accent;
   }
 }
 
 .archetype-image-card .archetype-name {
-  color: $haven-primary;
+  color: $stoic-text-primary;
   font-size: 1.25rem;
   font-weight: 700;
   margin: 0;
 }
 
 .archetype-desc-card {
-  background: white;
-  border-radius: 16px;
-  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+  background: $stoic-surface;
+  border-radius: 12px;
+  border: 1px solid $stoic-border;
   padding: 1.5rem;
   display: flex;
   flex-direction: column;
@@ -86,7 +87,7 @@
   align-items: center;
   gap: 0.75rem;
   margin-bottom: 1rem;
-  color: $haven-secondary;
+  color: $stoic-accent-bronze;
   font-weight: 600;
 
   i {
@@ -95,7 +96,7 @@
 }
 
 .archetype-description {
-  color: $haven-dark;
+  color: $stoic-text-secondary;
   line-height: 1.7;
   margin: 0;
   flex: 1;
@@ -107,25 +108,25 @@
 }
 
 .archetype-empty-card {
-  background: white;
-  border-radius: 16px;
-  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+  background: $stoic-surface;
+  border-radius: 12px;
+  border: 1px solid $stoic-border;
   padding: 3rem;
   text-align: center;
 
   i {
     font-size: 3rem;
-    color: $light-gray;
+    color: $stoic-text-muted;
     margin-bottom: 1rem;
   }
 
   h3 {
-    color: $haven-dark;
+    color: $stoic-text-primary;
     margin-bottom: 0.5rem;
   }
 
   p {
-    color: $gray;
+    color: $stoic-text-secondary;
     margin: 0;
   }
 }
@@ -136,7 +137,7 @@
 }
 
 .insights-title {
-  color: $haven-primary;
+  color: $stoic-text-primary;
   font-family: $headings-font-family;
   font-weight: 700;
   font-size: 1.25rem;
@@ -150,30 +151,29 @@
 }
 
 .insight-card {
-  background: white;
-  border-radius: 16px;
-  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+  background: $stoic-surface;
+  border-radius: 10px;
+  border: 1px solid $stoic-border;
   padding: 1.25rem;
   display: flex;
   gap: 1rem;
-  border-left: 4px solid $gray;
+  border-left: 3px solid $stoic-text-muted;
   transition: all 0.2s ease;
 
   &:hover {
-    transform: translateY(-2px);
-    box-shadow: 0 6px 25px rgba(0, 0, 0, 0.12);
+    border-color: $stoic-accent;
   }
 
   &.positive {
     border-left-color: $pain-low;
 
     .insight-icon {
-      background: rgba($pain-low, 0.15);
-      color: darken($pain-low, 15%);
+      background: rgba($pain-low, 0.1);
+      color: $pain-low;
     }
 
     .insight-value {
-      color: darken($pain-low, 15%);
+      color: $pain-low;
     }
   }
 
@@ -181,7 +181,7 @@
     border-left-color: $pain-high;
 
     .insight-icon {
-      background: rgba($pain-high, 0.15);
+      background: rgba($pain-high, 0.1);
       color: $pain-high;
     }
 
@@ -191,15 +191,15 @@
   }
 
   &.neutral {
-    border-left-color: $haven-secondary;
+    border-left-color: $stoic-accent-bronze;
 
     .insight-icon {
-      background: rgba($haven-secondary, 0.15);
-      color: $haven-secondary;
+      background: rgba($stoic-accent-bronze, 0.1);
+      color: $stoic-accent-bronze;
     }
 
     .insight-value {
-      color: $haven-primary;
+      color: $stoic-text-primary;
     }
   }
 }
@@ -207,7 +207,7 @@
 .insight-icon {
   width: 50px;
   height: 50px;
-  border-radius: 12px;
+  border-radius: 8px;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -231,14 +231,14 @@
 }
 
 .insight-label {
-  color: $haven-dark;
+  color: $stoic-text-primary;
   font-weight: 500;
   font-size: 0.9rem;
   margin-bottom: 0.35rem;
 }
 
 .insight-detail {
-  color: $gray;
+  color: $stoic-text-secondary;
   font-size: 0.8rem;
   line-height: 1.4;
 }
@@ -246,10 +246,10 @@
 .trigger-tag,
 .time-tag {
   display: inline-block;
-  background: $haven-light;
-  color: $haven-dark;
+  background: $stoic-elevated;
+  color: $stoic-text-secondary;
   padding: 0.15rem 0.5rem;
-  border-radius: 10px;
+  border-radius: 4px;
   font-size: 0.75rem;
   margin-right: 0.35rem;
   margin-top: 0.25rem;
@@ -257,22 +257,22 @@
 
 // Graphique des émotions
 .emotions-chart-card {
-  background: white;
-  border-radius: 16px;
-  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+  background: $stoic-surface;
+  border-radius: 12px;
+  border: 1px solid $stoic-border;
   padding: 1.5rem;
   margin-bottom: 2rem;
 }
 
 .chart-title {
-  color: $haven-primary;
+  color: $stoic-text-primary;
   font-size: 1.1rem;
   font-weight: 700;
   margin: 0 0 0.25rem;
 }
 
 .chart-subtitle {
-  color: $gray;
+  color: $stoic-text-secondary;
   font-size: 0.85rem;
   margin: 0 0 1.5rem;
 }
@@ -291,29 +291,29 @@
 }
 
 .emotion-label {
-  color: $haven-dark;
+  color: $stoic-text-primary;
   font-weight: 500;
   font-size: 0.9rem;
   text-align: right;
 }
 
 .emotion-bar-wrapper {
-  height: 24px;
-  background: $light-gray;
-  border-radius: 12px;
+  height: 20px;
+  background: $stoic-border;
+  border-radius: 4px;
   overflow: hidden;
 }
 
 .emotion-bar {
   height: 100%;
-  background: linear-gradient(90deg, $haven-secondary, $haven-primary);
-  border-radius: 12px;
+  background: $stoic-accent;
+  border-radius: 4px;
   transition: width 0.8s ease;
   min-width: 5%;
 }
 
 .emotion-percentage {
-  color: $haven-primary;
+  color: $stoic-text-primary;
   font-weight: 700;
   font-size: 0.9rem;
 }
@@ -324,25 +324,25 @@
 
   i {
     font-size: 2.5rem;
-    color: $light-gray;
+    color: $stoic-text-muted;
     margin-bottom: 1rem;
   }
 
   p {
-    color: $gray;
+    color: $stoic-text-secondary;
     margin: 0;
   }
 }
 
 // Historique des analyses
 .analyses-history-card {
-  background: white;
-  border-radius: 16px;
-  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+  background: $stoic-surface;
+  border-radius: 12px;
+  border: 1px solid $stoic-border;
   padding: 1.5rem;
 
   h3 {
-    color: $haven-primary;
+    color: $stoic-text-primary;
     font-size: 1.1rem;
     font-weight: 700;
     margin: 0 0 1rem;
@@ -356,7 +356,7 @@
 }
 
 .analysis-item {
-  border-bottom: 1px solid $light-gray;
+  border-bottom: 1px solid $stoic-border;
 
   &:last-child {
     border-bottom: none;
@@ -376,12 +376,12 @@
     padding-left: 0.5rem;
 
     i {
-      color: $haven-primary;
+      color: $stoic-accent;
     }
   }
 
   i {
-    color: $light-gray;
+    color: $stoic-text-muted;
     transition: color 0.2s ease;
   }
 }
@@ -393,15 +393,15 @@
 }
 
 .analysis-score {
-  background: linear-gradient(135deg, $haven-secondary, $haven-primary);
-  color: white;
+  background: $stoic-accent;
+  color: $stoic-text-primary;
   font-weight: 700;
   padding: 0.35rem 0.75rem;
-  border-radius: 15px;
+  border-radius: 6px;
   font-size: 0.9rem;
 }
 
 .analysis-date {
-  color: $gray;
+  color: $stoic-text-secondary;
   font-size: 0.9rem;
 }

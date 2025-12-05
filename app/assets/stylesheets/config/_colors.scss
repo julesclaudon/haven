@@ -1,22 +1,39 @@
-// Define variables for your color scheme - Haven theme (apaisant)
+// Define variables for your color scheme - Haven Stoic Warm Light Theme
+// VERSION DEMO-DAY: Contrastes renforcés pour projection TV
+
+// Palette Stoic Warm Claire - Fond et surfaces (contrastes renforcés)
+$stoic-bg: #E8E2D9;            // sable plus marqué
+$stoic-surface: #F5F2EB;       // ivoire avec plus de contraste
+$stoic-border: #C4B8A8;        // bordure plus visible
+$stoic-elevated: #DDD7CC;      // sable plus soutenu
+
+// Palette Stoic Warm Claire - Typographie (plus foncé pour lisibilité)
+$stoic-text-primary: #2A2622;  // brun charbon plus profond
+$stoic-text-secondary: #524C44; // gris-brun plus marqué
+$stoic-text-muted: #7A7368;    // moins pâle
+
+// Palette Stoic Warm Claire - Accents (plus saturés et visibles)
+$stoic-accent: #A06F2E;        // bronze plus saturé et foncé
+$stoic-accent-bronze: #C4923A; // ocre plus vif
+$stoic-accent-hover: #8A5F28;  // bronze hover plus marqué
 
 // Couleurs de base (utilisées par Bootstrap)
-$red: #E57373;
-$blue: #6B8E9F;
-$yellow: #FFD993;
-$orange: #FFAB7B;
-$green: #81C995;
-$gray: #718096;
-$light-gray: #EDF2F7;
+$red: #9A5A4C;
+$blue: $stoic-accent;
+$yellow: #C4923A;
+$orange: #A06F2E;
+$green: #5F7A52;
+$gray: $stoic-text-secondary;
+$light-gray: $stoic-border;
 
-// Palette Haven (définies AVANT bootstrap_variables)
-$haven-primary: #6B8E9F;
-$haven-secondary: #A8C5B5;
-$haven-accent: #E8B4A8;
-$haven-dark: #4A5568;
-$haven-light: #F7F8FA;
+// Palette Haven mappée sur stoic warm claire
+$haven-primary: $stoic-accent;
+$haven-secondary: $stoic-accent-bronze;
+$haven-accent: $stoic-accent-hover;
+$haven-dark: $stoic-text-primary;
+$haven-light: $stoic-surface;
 
-// Couleurs d'état émotionnel
-$pain-low: #81C995;
-$pain-medium: #FFD993;
-$pain-high: #E57373;
+// Couleurs d'état émotionnel (plus saturées pour TV)
+$pain-low: #5F7A52;
+$pain-medium: #C4923A;
+$pain-high: #9A5A4C;

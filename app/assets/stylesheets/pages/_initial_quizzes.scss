@@ -1,4 +1,4 @@
-// Styles pour Initial Quizzes
+// Styles pour Initial Quizzes - Stoic Theme
 
 .quiz-container {
   max-width: 700px;
@@ -11,22 +11,22 @@
   margin-bottom: 2rem;
 
   h1 {
-    color: $haven-primary;
+    color: $stoic-text-primary;
     font-family: $headings-font-family;
     font-weight: 700;
     margin-bottom: 0.5rem;
   }
 
   p {
-    color: $gray;
+    color: $stoic-text-secondary;
     font-size: 1.1rem;
   }
 }
 
 .quiz-card {
-  background: white;
-  border-radius: 16px;
-  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+  background: $stoic-surface;
+  border-radius: 12px;
+  border: 1px solid $stoic-border;
   padding: 2rem;
   margin-bottom: 2rem;
 }
@@ -34,7 +34,7 @@
 .quiz-section {
   margin-bottom: 2rem;
   padding-bottom: 1.5rem;
-  border-bottom: 1px solid $light-gray;
+  border-bottom: 1px solid $stoic-border;
 
   &:last-child {
     border-bottom: none;
@@ -44,7 +44,7 @@
 }
 
 .quiz-section-title {
-  color: $haven-primary;
+  color: $stoic-text-primary;
   font-family: $headings-font-family;
   font-size: 1.1rem;
   font-weight: 600;
@@ -54,7 +54,7 @@
   gap: 0.5rem;
 
   i {
-    color: $haven-secondary;
+    color: $stoic-accent-bronze;
   }
 }
 
@@ -63,21 +63,28 @@
 
   label {
     display: block;
-    color: $haven-dark;
+    color: $stoic-text-primary;
     font-weight: 500;
     margin-bottom: 0.5rem;
   }
 
   .form-control,
   .form-select {
-    border: 2px solid $light-gray;
-    border-radius: 10px;
+    background: $stoic-elevated;
+    border: 1px solid $stoic-border;
+    border-radius: 8px;
     padding: 0.75rem 1rem;
+    color: $stoic-text-primary;
     transition: all 0.2s ease;
 
+    &::placeholder {
+      color: $stoic-text-muted;
+    }
+
     &:focus {
-      border-color: $haven-primary;
-      box-shadow: 0 0 0 3px rgba($haven-primary, 0.15);
+      border-color: $stoic-accent;
+      box-shadow: 0 0 0 2px rgba($stoic-accent, 0.15);
+      background: $stoic-surface;
     }
   }
 
@@ -94,20 +101,19 @@
 
   .form-range {
     width: 100%;
-    height: 8px;
-    border-radius: 4px;
-    background: linear-gradient(to right, $pain-low, $pain-medium, $pain-high);
+    height: 6px;
+    border-radius: 3px;
+    background: $stoic-border;
     -webkit-appearance: none;
 
     &::-webkit-slider-thumb {
       -webkit-appearance: none;
-      width: 24px;
-      height: 24px;
+      width: 22px;
+      height: 22px;
       border-radius: 50%;
-      background: white;
-      border: 3px solid $haven-primary;
+      background: $stoic-surface;
+      border: 2px solid $stoic-accent;
       cursor: pointer;
-      box-shadow: 0 2px 6px rgba(0, 0, 0, 0.15);
     }
   }
 
@@ -116,7 +122,7 @@
     justify-content: space-between;
     margin-top: 0.5rem;
     font-size: 0.85rem;
-    color: $gray;
+    color: $stoic-text-secondary;
   }
 }
 
@@ -134,24 +140,25 @@
       display: none;
 
       &:checked + label {
-        background: $haven-primary;
-        color: white;
-        border-color: $haven-primary;
+        background: $stoic-accent;
+        color: $stoic-text-primary;
+        border-color: $stoic-accent;
       }
     }
 
     label {
       display: block;
       padding: 0.75rem 1.5rem;
-      border: 2px solid $light-gray;
-      border-radius: 10px;
+      border: 1px solid $stoic-border;
+      border-radius: 8px;
       text-align: center;
       cursor: pointer;
+      color: $stoic-text-secondary;
       transition: all 0.2s ease;
 
       &:hover {
-        border-color: $haven-primary;
-        background: rgba($haven-primary, 0.05);
+        border-color: $stoic-accent;
+        color: $stoic-text-primary;
       }
     }
   }
@@ -163,30 +170,32 @@
   gap: 1rem;
   margin-top: 2rem;
   padding-top: 1.5rem;
-  border-top: 1px solid $light-gray;
+  border-top: 1px solid $stoic-border;
 
   .btn-primary {
-    background: $haven-primary;
-    border-color: $haven-primary;
+    background: $stoic-accent;
+    border-color: $stoic-accent;
+    color: $stoic-text-primary;
     padding: 0.75rem 2rem;
-    border-radius: 10px;
+    border-radius: 8px;
     font-weight: 600;
 
     &:hover {
-      background: darken($haven-primary, 8%);
-      border-color: darken($haven-primary, 8%);
+      background: $stoic-accent-hover;
+      border-color: $stoic-accent-hover;
     }
   }
 
   .btn-secondary {
     background: transparent;
-    border: 2px solid $gray;
-    color: $gray;
+    border: 1px solid $stoic-border;
+    color: $stoic-text-secondary;
     padding: 0.75rem 2rem;
-    border-radius: 10px;
+    border-radius: 8px;
 
     &:hover {
-      background: $light-gray;
+      background: $stoic-elevated;
+      color: $stoic-text-primary;
     }
   }
 }
@@ -200,37 +209,37 @@
   }
 
   .info-item {
-    background: $haven-light;
+    background: $stoic-elevated;
     padding: 1rem 1.25rem;
-    border-radius: 10px;
+    border-radius: 8px;
 
     .info-label {
       font-size: 0.85rem;
-      color: $gray;
+      color: $stoic-text-muted;
       margin-bottom: 0.25rem;
     }
 
     .info-value {
       font-weight: 600;
-      color: $haven-dark;
+      color: $stoic-text-primary;
     }
   }
 
   .info-text {
-    background: $haven-light;
+    background: $stoic-elevated;
     padding: 1.25rem;
-    border-radius: 10px;
+    border-radius: 8px;
     margin-top: 1.5rem;
 
     .info-label {
       font-size: 0.85rem;
-      color: $gray;
+      color: $stoic-text-muted;
       margin-bottom: 0.5rem;
     }
 
     p {
       margin: 0;
-      color: $haven-dark;
+      color: $stoic-text-secondary;
       line-height: 1.6;
     }
   }
@@ -242,21 +251,21 @@
   align-items: center;
   gap: 0.5rem;
   padding: 0.25rem 0.75rem;
-  border-radius: 20px;
+  border-radius: 6px;
   font-weight: 600;
 
   &.low {
-    background: rgba($pain-low, 0.2);
-    color: darken($pain-low, 20%);
+    background: rgba($pain-low, 0.15);
+    color: $pain-low;
   }
 
   &.medium {
-    background: rgba($pain-medium, 0.3);
-    color: darken($pain-medium, 30%);
+    background: rgba($pain-medium, 0.15);
+    color: $pain-medium;
   }
 
   &.high {
-    background: rgba($pain-high, 0.2);
-    color: darken($pain-high, 15%);
+    background: rgba($pain-high, 0.15);
+    color: $pain-high;
   }
 }
