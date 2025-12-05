@@ -87,9 +87,10 @@
 .haven-conversation {
   display: flex;
   flex-direction: column;
-  height: 100vh;
+  height: calc(100vh - 70px); /* Hauteur moins la navbar du bas */
   background: #E8E2D9;
   color: #2A2622;
+  position: relative;
 }
 
 .conversation-header {
@@ -263,9 +264,10 @@
 
 .conversation-input {
   padding: 1rem 1.5rem;
-  padding-bottom: calc(1rem + env(safe-area-inset-bottom, 0));
+  padding-bottom: 1rem;
   background: #F5F2EB;
   border-top: 2px solid #C4B8A8;
+  flex-shrink: 0;
 }
 
 .message-form {
@@ -359,7 +361,6 @@
 
 .conversation-closed-notice {
   padding: 1rem 1.5rem;
-  padding-bottom: calc(1rem + env(safe-area-inset-bottom, 0));
   background: #F5F2EB;
   border-top: 2px solid #C4B8A8;
   text-align: center;
@@ -369,6 +370,7 @@
   align-items: center;
   justify-content: center;
   gap: 0.5rem;
+  flex-shrink: 0;
 }
 
 /* Modal de confirmation */

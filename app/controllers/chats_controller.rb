@@ -44,9 +44,8 @@ class ChatsController < ApplicationController
       time_of_day: current_time_of_day
     )
 
-    if params[:message].present? && params[:message][:content].present?
-      user_content = params[:message][:content]
-
+    user_content = extract_message_content
+    if user_content.present?
       @chat.messages.create!(role: 'user', content: user_content)
       @chat.generate_title_from_first_message
 
@@ -83,7 +82,8 @@ class ChatsController < ApplicationController
       }.to_json
     )
 
-    response_content = response.dig('choices', 0, 'message', 'content')
+    parsed_response = response.parsed_response
+    response_content = parsed_response.dig('choices', 0, 'message', 'content')
     @chat.messages.create!(role: "assistant", content: response_content)
   end
 
@@ -218,5 +218,17 @@ class ChatsController < ApplicationController
     return if current_user.initial_quiz.present?
 
     redirect_to new_initial_quiz_path, alert: "Veuillez d'abord remplir le questionnaire initial."
+  end
+
+  def extract_message_content
+    # Gérer les params classiques (form submission)
+    if params[:message].is_a?(ActionController::Parameters) || params[:message].is_a?(Hash)
+      params[:message][:content]
+    # Gérer le cas où params[:message] est nil mais content est à la racine
+    elsif params[:content].present?
+      params[:content]
+    else
+      nil
+    end
   end
 end
