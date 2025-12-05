@@ -1,39 +1,87 @@
-// Define variables for your color scheme - Haven Stoic Warm Light Theme
-// VERSION DEMO-DAY: Contrastes renforcés pour projection TV
+// Define variables for your color scheme - Haven Stoic Theme
+// Système Dark/Light Mode avec CSS Custom Properties
 
-// Palette Stoic Warm Claire - Fond et surfaces (contrastes renforcés)
-$stoic-bg: #E8E2D9;            // sable plus marqué
-$stoic-surface: #F5F2EB;       // ivoire avec plus de contraste
-$stoic-border: #C4B8A8;        // bordure plus visible
-$stoic-elevated: #DDD7CC;      // sable plus soutenu
+// ===========================================
+// SCSS Variables (pour Bootstrap et compilation)
+// ===========================================
 
-// Palette Stoic Warm Claire - Typographie (plus foncé pour lisibilité)
-$stoic-text-primary: #2A2622;  // brun charbon plus profond
-$stoic-text-secondary: #524C44; // gris-brun plus marqué
-$stoic-text-muted: #7A7368;    // moins pâle
-
-// Palette Stoic Warm Claire - Accents (plus saturés et visibles)
-$stoic-accent: #A06F2E;        // bronze plus saturé et foncé
-$stoic-accent-bronze: #C4923A; // ocre plus vif
-$stoic-accent-hover: #8A5F28;  // bronze hover plus marqué
+// Valeurs par défaut (dark mode - thème principal)
+$stoic-bg: #1A1816;
+$stoic-surface: #242220;
+$stoic-border: #3D3835;
+$stoic-elevated: #2E2A27;
+$stoic-text-primary: #F5F0E8;
+$stoic-text-secondary: #B8AFA3;
+$stoic-text-muted: #7A7269;
+$stoic-accent: #D4A55A;
+$stoic-accent-bronze: #E8C078;
+$stoic-accent-hover: #C49545;
 
 // Couleurs de base (utilisées par Bootstrap)
-$red: #9A5A4C;
+$red: #E07A6B;
 $blue: $stoic-accent;
-$yellow: #C4923A;
-$orange: #A06F2E;
-$green: #5F7A52;
+$yellow: #E8C078;
+$orange: #D4A55A;
+$green: #7FB069;
 $gray: $stoic-text-secondary;
 $light-gray: $stoic-border;
 
-// Palette Haven mappée sur stoic warm claire
+// Palette Haven
 $haven-primary: $stoic-accent;
 $haven-secondary: $stoic-accent-bronze;
 $haven-accent: $stoic-accent-hover;
-$haven-dark: $stoic-text-primary;
-$haven-light: $stoic-surface;
+$haven-dark: $stoic-bg;
+$haven-light: $stoic-text-primary;
 
-// Couleurs d'état émotionnel (plus saturées pour TV)
-$pain-low: #5F7A52;
-$pain-medium: #C4923A;
-$pain-high: #9A5A4C;
+// Couleurs d'état émotionnel
+$pain-low: #7FB069;
+$pain-medium: #E8C078;
+$pain-high: #E07A6B;
+
+// ===========================================
+// CSS Custom Properties (pour le switch dynamique)
+// ===========================================
+
+:root {
+  // Dark Mode (défaut)
+  --stoic-bg: #1A1816;
+  --stoic-surface: #242220;
+  --stoic-border: #3D3835;
+  --stoic-elevated: #2E2A27;
+  --stoic-text-primary: #F5F0E8;
+  --stoic-text-secondary: #B8AFA3;
+  --stoic-text-muted: #7A7269;
+  --stoic-accent: #D4A55A;
+  --stoic-accent-bronze: #E8C078;
+  --stoic-accent-hover: #C49545;
+  --pain-low: #7FB069;
+  --pain-medium: #E8C078;
+  --pain-high: #E07A6B;
+
+  // Ombres adaptatives
+  --shadow-sm: 0 1px 3px rgba(0, 0, 0, 0.3);
+  --shadow-md: 0 4px 12px rgba(0, 0, 0, 0.4);
+  --shadow-lg: 0 8px 24px rgba(0, 0, 0, 0.5);
+}
+
+// Light Mode
+[data-theme="light"] {
+  --stoic-bg: #F5F0E8;
+  --stoic-surface: #FFFFFF;
+  --stoic-border: #D4C9B8;
+  --stoic-elevated: #EDE7DC;
+  --stoic-text-primary: #1A1816;
+  --stoic-text-secondary: #5C564E;
+  --stoic-text-muted: #8A8279;
+  --stoic-accent: #A67C3D;
+  --stoic-accent-bronze: #C49545;
+  --stoic-accent-hover: #8B6530;
+  --pain-low: #4A8B3D;
+  --pain-medium: #C49545;
+  --pain-high: #C45A4A;
+
+  // Ombres plus légères pour light mode
+  --shadow-sm: 0 1px 3px rgba(0, 0, 0, 0.08);
+  --shadow-md: 0 4px 12px rgba(0, 0, 0, 0.1);
+  --shadow-lg: 0 8px 24px rgba(0, 0, 0, 0.12);
+}

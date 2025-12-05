@@ -64,6 +64,21 @@
   </div>
 
   <div class="profile-section">
+    <h3><i class="fa-solid fa-palette"></i> Apparence</h3>
+    <p>Choisis le thème qui te convient le mieux.</p>
+    <div class="theme-selector">
+      <button type="button" class="theme-option" data-theme="dark" id="theme-dark">
+        <i class="fa-solid fa-moon"></i>
+        <span>Sombre</span>
+      </button>
+      <button type="button" class="theme-option" data-theme="light" id="theme-light">
+        <i class="fa-solid fa-sun"></i>
+        <span>Clair</span>
+      </button>
+    </div>
+  </div>
+
+  <div class="profile-section">
     <h3><i class="fa-solid fa-right-from-bracket"></i> Déconnexion</h3>
     <p>Tu veux te déconnecter de ton compte ?</p>
     <%= button_to "Se déconnecter", destroy_user_session_path, method: :delete, class: "btn-secondary" %>
@@ -78,3 +93,34 @@
         data: { confirm: "Es-tu sûr de vouloir supprimer ton compte ? Cette action est irréversible.", turbo_confirm: "Es-tu sûr de vouloir supprimer ton compte ? Cette action est irréversible." } %>
   </div>
 </div>
+
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+  const themeButtons = document.querySelectorAll('.theme-option');
+  const currentTheme = localStorage.getItem('haven-theme') || 'dark';
+
+  // Marquer le bouton actif au chargement
+  themeButtons.forEach(btn => {
+    if (btn.dataset.theme === currentTheme) {
+      btn.classList.add('active');
+    }
+  });
+
+  // Gérer le clic sur les boutons de thème
+  themeButtons.forEach(btn => {
+    btn.addEventListener('click', function() {
+      const newTheme = this.dataset.theme;
+
+      // Mettre à jour le DOM
+      document.documentElement.setAttribute('data-theme', newTheme);
+
+      // Sauvegarder dans localStorage
+      localStorage.setItem('haven-theme', newTheme);
+
+      // Mettre à jour les classes actives
+      themeButtons.forEach(b => b.classList.remove('active'));
+      this.classList.add('active');
+    });
+  });
+});
+</script>

@@ -1,4 +1,4 @@
-// Styles pour Initial Quizzes - Stoic Theme
+// Styles pour Initial Quizzes - Stoic Theme (avec CSS Custom Properties)
 
 .quiz-container {
   max-width: 700px;
@@ -11,22 +11,22 @@
   margin-bottom: 2rem;
 
   h1 {
-    color: $stoic-text-primary;
+    color: var(--stoic-text-primary);
     font-family: $headings-font-family;
     font-weight: 700;
     margin-bottom: 0.5rem;
   }
 
   p {
-    color: $stoic-text-secondary;
+    color: var(--stoic-text-secondary);
     font-size: 1.1rem;
   }
 }
 
 .quiz-card {
-  background: $stoic-surface;
+  background: var(--stoic-surface);
   border-radius: 12px;
-  border: 1px solid $stoic-border;
+  border: 1px solid var(--stoic-border);
   padding: 2rem;
   margin-bottom: 2rem;
 }
@@ -34,7 +34,7 @@
 .quiz-section {
   margin-bottom: 2rem;
   padding-bottom: 1.5rem;
-  border-bottom: 1px solid $stoic-border;
+  border-bottom: 1px solid var(--stoic-border);
 
   &:last-child {
     border-bottom: none;
@@ -44,7 +44,7 @@
 }
 
 .quiz-section-title {
-  color: $stoic-text-primary;
+  color: var(--stoic-text-primary);
   font-family: $headings-font-family;
   font-size: 1.1rem;
   font-weight: 600;
@@ -54,7 +54,7 @@
   gap: 0.5rem;
 
   i {
-    color: $stoic-accent-bronze;
+    color: var(--stoic-accent-bronze);
   }
 }
 
@@ -63,28 +63,28 @@
 
   label {
     display: block;
-    color: $stoic-text-primary;
+    color: var(--stoic-text-primary);
     font-weight: 500;
     margin-bottom: 0.5rem;
   }
 
   .form-control,
   .form-select {
-    background: $stoic-elevated;
-    border: 1px solid $stoic-border;
+    background: var(--stoic-elevated);
+    border: 1px solid var(--stoic-border);
     border-radius: 8px;
     padding: 0.75rem 1rem;
-    color: $stoic-text-primary;
+    color: var(--stoic-text-primary);
     transition: all 0.2s ease;
 
     &::placeholder {
-      color: $stoic-text-muted;
+      color: var(--stoic-text-muted);
     }
 
     &:focus {
-      border-color: $stoic-accent;
-      box-shadow: 0 0 0 2px rgba($stoic-accent, 0.15);
-      background: $stoic-surface;
+      border-color: var(--stoic-accent);
+      box-shadow: 0 0 0 2px rgba(212, 165, 90, 0.15);
+      background: var(--stoic-surface);
     }
   }
 
@@ -103,7 +103,7 @@
     width: 100%;
     height: 6px;
     border-radius: 3px;
-    background: $stoic-border;
+    background: var(--stoic-border);
     -webkit-appearance: none;
 
     &::-webkit-slider-thumb {
@@ -111,8 +111,8 @@
       width: 22px;
       height: 22px;
       border-radius: 50%;
-      background: $stoic-surface;
-      border: 2px solid $stoic-accent;
+      background: var(--stoic-surface);
+      border: 2px solid var(--stoic-accent);
       cursor: pointer;
     }
   }
@@ -122,7 +122,7 @@
     justify-content: space-between;
     margin-top: 0.5rem;
     font-size: 0.85rem;
-    color: $stoic-text-secondary;
+    color: var(--stoic-text-secondary);
   }
 }
 
@@ -140,25 +140,25 @@
       display: none;
 
       &:checked + label {
-        background: $stoic-accent;
-        color: $stoic-text-primary;
-        border-color: $stoic-accent;
+        background: var(--stoic-accent);
+        color: white;
+        border-color: var(--stoic-accent);
       }
     }
 
     label {
       display: block;
       padding: 0.75rem 1.5rem;
-      border: 1px solid $stoic-border;
+      border: 1px solid var(--stoic-border);
       border-radius: 8px;
       text-align: center;
       cursor: pointer;
-      color: $stoic-text-secondary;
+      color: var(--stoic-text-secondary);
       transition: all 0.2s ease;
 
       &:hover {
-        border-color: $stoic-accent;
-        color: $stoic-text-primary;
+        border-color: var(--stoic-accent);
+        color: var(--stoic-text-primary);
       }
     }
   }
@@ -170,32 +170,32 @@
   gap: 1rem;
   margin-top: 2rem;
   padding-top: 1.5rem;
-  border-top: 1px solid $stoic-border;
+  border-top: 1px solid var(--stoic-border);
 
   .btn-primary {
-    background: $stoic-accent;
-    border-color: $stoic-accent;
-    color: $stoic-text-primary;
+    background: var(--stoic-accent);
+    border-color: var(--stoic-accent);
+    color: white;
     padding: 0.75rem 2rem;
     border-radius: 8px;
     font-weight: 600;
 
     &:hover {
-      background: $stoic-accent-hover;
-      border-color: $stoic-accent-hover;
+      background: var(--stoic-accent-hover);
+      border-color: var(--stoic-accent-hover);
     }
   }
 
   .btn-secondary {
     background: transparent;
-    border: 1px solid $stoic-border;
-    color: $stoic-text-secondary;
+    border: 1px solid var(--stoic-border);
+    color: var(--stoic-text-secondary);
     padding: 0.75rem 2rem;
     border-radius: 8px;
 
     &:hover {
-      background: $stoic-elevated;
-      color: $stoic-text-primary;
+      background: var(--stoic-elevated);
+      color: var(--stoic-text-primary);
     }
   }
 }
@@ -209,37 +209,37 @@
   }
 
   .info-item {
-    background: $stoic-elevated;
+    background: var(--stoic-elevated);
     padding: 1rem 1.25rem;
     border-radius: 8px;
 
     .info-label {
       font-size: 0.85rem;
-      color: $stoic-text-muted;
+      color: var(--stoic-text-muted);
       margin-bottom: 0.25rem;
     }
 
     .info-value {
       font-weight: 600;
-      color: $stoic-text-primary;
+      color: var(--stoic-text-primary);
     }
   }
 
   .info-text {
-    background: $stoic-elevated;
+    background: var(--stoic-elevated);
     padding: 1.25rem;
     border-radius: 8px;
     margin-top: 1.5rem;
 
     .info-label {
       font-size: 0.85rem;
-      color: $stoic-text-muted;
+      color: var(--stoic-text-muted);
       margin-bottom: 0.5rem;
     }
 
     p {
       margin: 0;
-      color: $stoic-text-secondary;
+      color: var(--stoic-text-secondary);
       line-height: 1.6;
     }
   }
@@ -255,17 +255,17 @@
   font-weight: 600;
 
   &.low {
-    background: rgba($pain-low, 0.15);
-    color: $pain-low;
+    background: rgba(127, 176, 105, 0.15);
+    color: var(--pain-low);
   }
 
   &.medium {
-    background: rgba($pain-medium, 0.15);
-    color: $pain-medium;
+    background: rgba(232, 192, 120, 0.15);
+    color: var(--pain-medium);
   }
 
   &.high {
-    background: rgba($pain-high, 0.15);
-    color: $pain-high;
+    background: rgba(224, 122, 107, 0.15);
+    color: var(--pain-high);
   }
 }

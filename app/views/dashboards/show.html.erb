@@ -29,6 +29,10 @@
 
   <!-- Frise des 5 étapes du deuil -->
   <div class="grief-timeline-card">
+    <div class="grief-timeline-title">
+      <h3>Ton parcours de guérison</h3>
+      <p>Les 5 étapes du deuil amoureux</p>
+    </div>
     <div class="grief-timeline">
       <div class="grief-progress-bar">
         <div class="grief-progress-fill" style="width: <%= @current_score %>%;"></div>
@@ -45,10 +49,12 @@
       </div>
 
       <div class="grief-stages">
+        <% current_stage_index = @latest_state&.grief_stage_id ? @grief_stages.index { |s| s.id == @latest_state.grief_stage_id } : -1 %>
         <% @grief_stages.each_with_index do |stage, index| %>
           <% stage_position = (index * 25) %>
-          <% is_current = @latest_state && @latest_state.grief_stage_id == stage.id %>
-          <div class="grief-stage-item <%= 'active' if is_current %>"
+          <% is_current = current_stage_index == index %>
+          <% is_passed = current_stage_index.present? && index < current_stage_index %>
+          <div class="grief-stage-item <%= 'active' if is_current %> <%= 'passed' if is_passed %>"
                data-stage-id="<%= stage.id %>"
                data-stage-name="<%= stage.name %>"
                data-stage-desc="<%= stage.description %>"

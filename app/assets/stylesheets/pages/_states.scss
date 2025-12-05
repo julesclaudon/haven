@@ -1,4 +1,4 @@
-// Styles pour States - Stoic Theme
+// Styles pour States - Stoic Theme (avec CSS Custom Properties pour dark/light mode)
 
 .states-container {
   max-width: 900px;
@@ -15,7 +15,7 @@
   gap: 1rem;
 
   h1 {
-    color: $stoic-text-primary;
+    color: var(--stoic-text-primary);
     font-family: $headings-font-family;
     font-weight: 700;
     margin: 0;
@@ -30,9 +30,9 @@
 }
 
 .state-card {
-  background: $stoic-surface;
+  background: var(--stoic-surface);
   border-radius: 10px;
-  border: 1px solid $stoic-border;
+  border: 1px solid var(--stoic-border);
   padding: 1.25rem 1.5rem;
   display: flex;
   align-items: center;
@@ -42,7 +42,7 @@
   color: inherit;
 
   &:hover {
-    border-color: $stoic-accent;
+    border-color: var(--stoic-accent);
   }
 
   .state-pain {
@@ -57,18 +57,18 @@
     flex-shrink: 0;
 
     &.low {
-      background: rgba($pain-low, 0.15);
-      color: $pain-low;
+      background: rgba(127, 176, 105, 0.15);
+      color: var(--pain-low);
     }
 
     &.medium {
-      background: rgba($pain-medium, 0.15);
-      color: $pain-medium;
+      background: rgba(232, 192, 120, 0.15);
+      color: var(--pain-medium);
     }
 
     &.high {
-      background: rgba($pain-high, 0.15);
-      color: $pain-high;
+      background: rgba(224, 122, 107, 0.15);
+      color: var(--pain-high);
     }
   }
 
@@ -77,13 +77,13 @@
 
     .state-date {
       font-size: 0.85rem;
-      color: $stoic-text-secondary;
+      color: var(--stoic-text-secondary);
       margin-bottom: 0.25rem;
     }
 
     .state-emotion {
       font-weight: 600;
-      color: $stoic-text-primary;
+      color: var(--stoic-text-primary);
     }
   }
 
@@ -97,16 +97,16 @@
       align-items: center;
       gap: 0.35rem;
       font-size: 0.9rem;
-      color: $stoic-text-secondary;
+      color: var(--stoic-text-secondary);
 
       i {
-        color: $stoic-accent-bronze;
+        color: var(--stoic-accent-bronze);
       }
     }
   }
 
   .state-arrow {
-    color: $stoic-text-muted;
+    color: var(--stoic-text-muted);
     font-size: 1.25rem;
   }
 }
@@ -115,23 +115,23 @@
 .states-empty {
   text-align: center;
   padding: 4rem 2rem;
-  background: $stoic-surface;
+  background: var(--stoic-surface);
   border-radius: 12px;
-  border: 1px solid $stoic-border;
+  border: 1px solid var(--stoic-border);
 
   i {
     font-size: 3rem;
-    color: $stoic-text-muted;
+    color: var(--stoic-text-muted);
     margin-bottom: 1rem;
   }
 
   h3 {
-    color: $stoic-text-primary;
+    color: var(--stoic-text-primary);
     margin-bottom: 0.5rem;
   }
 
   p {
-    color: $stoic-text-secondary;
+    color: var(--stoic-text-secondary);
     margin-bottom: 1.5rem;
   }
 }
@@ -148,20 +148,20 @@
   margin-bottom: 2rem;
 
   h1 {
-    color: $stoic-text-primary;
+    color: var(--stoic-text-primary);
     font-family: $headings-font-family;
     font-weight: 700;
   }
 
   .subtitle {
-    color: $stoic-text-secondary;
+    color: var(--stoic-text-secondary);
   }
 }
 
 .state-form-card {
-  background: $stoic-surface;
+  background: var(--stoic-surface);
   border-radius: 12px;
-  border: 1px solid $stoic-border;
+  border: 1px solid var(--stoic-border);
   padding: 2rem;
 }
 
@@ -170,15 +170,15 @@
   text-align: center;
   padding: 2rem;
   margin-bottom: 1.5rem;
-  background: $stoic-elevated;
-  border: 1px solid $stoic-border;
+  background: var(--stoic-elevated);
+  border: 1px solid var(--stoic-border);
   border-radius: 12px;
   animation: fadeInDown 0.5s ease;
 
   .success-icon {
     width: 70px;
     height: 70px;
-    background: rgba($pain-low, 0.15);
+    background: rgba(127, 176, 105, 0.15);
     border-radius: 50%;
     display: flex;
     align-items: center;
@@ -187,18 +187,18 @@
 
     i {
       font-size: 2rem;
-      color: $pain-low;
+      color: var(--pain-low);
     }
   }
 
   h2 {
-    color: $stoic-text-primary;
+    color: var(--stoic-text-primary);
     font-size: 1.5rem;
     margin: 0 0 0.5rem;
   }
 
   p {
-    color: $stoic-text-secondary;
+    color: var(--stoic-text-secondary);
     margin: 0;
     font-size: 0.95rem;
     line-height: 1.5;
@@ -221,83 +221,146 @@
   max-width: 700px;
   margin: 2rem auto;
   padding: 0 1rem;
+  padding-bottom: 2rem;
 
   .state-show-header {
     display: flex;
-    align-items: center;
+    align-items: flex-start;
     gap: 1rem;
-    margin-bottom: 2rem;
+    margin-bottom: 1.5rem;
+    padding: 0 0.5rem;
 
     .back-link {
-      color: $stoic-text-secondary;
+      color: var(--stoic-text-secondary);
       font-size: 1.5rem;
+      margin-top: 0.25rem;
 
       &:hover {
-        color: $stoic-accent;
+        color: var(--stoic-accent);
       }
     }
 
     .header-content {
+      flex: 1;
+
       h1 {
-        color: $stoic-text-primary;
+        color: var(--stoic-text-primary);
         font-family: $headings-font-family;
         font-size: 1.5rem;
-        margin: 0;
+        margin: 0 0 0.25rem;
       }
 
       .date {
-        color: $stoic-text-secondary;
+        color: var(--stoic-text-secondary);
         font-size: 0.9rem;
       }
     }
   }
 
   .state-detail-card {
-    background: $stoic-surface;
+    background: var(--stoic-surface);
     border-radius: 12px;
-    border: 1px solid $stoic-border;
-    padding: 2rem;
+    border: 1px solid var(--stoic-border);
+    padding: 1.5rem;
+
+    @media (min-width: 500px) {
+      padding: 2rem;
+    }
   }
 
   .state-summary {
-    display: flex;
-    gap: 1.5rem;
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(80px, 1fr));
+    gap: 1rem;
     padding-bottom: 1.5rem;
-    border-bottom: 1px solid $stoic-border;
+    border-bottom: 1px solid var(--stoic-border);
     margin-bottom: 1.5rem;
-    flex-wrap: wrap;
+
+    @media (min-width: 500px) {
+      grid-template-columns: repeat(auto-fit, minmax(100px, 1fr));
+      gap: 1.5rem;
+    }
 
     .summary-item {
       text-align: center;
-      flex: 1;
-      min-width: 100px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: flex-start;
+      padding: 0.5rem 0.25rem;
 
       .summary-value {
-        font-size: 1.5rem;
+        font-size: 1.1rem;
         font-weight: 700;
-        color: $stoic-text-primary;
+        color: var(--stoic-text-primary);
+        margin-bottom: 0.35rem;
+        line-height: 1.2;
+        word-break: break-word;
+        hyphens: auto;
+
+        @media (min-width: 500px) {
+          font-size: 1.25rem;
+        }
+
+        .pain-badge {
+          display: inline-block;
+          padding: 0.35rem 0.6rem;
+          border-radius: 6px;
+          font-size: 1rem;
+
+          @media (min-width: 500px) {
+            font-size: 1.1rem;
+            padding: 0.4rem 0.75rem;
+          }
+
+          &.low {
+            background: rgba(127, 176, 105, 0.15);
+            color: var(--pain-low);
+          }
+
+          &.medium {
+            background: rgba(232, 192, 120, 0.15);
+            color: var(--pain-medium);
+          }
+
+          &.high {
+            background: rgba(224, 122, 107, 0.15);
+            color: var(--pain-high);
+          }
+        }
 
         .score-diff-badge {
           display: inline-block;
-          padding: 0.25rem 0.75rem;
+          padding: 0.25rem 0.6rem;
           border-radius: 6px;
-          font-size: 1.1rem;
+          font-size: 0.95rem;
+
+          @media (min-width: 500px) {
+            font-size: 1rem;
+            padding: 0.25rem 0.75rem;
+          }
 
           &.positive {
-            background: rgba($pain-low, 0.15);
-            color: $pain-low;
+            background: rgba(127, 176, 105, 0.15);
+            color: var(--pain-low);
           }
 
           &.neutral {
-            background: $stoic-elevated;
-            color: $stoic-text-secondary;
+            background: var(--stoic-elevated);
+            color: var(--stoic-text-secondary);
           }
         }
       }
 
       .summary-label {
-        font-size: 0.85rem;
-        color: $stoic-text-secondary;
+        font-size: 0.75rem;
+        color: var(--stoic-text-secondary);
+        line-height: 1.3;
+        text-align: center;
+
+        @media (min-width: 500px) {
+          font-size: 0.8rem;
+        }
       }
     }
   }
@@ -305,44 +368,71 @@
   .detail-section {
     margin-bottom: 1.5rem;
 
+    &:last-child {
+      margin-bottom: 0;
+    }
+
     .section-title {
-      font-size: 0.85rem;
-      color: $stoic-text-secondary;
+      font-size: 0.8rem;
+      color: var(--stoic-text-secondary);
       text-transform: uppercase;
       letter-spacing: 0.5px;
       margin-bottom: 0.75rem;
+      font-weight: 500;
+    }
+
+    p {
+      margin: 0;
+      color: var(--stoic-text-primary);
+      line-height: 1.5;
     }
   }
 
   .raw-input-box {
-    background: $stoic-elevated;
-    padding: 1.25rem;
+    background: var(--stoic-elevated);
+    padding: 1rem 1.25rem;
     border-radius: 8px;
-    border-left: 3px solid $stoic-accent;
+    border-left: 3px solid var(--stoic-accent);
     font-style: italic;
-    color: $stoic-text-secondary;
+    color: var(--stoic-text-secondary);
     line-height: 1.6;
+    font-size: 0.95rem;
   }
 
   .details-grid {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-    gap: 1rem;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 0.75rem;
+
+    @media (min-width: 500px) {
+      grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+      gap: 1rem;
+    }
 
     .detail-item {
-      background: $stoic-elevated;
-      padding: 1rem;
+      background: var(--stoic-elevated);
+      padding: 0.85rem 1rem;
       border-radius: 8px;
 
       .detail-label {
-        font-size: 0.8rem;
-        color: $stoic-text-muted;
+        font-size: 0.75rem;
+        color: var(--stoic-text-muted);
         margin-bottom: 0.25rem;
+
+        @media (min-width: 500px) {
+          font-size: 0.8rem;
+        }
       }
 
       .detail-value {
         font-weight: 500;
-        color: $stoic-text-primary;
+        color: var(--stoic-text-primary);
+        font-size: 0.9rem;
+        word-break: break-word;
+
+        @media (min-width: 500px) {
+          font-size: 0.95rem;
+        }
       }
     }
   }
@@ -350,31 +440,31 @@
 
 // Section analyse avec résumé et score
 .analysis-resume {
-  background: $stoic-elevated;
+  background: var(--stoic-elevated);
   padding: 1.25rem;
   border-radius: 10px;
-  border: 1px solid $stoic-border;
+  border: 1px solid var(--stoic-border);
   margin-bottom: 1.5rem;
 
   .section-title {
     display: flex;
     align-items: center;
     gap: 0.5rem;
-    color: $stoic-text-primary;
+    color: var(--stoic-text-primary);
     font-weight: 600;
 
     i {
       font-size: 1rem;
-      color: $stoic-accent;
+      color: var(--stoic-accent);
     }
   }
 
   .resume-box {
-    background: $stoic-surface;
+    background: var(--stoic-surface);
     padding: 1rem;
     border-radius: 8px;
     margin-top: 0.75rem;
-    color: $stoic-text-secondary;
+    color: var(--stoic-text-secondary);
     line-height: 1.6;
     font-size: 0.95rem;
   }
@@ -385,24 +475,24 @@
     gap: 1rem;
     margin-top: 1rem;
     padding-top: 1rem;
-    border-top: 1px solid $stoic-border;
+    border-top: 1px solid var(--stoic-border);
 
     .score-label {
       font-size: 0.8rem;
-      color: $stoic-text-secondary;
+      color: var(--stoic-text-secondary);
       white-space: nowrap;
     }
 
     .score-bar {
       flex: 1;
       height: 6px;
-      background: $stoic-border;
+      background: var(--stoic-border);
       border-radius: 3px;
       overflow: hidden;
 
       .score-fill {
         height: 100%;
-        background: $stoic-accent;
+        background: var(--stoic-accent);
         border-radius: 3px;
         transition: width 0.5s ease;
       }
@@ -410,7 +500,7 @@
 
     .score-value {
       font-weight: 700;
-      color: $stoic-text-primary;
+      color: var(--stoic-text-primary);
       font-size: 0.9rem;
       min-width: 40px;
       text-align: right;
@@ -426,14 +516,14 @@
     gap: 0.5rem;
 
     i {
-      color: $stoic-accent-bronze;
+      color: var(--stoic-accent-bronze);
     }
   }
 
   .archetype-badge {
     display: inline-block;
-    background: $stoic-accent;
-    color: $stoic-text-primary;
+    background: var(--stoic-accent);
+    color: white;
     padding: 0.5rem 1.25rem;
     border-radius: 6px;
     font-weight: 600;
@@ -445,16 +535,16 @@
     display: flex;
     align-items: center;
     gap: 0.75rem;
-    background: $stoic-elevated;
+    background: var(--stoic-elevated);
     padding: 1rem 1.25rem;
     border-radius: 8px;
     margin-top: 0.5rem;
-    color: $stoic-text-secondary;
+    color: var(--stoic-text-secondary);
     font-size: 0.9rem;
     font-style: italic;
 
     i {
-      color: $stoic-text-muted;
+      color: var(--stoic-text-muted);
       font-size: 1.25rem;
     }
   }
@@ -462,8 +552,8 @@
 
 // Bouton nouveau state
 .btn-new-state {
-  background: $stoic-accent;
-  color: $stoic-text-primary;
+  background: var(--stoic-accent);
+  color: white;
   padding: 0.75rem 1.5rem;
   border-radius: 8px;
   font-weight: 600;
@@ -475,8 +565,8 @@
   border: none;
 
   &:hover {
-    background: $stoic-accent-hover;
-    color: $stoic-text-primary;
+    background: var(--stoic-accent-hover);
+    color: white;
   }
 
   i {

@@ -1,0 +1,355 @@
+// Profile Page - Stoic Theme (avec CSS Custom Properties pour dark/light mode)
+
+.profile-container {
+  max-width: 600px;
+  margin: 2rem auto;
+  padding: 0 1rem;
+  padding-bottom: 100px;
+}
+
+.profile-header {
+  margin-bottom: 2rem;
+
+  h1 {
+    color: var(--stoic-text-primary);
+    font-family: $headings-font-family;
+    font-weight: 700;
+    margin: 0;
+  }
+}
+
+.profile-info-card {
+  background: var(--stoic-surface);
+  border-radius: 12px;
+  border: 1px solid var(--stoic-border);
+  padding: 2rem;
+  display: flex;
+  align-items: center;
+  gap: 1.5rem;
+  margin-bottom: 1.5rem;
+}
+
+.profile-avatar {
+  width: 80px;
+  height: 80px;
+  background: var(--stoic-elevated);
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+
+  i {
+    font-size: 3rem;
+    color: var(--stoic-accent);
+  }
+}
+
+.profile-details {
+  h3 {
+    color: var(--stoic-text-primary);
+    font-size: 1.25rem;
+    font-weight: 600;
+    margin: 0 0 0.25rem;
+  }
+
+  p {
+    color: var(--stoic-text-secondary);
+    font-size: 0.9rem;
+    margin: 0;
+  }
+}
+
+.profile-section {
+  background: var(--stoic-surface);
+  border-radius: 12px;
+  border: 1px solid var(--stoic-border);
+  padding: 1.5rem;
+  margin-bottom: 1rem;
+
+  h3 {
+    color: var(--stoic-text-primary);
+    font-size: 1rem;
+    font-weight: 600;
+    margin: 0 0 1rem;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+
+    i {
+      color: var(--stoic-accent);
+      font-size: 1rem;
+    }
+  }
+
+  p {
+    color: var(--stoic-text-secondary);
+    font-size: 0.9rem;
+    margin: 0 0 1rem;
+    line-height: 1.5;
+  }
+
+  &.profile-danger {
+    border-color: rgba(224, 122, 107, 0.3);
+
+    h3 {
+      color: var(--pain-high);
+
+      i {
+        color: var(--pain-high);
+      }
+    }
+  }
+}
+
+.profile-form {
+  .form-inputs {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+  }
+
+  .form-group {
+    margin-bottom: 0;
+
+    label {
+      display: block;
+      color: var(--stoic-text-primary);
+      font-size: 0.9rem;
+      font-weight: 500;
+      margin-bottom: 0.5rem;
+    }
+
+    input {
+      width: 100%;
+      padding: 0.75rem 1rem;
+      border: 1px solid var(--stoic-border);
+      border-radius: 8px;
+      background: var(--stoic-bg);
+      color: var(--stoic-text-primary);
+      font-size: 1rem;
+      transition: border-color 0.2s ease;
+
+      &:focus {
+        outline: none;
+        border-color: var(--stoic-accent);
+      }
+
+      &::placeholder {
+        color: var(--stoic-text-muted);
+      }
+    }
+
+    .hint, .form-text {
+      display: block;
+      color: var(--stoic-text-muted);
+      font-size: 0.8rem;
+      margin-top: 0.35rem;
+    }
+  }
+
+  .string, .email, .password {
+    margin-bottom: 0;
+
+    label {
+      display: block;
+      color: var(--stoic-text-primary);
+      font-size: 0.9rem;
+      font-weight: 500;
+      margin-bottom: 0.5rem;
+
+      abbr {
+        display: none;
+      }
+    }
+
+    input {
+      width: 100%;
+      padding: 0.75rem 1rem;
+      border: 1px solid var(--stoic-border);
+      border-radius: 8px;
+      background: var(--stoic-bg);
+      color: var(--stoic-text-primary);
+      font-size: 1rem;
+      transition: border-color 0.2s ease;
+
+      &:focus {
+        outline: none;
+        border-color: var(--stoic-accent);
+      }
+
+      &::placeholder {
+        color: var(--stoic-text-muted);
+      }
+    }
+
+    .hint, .form-text, small {
+      display: block;
+      color: var(--stoic-text-muted);
+      font-size: 0.8rem;
+      margin-top: 0.35rem;
+    }
+  }
+}
+
+.profile-divider {
+  border: none;
+  border-top: 1px solid var(--stoic-border);
+  margin: 1.5rem 0;
+}
+
+.form-section-title {
+  color: var(--stoic-text-primary);
+  font-size: 0.95rem;
+  font-weight: 600;
+  margin: 0 0 0.5rem;
+}
+
+.form-actions {
+  margin-top: 1.5rem;
+}
+
+// Buttons
+.btn-primary {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  background: var(--stoic-accent);
+  color: white;
+  padding: 0.75rem 1.5rem;
+  border-radius: 8px;
+  border: none;
+  font-size: 0.95rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  text-decoration: none;
+
+  &:hover {
+    background: var(--stoic-accent-hover);
+    color: white;
+  }
+}
+
+.btn-secondary {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  background: var(--stoic-elevated);
+  color: var(--stoic-text-primary);
+  padding: 0.75rem 1.5rem;
+  border-radius: 8px;
+  border: 1px solid var(--stoic-border);
+  font-size: 0.95rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  text-decoration: none;
+
+  &:hover {
+    background: var(--stoic-border);
+    color: var(--stoic-text-primary);
+  }
+}
+
+.btn-danger {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  background: rgba(224, 122, 107, 0.1);
+  color: var(--pain-high);
+  padding: 0.75rem 1.5rem;
+  border-radius: 8px;
+  border: 1px solid rgba(224, 122, 107, 0.3);
+  font-size: 0.95rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  text-decoration: none;
+
+  &:hover {
+    background: var(--pain-high);
+    color: white;
+    border-color: var(--pain-high);
+  }
+}
+
+// Error messages
+.error_notification {
+  background: rgba(224, 122, 107, 0.1);
+  border: 1px solid rgba(224, 122, 107, 0.3);
+  border-radius: 8px;
+  padding: 1rem;
+  margin-bottom: 1rem;
+  color: var(--pain-high);
+  font-size: 0.9rem;
+}
+
+.field_with_errors {
+  input {
+    border-color: var(--pain-high) !important;
+  }
+
+  .error {
+    color: var(--pain-high);
+    font-size: 0.8rem;
+    margin-top: 0.25rem;
+  }
+}
+
+// Theme Selector
+.theme-selector {
+  display: flex;
+  gap: 1rem;
+}
+
+.theme-option {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 1.25rem 1rem;
+  background: var(--stoic-elevated);
+  border: 2px solid var(--stoic-border);
+  border-radius: 12px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+
+  i {
+    font-size: 1.5rem;
+    color: var(--stoic-text-secondary);
+    transition: color 0.2s ease;
+  }
+
+  span {
+    font-size: 0.9rem;
+    font-weight: 500;
+    color: var(--stoic-text-secondary);
+    transition: color 0.2s ease;
+  }
+
+  &:hover {
+    border-color: var(--stoic-accent);
+
+    i, span {
+      color: var(--stoic-text-primary);
+    }
+  }
+
+  &.active {
+    border-color: var(--stoic-accent);
+    background: rgba(212, 165, 90, 0.1);
+
+    i {
+      color: var(--stoic-accent);
+    }
+
+    span {
+      color: var(--stoic-text-primary);
+    }
+  }
+}

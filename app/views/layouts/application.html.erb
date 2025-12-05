@@ -8,6 +8,14 @@
 
     <%= stylesheet_link_tag "application", "data-turbo-track": "reload" %>
     <%= javascript_importmap_tags %>
+
+    <script>
+      // Appliquer le thème immédiatement pour éviter le flash
+      (function() {
+        const savedTheme = localStorage.getItem('haven-theme') || 'dark';
+        document.documentElement.setAttribute('data-theme', savedTheme);
+      })();
+    </script>
   </head>
 
   <body class="<%= 'has-bottom-navbar' if user_signed_in? %>">

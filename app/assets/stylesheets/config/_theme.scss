@@ -1,0 +1,172 @@
+// Theme Utilities - Use CSS Custom Properties for dynamic theming
+// Ce fichier fournit des classes utilitaires qui utilisent les variables CSS
+
+// Body et fond principal
+body {
+  background-color: var(--stoic-bg);
+  color: var(--stoic-text-primary);
+  transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+// Classes utilitaires pour les couleurs de fond
+.bg-stoic {
+  background-color: var(--stoic-bg) !important;
+}
+
+.bg-stoic-surface {
+  background-color: var(--stoic-surface) !important;
+}
+
+.bg-stoic-elevated {
+  background-color: var(--stoic-elevated) !important;
+}
+
+// Classes utilitaires pour les couleurs de texte
+.text-stoic-primary {
+  color: var(--stoic-text-primary) !important;
+}
+
+.text-stoic-secondary {
+  color: var(--stoic-text-secondary) !important;
+}
+
+.text-stoic-muted {
+  color: var(--stoic-text-muted) !important;
+}
+
+.text-stoic-accent {
+  color: var(--stoic-accent) !important;
+}
+
+// Bordures
+.border-stoic {
+  border-color: var(--stoic-border) !important;
+}
+
+// ===========================================
+// Theme Toggle Button Styles
+// ===========================================
+
+.theme-toggle {
+  position: relative;
+  width: 50px;
+  height: 26px;
+  border-radius: 13px;
+  background: var(--stoic-elevated);
+  border: 1px solid var(--stoic-border);
+  cursor: pointer;
+  transition: all 0.3s ease;
+  display: flex;
+  align-items: center;
+  padding: 0 4px;
+
+  &:hover {
+    border-color: var(--stoic-accent);
+  }
+
+  .toggle-slider {
+    position: absolute;
+    width: 20px;
+    height: 20px;
+    border-radius: 50%;
+    background: var(--stoic-accent);
+    transition: transform 0.3s ease;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    left: 3px;
+
+    i {
+      font-size: 10px;
+      color: var(--stoic-bg);
+    }
+  }
+
+  // État light mode
+  &.light-mode .toggle-slider {
+    transform: translateX(24px);
+  }
+
+  .toggle-icons {
+    display: flex;
+    justify-content: space-between;
+    width: 100%;
+    padding: 0 5px;
+
+    i {
+      font-size: 11px;
+      color: var(--stoic-text-muted);
+      transition: color 0.3s ease;
+    }
+
+    .icon-moon {
+      color: var(--stoic-accent);
+    }
+  }
+
+  &.light-mode .toggle-icons {
+    .icon-moon {
+      color: var(--stoic-text-muted);
+    }
+    .icon-sun {
+      color: var(--stoic-accent);
+    }
+  }
+}
+
+// Bouton toggle simplifié pour navbar
+.theme-toggle-btn {
+  background: transparent;
+  border: none;
+  color: var(--stoic-text-secondary);
+  font-size: 1.25rem;
+  padding: 0.5rem;
+  cursor: pointer;
+  border-radius: 8px;
+  transition: all 0.2s ease;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  &:hover {
+    color: var(--stoic-accent);
+    background: var(--stoic-elevated);
+  }
+
+  .icon-sun {
+    display: none;
+  }
+
+  .icon-moon {
+    display: block;
+  }
+}
+
+// En light mode, afficher le soleil
+[data-theme="light"] .theme-toggle-btn {
+  .icon-sun {
+    display: block;
+  }
+
+  .icon-moon {
+    display: none;
+  }
+}
+
+// ===========================================
+// Transitions douces pour le changement de thème
+// ===========================================
+
+* {
+  transition: background-color 0.2s ease,
+              border-color 0.2s ease,
+              box-shadow 0.2s ease;
+}
+
+// Exclure les éléments qui ont besoin de transitions spécifiques
+input, textarea, button, a {
+  transition: background-color 0.2s ease,
+              border-color 0.2s ease,
+              box-shadow 0.2s ease,
+              color 0.2s ease;
+}
