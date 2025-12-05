@@ -186,18 +186,23 @@
       </div>
     <% end %>
 
-    <%# Archétype utilisateur (si disponible) %>
-    <% if @state.user.archetype.present? %>
-      <div class="detail-section archetype-section">
-        <div class="section-title">
-          <i class="fas fa-user-circle"></i>
-          Ton profil relationnel
-        </div>
-        <div class="archetype-badge">
-          <%= @state.user.archetype.archetype_name %>
-        </div>
+    <%# Archétype détecté pour cet échange %>
+    <div class="detail-section archetype-section">
+      <div class="section-title">
+        <i class="fas fa-user-circle"></i>
+        Ton profil relationnel
       </div>
-    <% end %>
+      <% if @state.profil_relationnel.present? %>
+        <div class="archetype-badge">
+          <%= @state.profil_relationnel %>
+        </div>
+      <% else %>
+        <div class="archetype-undetermined">
+          <i class="fas fa-question-circle"></i>
+          <span>Impossible de déterminer ton archétype, notre échange a été trop court !</span>
+        </div>
+      <% end %>
+    </div>
   </div>
 
   <% unless params[:iframe] %>

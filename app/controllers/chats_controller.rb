@@ -134,6 +134,7 @@ class ChatsController < ApplicationController
     state_attrs[:support_level] = parsed["support_level"] if parsed["support_level"].present?
     state_attrs[:habits_changed] = parsed["habits_changed"] if parsed["habits_changed"].present?
     state_attrs[:drugs] = parsed["drugs"] if parsed["drugs"].present?
+    state_attrs[:profil_relationnel] = parsed["profil_relationnel"] if parsed["profil_relationnel"].present?
 
     # Mettre à jour le raw_input avec le dernier message utilisateur si pas déjà rempli
     if state.raw_input.blank?
@@ -143,11 +144,8 @@ class ChatsController < ApplicationController
 
     state.update!(state_attrs)
 
-    # Mettre à jour l'archétype utilisateur si détecté
-    if parsed["profil_relationnel"].present?
-      archetype = Archetype.find_by(archetype_name: parsed["profil_relationnel"])
-      current_user.update(archetype: archetype) if archetype
-    end
+    # Mettre à jour l'archétype final si les conditions sont remplies
+    current_user.update_final_archetype!
   end
 
   def find_grief_stage_by_french(stage_key)
