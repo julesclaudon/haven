@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.1].define(version: 2025_12_02_134627) do
+ActiveRecord::Schema[7.1].define(version: 2025_12_05_102143) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -93,6 +93,7 @@ ActiveRecord::Schema[7.1].define(version: 2025_12_02_134627) do
     t.string "support_level"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.string "profil_relationnel"
     t.index ["chat_id"], name: "index_states_on_chat_id"
     t.index ["grief_stage_id"], name: "index_states_on_grief_stage_id"
     t.index ["user_id"], name: "index_states_on_user_id"

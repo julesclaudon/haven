@@ -1,6 +1,35 @@
+// Alert - Stoic Theme
 .alert {
   position: fixed;
   bottom: 16px;
   right: 16px;
   z-index: 1000;
+  background: $stoic-surface;
+  border: 1px solid $stoic-border;
+  border-radius: 8px;
+  color: $stoic-text-secondary;
+
+  &.alert-success {
+    border-left: 3px solid $pain-low;
+    color: $pain-low;
+  }
+
+  &.alert-danger {
+    border-left: 3px solid $pain-high;
+    color: $pain-high;
+  }
+
+  &.alert-warning {
+    border-left: 3px solid $pain-medium;
+    color: $pain-medium;
+  }
+
+  &.alert-info {
+    border-left: 3px solid $stoic-accent;
+    color: $stoic-accent;
+  }
+
+  .btn-close {
+    filter: invert(0.7);
+  }
 }

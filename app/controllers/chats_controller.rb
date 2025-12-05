@@ -162,6 +162,18 @@ class ChatsController < ApplicationController
     if parsed["attachement_ex"].present? && attachement_mapping[parsed["attachement_ex"]]
       state_attrs[:ex_contact_frequency] = attachement_mapping[parsed["attachement_ex"]]
     end
+    state_attrs[:pain_level] = parsed["pain_level"].to_i.clamp(0, 10) if parsed["pain_level"].present?
+    state_attrs[:emotion_label] = parsed["emotion_label"] if parsed["emotion_label"].present?
+    state_attrs[:main_sentiment] = parsed["main_sentiment"] if parsed["main_sentiment"].present?
+    state_attrs[:trigger_source] = parsed["trigger_source"] if parsed["trigger_source"].present? && valid_trigger_source?(parsed["trigger_source"])
+    state_attrs[:ex_contact_frequency] = parsed["ex_contact_frequency"] if parsed["ex_contact_frequency"].present?
+    state_attrs[:considered_reunion] = parsed["considered_reunion"] unless parsed["considered_reunion"].nil?
+    state_attrs[:ruminating_frequency] = parsed["ruminating_frequency"] if parsed["ruminating_frequency"].present?
+    state_attrs[:sleep_quality] = parsed["sleep_quality"] if parsed["sleep_quality"].present?
+    state_attrs[:support_level] = parsed["support_level"] if parsed["support_level"].present?
+    state_attrs[:habits_changed] = parsed["habits_changed"] if parsed["habits_changed"].present?
+    state_attrs[:drugs] = parsed["drugs"] if parsed["drugs"].present?
+    state_attrs[:profil_relationnel] = parsed["profil_relationnel"] if parsed["profil_relationnel"].present?
 
     # Mettre à jour le raw_input avec le dernier message utilisateur si pas déjà rempli
     if state.raw_input.blank?
@@ -171,11 +183,8 @@ class ChatsController < ApplicationController
 
     state.update!(state_attrs)
 
-    # Mettre à jour l'archétype utilisateur si détecté
-    if parsed["profil_relationnel"].present?
-      archetype = Archetype.find_by(archetype_name: parsed["profil_relationnel"])
-      current_user.update(archetype: archetype) if archetype
-    end
+    # Mettre à jour l'archétype final si les conditions sont remplies
+    current_user.update_final_archetype!
   end
 
   def find_grief_stage_by_french(stage_key)

@@ -1,4 +1,4 @@
-// Styles pour Chats (Nos échanges)
+// Styles pour Chats (Nos échanges) - Stoic Theme
 
 .chats-container {
   max-width: 900px;
@@ -11,7 +11,7 @@
   margin-bottom: 2rem;
 
   h1 {
-    color: $haven-primary;
+    color: $stoic-text-primary;
     font-family: $headings-font-family;
     font-weight: 700;
     margin: 0;
@@ -19,9 +19,9 @@
 }
 
 .chats-content {
-  background: white;
-  border-radius: 16px;
-  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+  background: $stoic-surface;
+  border-radius: 12px;
+  border: 1px solid $stoic-border;
   overflow: hidden;
 }
 
@@ -36,7 +36,7 @@
   align-items: center;
   justify-content: space-between;
   padding: 1rem 1.5rem;
-  border-bottom: 1px solid $light-gray;
+  border-bottom: 1px solid $stoic-border;
   transition: background 0.2s ease;
 
   &:last-child {
@@ -44,7 +44,7 @@
   }
 
   &:hover {
-    background: rgba($haven-light, 0.5);
+    background: $stoic-elevated;
   }
 }
 
@@ -61,7 +61,7 @@
 
   i {
     font-size: 1.5rem;
-    color: $haven-primary;
+    color: $stoic-accent;
   }
 }
 
@@ -79,26 +79,26 @@
 
   .chat-date {
     font-weight: 500;
-    color: $haven-dark;
+    color: $stoic-text-primary;
   }
 
   .chat-badge-closed {
     background: rgba($pain-low, 0.15);
-    color: darken($pain-low, 15%);
+    color: $pain-low;
     padding: 0.15rem 0.5rem;
-    border-radius: 0.75rem;
+    border-radius: 4px;
     font-size: 0.7rem;
     font-weight: 600;
   }
 
   .chat-stage {
     font-size: 0.85rem;
-    color: $gray;
+    color: $stoic-text-secondary;
   }
 }
 
 .chat-item.chat-closed {
-  background: rgba($haven-light, 0.5);
+  background: rgba($stoic-elevated, 0.5);
 
   .chat-link i {
     color: $pain-low;
@@ -106,11 +106,11 @@
 }
 
 .btn-state-popup {
-  background: rgba($haven-secondary, 0.2);
-  border: none;
+  background: $stoic-elevated;
+  border: 1px solid $stoic-border;
   width: 40px;
   height: 40px;
-  border-radius: 50%;
+  border-radius: 8px;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -118,15 +118,16 @@
   transition: all 0.2s ease;
 
   i {
-    color: $haven-primary;
+    color: $stoic-text-secondary;
     font-size: 1rem;
   }
 
   &:hover {
-    background: $haven-secondary;
+    background: $stoic-accent;
+    border-color: $stoic-accent;
 
     i {
-      color: white;
+      color: $stoic-text-primary;
     }
   }
 }
@@ -138,17 +139,17 @@
 
   i {
     font-size: 3rem;
-    color: $light-gray;
+    color: $stoic-text-muted;
     margin-bottom: 1rem;
   }
 
   p {
-    color: $gray;
+    color: $stoic-text-secondary;
     margin: 0.5rem 0;
 
     &:first-of-type {
       font-weight: 600;
-      color: $haven-dark;
+      color: $stoic-text-primary;
     }
   }
 }
@@ -160,23 +161,24 @@
   left: 0;
   width: 100%;
   height: 100%;
-  background: rgba(0, 0, 0, 0.6);
+  background: rgba($stoic-bg, 0.85);
   display: flex;
   align-items: center;
   justify-content: center;
   z-index: 9999;
   padding: 1rem;
+  backdrop-filter: blur(4px);
 }
 
 .state-modal-content {
-  background: white;
-  border-radius: 16px;
+  background: $stoic-surface;
+  border-radius: 12px;
+  border: 1px solid $stoic-border;
   position: relative;
   width: 100%;
   max-width: 700px;
   max-height: 90vh;
   overflow: hidden;
-  box-shadow: 0 10px 40px rgba(0, 0, 0, 0.2);
 }
 
 .state-modal-iframe {
@@ -186,7 +188,8 @@
     width: 100%;
     height: 80vh;
     border: none;
-    border-radius: 0 0 16px 16px;
+    border-radius: 0 0 12px 12px;
+    background: $stoic-bg;
   }
 }
 
@@ -194,11 +197,11 @@
   position: absolute;
   top: 10px;
   right: 15px;
-  background: rgba(0, 0, 0, 0.1);
-  border: none;
+  background: $stoic-elevated;
+  border: 1px solid $stoic-border;
   width: 35px;
   height: 35px;
-  border-radius: 50%;
+  border-radius: 8px;
   font-size: 1.5rem;
   cursor: pointer;
   display: flex;
@@ -206,9 +209,11 @@
   justify-content: center;
   z-index: 10;
   transition: all 0.2s ease;
-  color: $haven-dark;
+  color: $stoic-text-secondary;
 
   &:hover {
-    background: rgba(0, 0, 0, 0.2);
+    background: $stoic-accent;
+    border-color: $stoic-accent;
+    color: $stoic-text-primary;
   }
 }
