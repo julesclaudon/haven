@@ -131,6 +131,112 @@
   }
 }
 
+// Archétype verrouillé avec progression
+.archetype-locked-section {
+  margin-bottom: 2rem;
+}
+
+.archetype-locked-card {
+  background: $stoic-surface;
+  border-radius: 12px;
+  border: 1px solid $stoic-border;
+  padding: 2rem;
+  text-align: center;
+
+  .locked-icon {
+    width: 80px;
+    height: 80px;
+    background: $stoic-elevated;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 0 auto 1rem;
+
+    i {
+      font-size: 2rem;
+      color: $stoic-text-muted;
+    }
+  }
+
+  h3 {
+    color: $stoic-text-primary;
+    font-size: 1.25rem;
+    margin: 0 0 0.5rem;
+  }
+
+  .locked-subtitle {
+    color: $stoic-text-secondary;
+    margin: 0 0 1.5rem;
+  }
+}
+
+.unlock-progress {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  max-width: 400px;
+  margin: 0 auto 1.5rem;
+}
+
+.progress-item {
+  text-align: left;
+
+  .progress-header {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    margin-bottom: 0.5rem;
+    color: $stoic-text-secondary;
+    font-size: 0.85rem;
+
+    i {
+      color: $stoic-accent-bronze;
+    }
+  }
+
+  .progress-bar-wrapper {
+    height: 8px;
+    background: $stoic-border;
+    border-radius: 4px;
+    overflow: hidden;
+    margin-bottom: 0.25rem;
+  }
+
+  .progress-bar {
+    height: 100%;
+    background: linear-gradient(90deg, $stoic-accent, $stoic-accent-bronze);
+    border-radius: 4px;
+    transition: width 0.5s ease;
+  }
+
+  .progress-text {
+    color: $stoic-text-primary;
+    font-size: 0.85rem;
+    font-weight: 600;
+    text-align: right;
+  }
+}
+
+.archetype-preview {
+  background: $stoic-elevated;
+  border-radius: 8px;
+  padding: 1rem 1.5rem;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.75rem;
+  color: $stoic-text-secondary;
+  font-size: 0.9rem;
+
+  i {
+    color: $stoic-accent;
+  }
+
+  strong {
+    color: $stoic-accent;
+  }
+}
+
 // Section Insights
 .insights-section {
   margin-bottom: 2rem;

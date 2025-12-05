@@ -4,7 +4,7 @@
   </div>
 
   <!-- Section Archétype : 2 cards côte à côte -->
-  <% if @archetype %>
+  <% if current_user.archetype_unlocked? && @archetype %>
     <div class="archetype-section">
       <div class="archetype-image-card">
         <div class="archetype-image-wrapper">
@@ -34,11 +34,46 @@
       </div>
     </div>
   <% else %>
-    <div class="archetype-empty-section">
-      <div class="archetype-empty-card">
-        <i class="fa-solid fa-question-circle"></i>
-        <h3>Archétype non défini</h3>
-        <p>Continue à échanger avec Haven pour qu'on puisse identifier ton archétype relationnel.</p>
+    <% progress = current_user.archetype_unlock_progress %>
+    <div class="archetype-locked-section">
+      <div class="archetype-locked-card">
+        <div class="locked-icon">
+          <i class="fa-solid fa-lock"></i>
+        </div>
+        <h3>Ton archétype relationnel</h3>
+        <p class="locked-subtitle">Continue à échanger avec Haven pour débloquer ton profil !</p>
+
+        <div class="unlock-progress">
+          <div class="progress-item">
+            <div class="progress-header">
+              <i class="fa-solid fa-comments"></i>
+              <span>Échanges terminés</span>
+            </div>
+            <div class="progress-bar-wrapper">
+              <div class="progress-bar" style="width: <%= (progress[:chats_progress].to_f / progress[:chats_required] * 100).round %>%;"></div>
+            </div>
+            <div class="progress-text"><%= progress[:chats_progress] %> / <%= progress[:chats_required] %></div>
+          </div>
+
+          <div class="progress-item">
+            <div class="progress-header">
+              <i class="fa-solid fa-calendar-days"></i>
+              <span>Jours d'utilisation</span>
+            </div>
+            <div class="progress-bar-wrapper">
+              <div class="progress-bar" style="width: <%= (progress[:days_progress].to_f / progress[:days_required] * 100).round %>%;"></div>
+            </div>
+            <div class="progress-text"><%= progress[:days_progress] %> / <%= progress[:days_required] %> jours</div>
+          </div>
+        </div>
+
+        <% dominant = current_user.computed_dominant_archetype %>
+        <% if dominant %>
+          <div class="archetype-preview">
+            <i class="fa-solid fa-eye"></i>
+            <span>Tendance actuelle : <strong><%= dominant %></strong></span>
+          </div>
+        <% end %>
       </div>
     </div>
   <% end %>
