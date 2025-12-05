@@ -2,7 +2,7 @@ import { Controller } from "@hotwired/stimulus"
 
 export default class extends Controller {
   static targets = ["messages", "textarea", "form", "submitBtn", "confirmModal", "modalTitle", "modalText", "modalIcon"]
-  static values = { closed: Boolean }
+  static values = { closed: Boolean, streamUrl: String }
 
   closeUrl = null
   pendingNavigation = null
@@ -78,7 +78,7 @@ export default class extends Controller {
     if (event.key === "Enter" && !event.shiftKey) {
       event.preventDefault()
       if (this.textareaTarget.value.trim()) {
-        this.formTarget.requestSubmit()
+        this.sendMessage()
       }
     }
   }
@@ -99,14 +99,146 @@ export default class extends Controller {
 
   // Gestion de la soumission du formulaire
   handleSubmit(event) {
+    event.preventDefault()
+    this.sendMessage()
+  }
+
+  // Envoyer le message et gérer le streaming
+  async sendMessage() {
     const content = this.textareaTarget.value.trim()
-    if (!content) {
-      event.preventDefault()
-      return
+    if (!content) return
+
+    // Désactiver le bouton et le textarea pendant l'envoi
+    this.submitBtnTarget.disabled = true
+    this.textareaTarget.disabled = true
+
+    // Ajouter le message utilisateur à l'UI
+    this.addUserMessage(content)
+
+    // Vider le textarea
+    this.textareaTarget.value = ""
+    this.autoResize()
+
+    // Créer la bulle de réponse vide avec curseur
+    const assistantBubble = this.createAssistantBubble()
+
+    // Scroll vers le bas
+    this.scrollToBottom()
+
+    try {
+      await this.streamResponse(content, assistantBubble)
+    } catch (error) {
+      console.error("Streaming error:", error)
+      assistantBubble.querySelector(".message-text").textContent = "Désolé, une erreur s'est produite. Veuillez réessayer."
+    } finally {
+      // Retirer le curseur et réactiver les contrôles
+      this.removeCursor(assistantBubble)
+      this.submitBtnTarget.disabled = false
+      this.textareaTarget.disabled = false
+      this.textareaTarget.focus()
+    }
+  }
+
+  // Ajouter le message utilisateur à l'interface
+  addUserMessage(content) {
+    const bubble = document.createElement("div")
+    bubble.className = "message-bubble user"
+    bubble.innerHTML = `
+      <div class="message-sender">Vous</div>
+      <div class="message-text">${this.escapeHtml(content)}</div>
+      <div class="message-time">${this.formatTime(new Date())}</div>
+    `
+    this.messagesTarget.appendChild(bubble)
+  }
+
+  // Créer la bulle de réponse assistant vide
+  createAssistantBubble() {
+    const bubble = document.createElement("div")
+    bubble.className = "message-bubble assistant"
+    bubble.innerHTML = `
+      <div class="message-sender">Haven (IA)</div>
+      <div class="message-text"><span class="typing-indicator"></span></div>
+      <div class="message-time">${this.formatTime(new Date())}</div>
+    `
+    this.messagesTarget.appendChild(bubble)
+    return bubble
+  }
+
+  // Retirer le curseur clignotant
+  removeCursor(bubble) {
+    const cursor = bubble.querySelector(".typing-indicator")
+    if (cursor) cursor.remove()
+  }
+
+  // Streamer la réponse depuis le serveur
+  async streamResponse(content, bubble) {
+    const csrfToken = document.querySelector("meta[name='csrf-token']")?.content
+    const textElement = bubble.querySelector(".message-text")
+
+    const response = await fetch(this.streamUrlValue, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        "X-CSRF-Token": csrfToken,
+        "Accept": "text/event-stream"
+      },
+      body: JSON.stringify({ message: { content } })
+    })
+
+    if (!response.ok) {
+      throw new Error(`HTTP error! status: ${response.status}`)
     }
 
-    // Désactiver le bouton pendant l'envoi
-    this.submitBtnTarget.disabled = true
+    const reader = response.body.getReader()
+    const decoder = new TextDecoder()
+    let fullText = ""
+
+    while (true) {
+      const { done, value } = await reader.read()
+      if (done) break
+
+      const chunk = decoder.decode(value, { stream: true })
+      const lines = chunk.split("\n")
+
+      for (const line of lines) {
+        if (line.startsWith("data: ")) {
+          const data = line.slice(6)
+
+          if (data === "[DONE]") {
+            continue
+          }
+
+          try {
+            const text = JSON.parse(data)
+            fullText += text
+            // Mettre à jour le texte en gardant le curseur
+            textElement.innerHTML = this.escapeHtml(fullText) + '<span class="typing-indicator"></span>'
+            this.scrollToBottom()
+          } catch (e) {
+            // Ignorer les erreurs de parsing
+          }
+        }
+      }
+    }
+
+    // Texte final sans curseur
+    textElement.textContent = fullText
+  }
+
+  // Échapper le HTML pour éviter XSS
+  escapeHtml(text) {
+    const div = document.createElement("div")
+    div.textContent = text
+    return div.innerHTML
+  }
+
+  // Formater l'heure
+  formatTime(date) {
+    const day = date.getDate().toString().padStart(2, "0")
+    const month = date.toLocaleString("fr-FR", { month: "short" })
+    const hours = date.getHours().toString().padStart(2, "0")
+    const minutes = date.getMinutes().toString().padStart(2, "0")
+    return `${day} ${month} ${hours}:${minutes}`
   }
 
   // Afficher la modale de confirmation
@@ -166,7 +298,7 @@ export default class extends Controller {
     const csrfToken = document.querySelector("meta[name='csrf-token']")?.content
 
     try {
-      const response = await fetch(this.closeUrl, {
+      await fetch(this.closeUrl, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -177,7 +309,7 @@ export default class extends Controller {
 
       // Que la requête réussisse ou non, on navigue vers la destination
       window.location.href = this.pendingNavigation
-    } catch (error) {
+    } catch {
       // En cas d'erreur, naviguer quand même
       window.location.href = this.pendingNavigation
     }

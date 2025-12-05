@@ -1,4 +1,4 @@
-<div class="haven-conversation" data-controller="chat" data-chat-closed-value="<%= @chat.closed? %>">
+<div class="haven-conversation" data-controller="chat" data-chat-closed-value="<%= @chat.closed? %>" data-chat-stream-url-value="<%= stream_chat_messages_path(@chat) %>">
   <header class="conversation-header">
     <%= link_to chats_path, class: "back-btn" do %>
       <i class="fa-solid fa-arrow-left"></i>
