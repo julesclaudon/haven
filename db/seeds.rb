@@ -432,3 +432,258 @@ puts "\n📧 Test accounts:"
 puts "   - lucas@test.com / password123 (5 chats, en progression)"
 puts "   - thomas@test.com / password123 (1 chat, phase colère)"
 puts "   - maxime@test.com / password123 (1 chat, phase acceptation)"
+
+# ============================================
+# FRANK - Persona pour démo pitch (3 min)
+# 29 ans, 3 ans de relation, elle l'a quitté
+# Émotion dominante : espoir mal placé → colère
+# ============================================
+
+frank = User.find_or_create_by!(email: "frank@test.com") do |user|
+  user.username = "Frank"
+  user.password = "password123"
+  user.archetype_id = archetypes[3].id # Le Romantique
+end
+
+# Initial Quiz pour Frank
+InitialQuiz.find_or_create_by!(user: frank) do |quiz|
+  quiz.age = 29
+  quiz.relation_end_date = 3.weeks.ago
+  quiz.relation_duration = 36 # 3 ans
+  quiz.pain_level = 8
+  quiz.breakup_type = "soudaine"
+  quiz.breakup_initiator = "elle"
+  quiz.emotion_label = "espoir"
+  quiz.main_sentiment = "Je suis sûr qu'elle va revenir. On était trop bien ensemble, c'est juste une crise."
+  quiz.ex_contact_frequency = "quotidien"
+  quiz.considered_reunion = true
+  quiz.ruminating_frequency = "constamment"
+  quiz.sleep_quality = "très mauvaise"
+  quiz.habits_changed = "Je ne dors plus, je relis nos messages, je regarde ses photos"
+  quiz.support_level = "quelques amis"
+end
+
+# Clear existing data for Frank
+State.where(user: frank).destroy_all
+
+frank_journey = [
+  # ============================================
+  # CHAT 1 - Espoir mal placé (il y a 3 semaines)
+  # ============================================
+  {
+    chat: { status: "[TERMINÉE] Premier choc" },
+    messages: [
+      { role: "user", content: "Elle m'a quitté hier. 3 ans ensemble et elle me dit qu'elle a besoin de 'se retrouver'. Je comprends pas, on parlait de s'installer ensemble le mois dernier." },
+      { role: "assistant", content: "3 ans et du jour au lendemain elle parle de se retrouver. C'est violent. T'as eu des signes avant ou c'est vraiment sorti de nulle part ?" },
+      { role: "user", content: "Non, rien. Enfin... elle était un peu distante ces dernières semaines mais je mettais ça sur le stress du boulot. On avait prévu un week-end à Lisbonne pour nos 3 ans." },
+      { role: "assistant", content: "Ouais, le cerveau fait ça — il rationalise. 'C'est le boulot', 'elle est fatiguée'. Et là t'es en train de repasser le film en te demandant ce que t'as loupé. C'est quoi qui te fait le plus mal là maintenant ?" },
+      { role: "user", content: "Je sais pas... J'arrive pas à croire que c'est fini. Genre, on a encore nos photos partout chez moi. Ses affaires sont encore là. C'est pas possible que ce soit vraiment terminé." },
+      { role: "assistant", content: "Ses affaires encore là, les photos, tout ça — c'est concret. Ça rend la rupture irréelle. T'as l'impression que si tu bouges rien, peut-être que ça va s'annuler. Tu lui as reparlé depuis hier ?" }
+    ],
+    state: {
+      grief_stage: grief_stages[0], # Déni
+      pain_level: 9,
+      raw_input: "Elle m'a quitté hier. 3 ans ensemble et elle me dit qu'elle a besoin de 'se retrouver'.",
+      trigger_source: "message",
+      time_of_day: "nuit",
+      drugs: "aucun",
+      emotion_label: "confusion",
+      main_sentiment: "C'est pas possible que ce soit vraiment terminé",
+      ex_contact_frequency: "quotidien",
+      considered_reunion: true,
+      ruminating_frequency: "constamment",
+      sleep_quality: "très mauvaise",
+      habits_changed: "Je n'ai pas dormi de la nuit",
+      support_level: "isolé"
+    },
+    analysis: {
+      score: 8,
+      resume: "Frank est en état de choc total suite à une rupture très récente et inattendue. Il présente tous les signes du déni : incapacité à accepter la réalité, environnement figé (affaires de l'ex encore présentes), recherche de rationalisation. Niveau de douleur critique (9/10). Il n'a pas encore de réseau de soutien activé."
+    },
+    created_at: 21.days.ago
+  },
+
+  # ============================================
+  # CHAT 2 - Espoir mal placé qui s'intensifie (il y a 2 semaines)
+  # ============================================
+  {
+    chat: { status: "[TERMINÉE] Les signes qu'elle va revenir" },
+    messages: [
+      { role: "user", content: "Elle a liké ma story Instagram hier. Et avant-hier elle m'a envoyé un message pour savoir si j'allais bien. C'est des signes non ? Elle regrette." },
+      { role: "assistant", content: "Un like et un message en deux jours. Je comprends que ça te donne de l'espoir. Qu'est-ce qu'elle a dit exactement dans son message ?" },
+      { role: "user", content: "Juste 'Hey, j'espère que tu vas bien. Prends soin de toi.' Mais le fait qu'elle pense à moi, ça veut dire quelque chose. Si elle voulait vraiment couper, elle m'aurait bloqué." },
+      { role: "assistant", content: "'Prends soin de toi' — c'est doux mais c'est aussi ce qu'on dit quand on s'éloigne. Je dis pas que ça veut rien dire, mais là, qu'est-ce que toi tu ressens quand tu reçois ça ? Du soulagement ou ça te laisse encore plus dans le flou ?" },
+      { role: "user", content: "Les deux je crois. Ça me rassure de savoir qu'elle pense à moi. Mais en même temps j'arrive pas à savoir ce qu'elle veut vraiment. J'hésite à lui répondre un long message pour lui dire tout ce que je ressens." },
+      { role: "assistant", content: "L'envie de tout déballer, de lui montrer à quel point tu l'aimes encore — c'est humain. Mais t'as peur de quoi exactement si tu envoies ce message ? Qu'elle réponde pas, ou qu'elle réponde quelque chose que tu veux pas entendre ?" },
+      { role: "user", content: "Qu'elle me dise que c'est définitif. Tant qu'elle l'a pas dit clairement, j'ai encore une chance." }
+    ],
+    state: {
+      grief_stage: grief_stages[0], # Toujours Déni
+      pain_level: 8,
+      raw_input: "Elle a liké ma story Instagram hier. C'est des signes non ? Elle regrette.",
+      trigger_source: "instagram",
+      time_of_day: "soir",
+      drugs: "aucun",
+      emotion_label: "espoir",
+      main_sentiment: "Tant qu'elle l'a pas dit clairement, j'ai encore une chance",
+      ex_contact_frequency: "quotidien",
+      considered_reunion: true,
+      ruminating_frequency: "constamment",
+      sleep_quality: "mauvaise",
+      habits_changed: "Je surveille mon téléphone en permanence",
+      support_level: "quelques amis"
+    },
+    analysis: {
+      score: 12,
+      resume: "Frank reste ancré dans le déni avec un espoir mal placé. Il interprète chaque micro-interaction (like, message poli) comme un signe de réconciliation. Ce mécanisme de défense lui évite de faire face à la douleur mais l'empêche d'avancer. Il est dans l'attente permanente, ce qui maintient son anxiété à un niveau élevé."
+    },
+    created_at: 14.days.ago
+  },
+
+  # ============================================
+  # CHAT 3 - La bascule vers la colère (il y a 10 jours)
+  # ============================================
+  {
+    chat: { status: "[TERMINÉE] Elle est sortie avec un mec" },
+    messages: [
+      { role: "user", content: "Je viens de voir sur Instagram qu'elle était en soirée avec un mec. Ils avaient l'air proches. Ça fait même pas 2 semaines putain." },
+      { role: "assistant", content: "2 semaines et tu tombes sur ça. C'est une claque. Tu sais qui c'est ce mec ou c'est un inconnu ?" },
+      { role: "user", content: "Je sais pas. Je crois que c'est un collègue. Mais merde, elle me parlait de 'se retrouver' et elle sort avec des mecs ? Elle s'est bien foutue de ma gueule." },
+      { role: "assistant", content: "La colère qui monte, c'est normal. T'as l'impression qu'elle t'a menti sur ses raisons. C'est quoi qui te fait le plus mal là — qu'elle soit avec quelqu'un d'autre ou qu'elle t'ait pas dit la vérité ?" },
+      { role: "user", content: "Les deux ! J'ai passé deux semaines à espérer qu'elle revienne, à analyser chaque like, chaque message, comme un con. Et pendant ce temps elle se marrait avec un autre." },
+      { role: "assistant", content: "Tu t'es accroché à des signaux pendant qu'elle avançait de son côté. C'est brutal de réaliser ça. Cette colère que tu ressens, elle est dirigée vers elle, ou y'a une part contre toi aussi ?" },
+      { role: "user", content: "Contre moi ouais. Je me sens tellement stupide d'avoir cru qu'on avait une chance. J'aurais dû voir que c'était du flan depuis le début." }
+    ],
+    state: {
+      grief_stage: grief_stages[1], # Colère
+      pain_level: 9,
+      raw_input: "Je viens de voir sur Instagram qu'elle était en soirée avec un mec. Ça fait même pas 2 semaines.",
+      trigger_source: "instagram",
+      time_of_day: "nuit",
+      drugs: "alcool",
+      emotion_label: "colère",
+      main_sentiment: "Elle s'est foutue de ma gueule, je me sens stupide",
+      ex_contact_frequency: "hebdomadaire",
+      considered_reunion: false,
+      ruminating_frequency: "constamment",
+      sleep_quality: "très mauvaise",
+      habits_changed: "J'ai bu ce soir, je dors pas",
+      support_level: "isolé"
+    },
+    analysis: {
+      score: 18,
+      resume: "Rupture brutale du déni. Frank découvre que son ex fréquente quelqu'un d'autre, ce qui déclenche une transition vers la phase de colère. La douleur est intense mais c'est une progression : il ne croit plus à la réconciliation. Attention : consommation d'alcool et isolement. La colère est dirigée contre elle ET contre lui-même — risque de spirale d'auto-dévalorisation."
+    },
+    created_at: 10.days.ago
+  },
+
+  # ============================================
+  # CHAT 4 - Colère + début de prise de recul (il y a 5 jours)
+  # ============================================
+  {
+    chat: { status: "[TERMINÉE] J'aurais dû voir les red flags" },
+    messages: [
+      { role: "user", content: "J'ai repensé à notre relation cette nuit. En fait y'avait des trucs qui collaient pas depuis longtemps. Elle annulait souvent nos plans, elle était sur son tel tout le temps..." },
+      { role: "assistant", content: "Tu commences à revoir l'histoire avec d'autres yeux. C'est quoi le truc qui te revient le plus, là, avec le recul ?" },
+      { role: "user", content: "Y'a 6 mois, elle a commencé à dire qu'elle voulait plus de temps pour elle. J'ai rien dit, j'ai accepté. Et puis elle sortait de plus en plus avec ses 'collègues'. Je me demande si le mec de la photo, c'était pas déjà dans le tableau." },
+      { role: "assistant", content: "T'as le sentiment qu'il y avait peut-être quelque chose avant même la rupture. Cette idée, elle te met en colère ou elle te fait te sentir trahi ?" },
+      { role: "user", content: "Les deux. Mais surtout je m'en veux de pas avoir réagi. J'étais tellement à fond sur 'nous construire un avenir' que j'ai rien vu. Ou j'ai pas voulu voir." },
+      { role: "assistant", content: "Tu t'es investi à fond pendant qu'elle prenait du recul. C'est un déséquilibre qui fait mal à voir après coup. Mais là tu parles au passé — c'est quoi qui a changé par rapport à la semaine dernière ?" },
+      { role: "user", content: "Je sais pas... J'ai arrêté de regarder son Instagram. Ça sert à rien à part me faire du mal. Mes potes m'ont dit de sortir un peu, j'ai accepté d'aller boire un verre demain." }
+    ],
+    state: {
+      grief_stage: grief_stages[1], # Colère mais plus lucide
+      pain_level: 7,
+      raw_input: "J'ai repensé à notre relation cette nuit. En fait y'avait des trucs qui collaient pas depuis longtemps.",
+      trigger_source: "mémoire",
+      time_of_day: "nuit",
+      drugs: "aucun",
+      emotion_label: "colère",
+      main_sentiment: "Je m'en veux de pas avoir vu les signes",
+      ex_contact_frequency: "jamais",
+      considered_reunion: false,
+      ruminating_frequency: "souvent",
+      sleep_quality: "mauvaise",
+      habits_changed: "J'ai arrêté de stalker son Instagram, je ressors avec mes potes",
+      support_level: "quelques amis"
+    },
+    analysis: {
+      score: 32,
+      resume: "Progression significative. Frank analyse sa relation avec plus de lucidité et identifie des signaux d'alerte qu'il avait ignorés. La colère reste présente mais devient plus constructive — il se questionne sur sa propre responsabilité (différent de l'auto-flagellation). Points très positifs : arrêt du stalking Instagram, reconnexion sociale prévue. Il passe de la réaction émotionnelle à la réflexion."
+    },
+    created_at: 5.days.ago
+  },
+
+  # ============================================
+  # CHAT 5 - Aujourd'hui - Conversation active pour la démo
+  # ============================================
+  {
+    chat: { status: "Nouvelle conversation" },
+    messages: [
+      { role: "user", content: "Je suis sorti avec mes potes hier soir. Ça faisait du bien. Mais ce matin je me suis réveillé et j'ai pensé direct à elle. C'est relou, j'ai l'impression de faire un pas en avant, deux en arrière." }
+    ],
+    state: {
+      grief_stage: grief_stages[2], # Marchandage / transition
+      pain_level: 6,
+      raw_input: "Je suis sorti avec mes potes hier soir. Ça faisait du bien. Mais ce matin je me suis réveillé et j'ai pensé direct à elle.",
+      trigger_source: "autre",
+      time_of_day: "matin",
+      drugs: "aucun",
+      emotion_label: "manque",
+      main_sentiment: "Un pas en avant, deux en arrière",
+      ex_contact_frequency: "jamais",
+      considered_reunion: false,
+      ruminating_frequency: "parfois",
+      sleep_quality: "correcte",
+      habits_changed: "Je ressors, je vois mes potes",
+      support_level: "quelques amis"
+    },
+    analysis: {
+      score: 45,
+      resume: "Frank progresse de manière non-linéaire, ce qui est normal. Il ressort, voit ses amis, et ne cherche plus le contact avec son ex. Le manque matinal est classique — le cerveau met du temps à désapprendre les automatismes. Sa frustration vient du fait qu'il attend une progression constante alors que le deuil fonctionne par vagues. Il est sur la bonne voie."
+    },
+    created_at: Time.current
+  }
+]
+
+frank_chats = []
+
+frank_journey.each do |data|
+  chat = Chat.create!(status: data[:chat][:status])
+  frank_chats << chat
+
+  # Créer les messages de la conversation
+  data[:messages].each_with_index do |msg, index|
+    Message.create!(
+      chat: chat,
+      role: msg[:role],
+      content: msg[:content],
+      created_at: data[:created_at] + index.minutes
+    )
+  end
+
+  # Créer le state
+  state = State.create!(
+    data[:state].merge(
+      user: frank,
+      chat: chat,
+      created_at: data[:created_at],
+      updated_at: data[:created_at]
+    )
+  )
+
+  # Créer l'analyse
+  Analysis.create!(
+    data[:analysis].merge(
+      state: state,
+      created_at: data[:created_at],
+      updated_at: data[:created_at]
+    )
+  )
+end
+
+puts "\n🎬 FRANK - Persona démo créé!"
+puts "   - frank@test.com / password123"
+puts "   - 5 conversations avec messages"
+puts "   - Progression: Déni → Espoir → Colère → Lucidité"
+puts "   - Score: 8 → 12 → 18 → 32 → 45"
