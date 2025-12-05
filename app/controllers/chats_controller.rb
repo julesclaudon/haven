@@ -97,7 +97,7 @@ class ChatsController < ApplicationController
       "#{msg.role == 'user' ? 'Utilisateur' : 'Haven'}: #{msg.content}"
     end.join("\n\n")
 
-    ruby_llm_chat = RubyLLM.chat(model: 'gpt-4.1', temperature: 0.2)
+    ruby_llm_chat = RubyLLM.chat(model: 'gpt-4.1')
     prompt = analysis_prompt(conversation_complete, current_user.initial_quiz)
 
     response = ruby_llm_chat.ask(prompt)
