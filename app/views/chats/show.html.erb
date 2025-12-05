@@ -1,4 +1,4 @@
-<div class="haven-conversation" data-controller="chat" data-chat-closed-value="<%= @chat.closed? %>">
+<div class="haven-conversation" data-controller="chat" data-chat-closed-value="<%= @chat.closed? %>" data-chat-stream-url-value="<%= stream_chat_messages_path(@chat) %>">
   <header class="conversation-header">
     <%= link_to chats_path, class: "back-btn" do %>
       <i class="fa-solid fa-arrow-left"></i>
@@ -43,7 +43,7 @@
 
   <% unless @chat.closed? %>
     <div class="conversation-input">
-      <%= form_with url: chat_messages_path(@chat), method: :post, local: true, class: "message-form", data: { chat_target: "form", action: "submit->chat#handleSubmit" } do |f| %>
+      <%= form_with url: chat_messages_path(@chat), method: :post, local: false, class: "message-form", data: { chat_target: "form", action: "submit->chat#handleSubmit" } do |f| %>
         <%= f.text_area :content,
             name: "message[content]",
             placeholder: "Écrivez votre message...",

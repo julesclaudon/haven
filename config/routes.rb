@@ -22,7 +22,11 @@ Rails.application.routes.draw do
     member do
       post :close
     end
-    resources :messages, only: [:create]
+    resources :messages, only: [:create] do
+      collection do
+        post :stream
+      end
+    end
   end
   resource :dashboard, only: :show
 
