@@ -8,6 +8,20 @@ class ApplicationController < ActionController::Base
     devise_parameter_sanitizer.permit(:account_update, keys: [:username])
   end
 
+  # Redirection après connexion
+  def after_sign_in_path_for(resource)
+    if resource.initial_quiz.present?
+      root_path
+    else
+      new_initial_quiz_path
+    end
+  end
+
+  # Redirection après inscription
+  def after_sign_up_path_for(resource)
+    new_initial_quiz_path
+  end
+
   def require_initial_quiz
     return unless user_signed_in?
     return if controller_name == "initial_quizzes"
