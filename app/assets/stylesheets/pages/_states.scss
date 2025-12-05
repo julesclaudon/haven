@@ -1,4 +1,4 @@
-‹// Styles pour States
+// Styles pour States - Stoic Theme
 
 .states-container {
   max-width: 900px;
@@ -15,7 +15,7 @@
   gap: 1rem;
 
   h1 {
-    color: $haven-primary;
+    color: $stoic-text-primary;
     font-family: $headings-font-family;
     font-weight: 700;
     margin: 0;
@@ -30,9 +30,9 @@
 }
 
 .state-card {
-  background: white;
-  border-radius: 12px;
-  box-shadow: 0 2px 12px rgba(0, 0, 0, 0.06);
+  background: $stoic-surface;
+  border-radius: 10px;
+  border: 1px solid $stoic-border;
   padding: 1.25rem 1.5rem;
   display: flex;
   align-items: center;
@@ -42,14 +42,13 @@
   color: inherit;
 
   &:hover {
-    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
-    transform: translateY(-2px);
+    border-color: $stoic-accent;
   }
 
   .state-pain {
     width: 50px;
     height: 50px;
-    border-radius: 50%;
+    border-radius: 8px;
     display: flex;
     align-items: center;
     justify-content: center;
@@ -58,18 +57,18 @@
     flex-shrink: 0;
 
     &.low {
-      background: rgba($pain-low, 0.2);
-      color: darken($pain-low, 20%);
+      background: rgba($pain-low, 0.15);
+      color: $pain-low;
     }
 
     &.medium {
-      background: rgba($pain-medium, 0.3);
-      color: darken($pain-medium, 30%);
+      background: rgba($pain-medium, 0.15);
+      color: $pain-medium;
     }
 
     &.high {
-      background: rgba($pain-high, 0.2);
-      color: darken($pain-high, 15%);
+      background: rgba($pain-high, 0.15);
+      color: $pain-high;
     }
   }
 
@@ -78,13 +77,13 @@
 
     .state-date {
       font-size: 0.85rem;
-      color: $gray;
+      color: $stoic-text-secondary;
       margin-bottom: 0.25rem;
     }
 
     .state-emotion {
       font-weight: 600;
-      color: $haven-dark;
+      color: $stoic-text-primary;
     }
   }
 
@@ -98,16 +97,16 @@
       align-items: center;
       gap: 0.35rem;
       font-size: 0.9rem;
-      color: $gray;
+      color: $stoic-text-secondary;
 
       i {
-        color: $haven-secondary;
+        color: $stoic-accent-bronze;
       }
     }
   }
 
   .state-arrow {
-    color: $light-gray;
+    color: $stoic-text-muted;
     font-size: 1.25rem;
   }
 }
@@ -116,23 +115,23 @@
 .states-empty {
   text-align: center;
   padding: 4rem 2rem;
-  background: white;
-  border-radius: 16px;
-  box-shadow: 0 2px 12px rgba(0, 0, 0, 0.06);
+  background: $stoic-surface;
+  border-radius: 12px;
+  border: 1px solid $stoic-border;
 
   i {
     font-size: 3rem;
-    color: $light-gray;
+    color: $stoic-text-muted;
     margin-bottom: 1rem;
   }
 
   h3 {
-    color: $haven-dark;
+    color: $stoic-text-primary;
     margin-bottom: 0.5rem;
   }
 
   p {
-    color: $gray;
+    color: $stoic-text-secondary;
     margin-bottom: 1.5rem;
   }
 }
@@ -149,20 +148,20 @@
   margin-bottom: 2rem;
 
   h1 {
-    color: $haven-primary;
+    color: $stoic-text-primary;
     font-family: $headings-font-family;
     font-weight: 700;
   }
 
   .subtitle {
-    color: $gray;
+    color: $stoic-text-secondary;
   }
 }
 
 .state-form-card {
-  background: white;
-  border-radius: 16px;
-  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+  background: $stoic-surface;
+  border-radius: 12px;
+  border: 1px solid $stoic-border;
   padding: 2rem;
 }
 
@@ -171,8 +170,9 @@
   text-align: center;
   padding: 2rem;
   margin-bottom: 1.5rem;
-  background: linear-gradient(135deg, rgba($pain-low, 0.1) 0%, rgba($haven-secondary, 0.1) 100%);
-  border-radius: 16px;
+  background: $stoic-elevated;
+  border: 1px solid $stoic-border;
+  border-radius: 12px;
   animation: fadeInDown 0.5s ease;
 
   .success-icon {
@@ -192,13 +192,13 @@
   }
 
   h2 {
-    color: $haven-dark;
+    color: $stoic-text-primary;
     font-size: 1.5rem;
     margin: 0 0 0.5rem;
   }
 
   p {
-    color: $gray;
+    color: $stoic-text-secondary;
     margin: 0;
     font-size: 0.95rem;
     line-height: 1.5;
@@ -229,33 +229,33 @@
     margin-bottom: 2rem;
 
     .back-link {
-      color: $gray;
+      color: $stoic-text-secondary;
       font-size: 1.5rem;
 
       &:hover {
-        color: $haven-primary;
+        color: $stoic-accent;
       }
     }
 
     .header-content {
       h1 {
-        color: $haven-primary;
+        color: $stoic-text-primary;
         font-family: $headings-font-family;
         font-size: 1.5rem;
         margin: 0;
       }
 
       .date {
-        color: $gray;
+        color: $stoic-text-secondary;
         font-size: 0.9rem;
       }
     }
   }
 
   .state-detail-card {
-    background: white;
-    border-radius: 16px;
-    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+    background: $stoic-surface;
+    border-radius: 12px;
+    border: 1px solid $stoic-border;
     padding: 2rem;
   }
 
@@ -263,7 +263,7 @@
     display: flex;
     gap: 1.5rem;
     padding-bottom: 1.5rem;
-    border-bottom: 1px solid $light-gray;
+    border-bottom: 1px solid $stoic-border;
     margin-bottom: 1.5rem;
     flex-wrap: wrap;
 
@@ -275,29 +275,29 @@
       .summary-value {
         font-size: 1.5rem;
         font-weight: 700;
-        color: $haven-primary;
+        color: $stoic-text-primary;
 
         .score-diff-badge {
           display: inline-block;
           padding: 0.25rem 0.75rem;
-          border-radius: 1rem;
+          border-radius: 6px;
           font-size: 1.1rem;
 
           &.positive {
-            background: linear-gradient(135deg, $pain-low, darken($pain-low, 10%));
-            color: white;
+            background: rgba($pain-low, 0.15);
+            color: $pain-low;
           }
 
           &.neutral {
-            background: rgba($gray, 0.2);
-            color: $gray;
+            background: $stoic-elevated;
+            color: $stoic-text-secondary;
           }
         }
       }
 
       .summary-label {
         font-size: 0.85rem;
-        color: $gray;
+        color: $stoic-text-secondary;
       }
     }
   }
@@ -307,7 +307,7 @@
 
     .section-title {
       font-size: 0.85rem;
-      color: $gray;
+      color: $stoic-text-secondary;
       text-transform: uppercase;
       letter-spacing: 0.5px;
       margin-bottom: 0.75rem;
@@ -315,12 +315,12 @@
   }
 
   .raw-input-box {
-    background: $haven-light;
+    background: $stoic-elevated;
     padding: 1.25rem;
-    border-radius: 10px;
-    border-left: 4px solid $haven-secondary;
+    border-radius: 8px;
+    border-left: 3px solid $stoic-accent;
     font-style: italic;
-    color: $haven-dark;
+    color: $stoic-text-secondary;
     line-height: 1.6;
   }
 
@@ -330,19 +330,19 @@
     gap: 1rem;
 
     .detail-item {
-      background: $haven-light;
+      background: $stoic-elevated;
       padding: 1rem;
-      border-radius: 10px;
+      border-radius: 8px;
 
       .detail-label {
         font-size: 0.8rem;
-        color: $gray;
+        color: $stoic-text-muted;
         margin-bottom: 0.25rem;
       }
 
       .detail-value {
         font-weight: 500;
-        color: $haven-dark;
+        color: $stoic-text-primary;
       }
     }
   }
@@ -350,29 +350,31 @@
 
 // Section analyse avec résumé et score
 .analysis-resume {
-  background: linear-gradient(135deg, rgba($haven-primary, 0.05) 0%, rgba($haven-secondary, 0.08) 100%);
+  background: $stoic-elevated;
   padding: 1.25rem;
-  border-radius: 12px;
+  border-radius: 10px;
+  border: 1px solid $stoic-border;
   margin-bottom: 1.5rem;
 
   .section-title {
     display: flex;
     align-items: center;
     gap: 0.5rem;
-    color: $haven-primary;
+    color: $stoic-text-primary;
     font-weight: 600;
 
     i {
       font-size: 1rem;
+      color: $stoic-accent;
     }
   }
 
   .resume-box {
-    background: white;
+    background: $stoic-surface;
     padding: 1rem;
     border-radius: 8px;
     margin-top: 0.75rem;
-    color: $haven-dark;
+    color: $stoic-text-secondary;
     line-height: 1.6;
     font-size: 0.95rem;
   }
@@ -383,32 +385,32 @@
     gap: 1rem;
     margin-top: 1rem;
     padding-top: 1rem;
-    border-top: 1px solid rgba($haven-primary, 0.1);
+    border-top: 1px solid $stoic-border;
 
     .score-label {
       font-size: 0.8rem;
-      color: $gray;
+      color: $stoic-text-secondary;
       white-space: nowrap;
     }
 
     .score-bar {
       flex: 1;
-      height: 8px;
-      background: rgba($haven-primary, 0.15);
-      border-radius: 4px;
+      height: 6px;
+      background: $stoic-border;
+      border-radius: 3px;
       overflow: hidden;
 
       .score-fill {
         height: 100%;
-        background: linear-gradient(90deg, $haven-secondary, $haven-primary);
-        border-radius: 4px;
+        background: $stoic-accent;
+        border-radius: 3px;
         transition: width 0.5s ease;
       }
     }
 
     .score-value {
       font-weight: 700;
-      color: $haven-primary;
+      color: $stoic-text-primary;
       font-size: 0.9rem;
       min-width: 40px;
       text-align: right;
@@ -424,16 +426,16 @@
     gap: 0.5rem;
 
     i {
-      color: $haven-secondary;
+      color: $stoic-accent-bronze;
     }
   }
 
   .archetype-badge {
     display: inline-block;
-    background: linear-gradient(135deg, $haven-primary, darken($haven-primary, 10%));
-    color: white;
+    background: $stoic-accent;
+    color: $stoic-text-primary;
     padding: 0.5rem 1.25rem;
-    border-radius: 2rem;
+    border-radius: 6px;
     font-weight: 600;
     font-size: 0.95rem;
     margin-top: 0.5rem;
@@ -442,21 +444,21 @@
 
 // Bouton nouveau state
 .btn-new-state {
-  background: $haven-primary;
-  color: white;
+  background: $stoic-accent;
+  color: $stoic-text-primary;
   padding: 0.75rem 1.5rem;
-  border-radius: 10px;
+  border-radius: 8px;
   font-weight: 600;
   text-decoration: none;
   display: inline-flex;
   align-items: center;
   gap: 0.5rem;
   transition: all 0.2s ease;
+  border: none;
 
   &:hover {
-    background: darken($haven-primary, 8%);
-    color: white;
-    transform: translateY(-1px);
+    background: $stoic-accent-hover;
+    color: $stoic-text-primary;
   }
 
   i {

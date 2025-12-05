@@ -1,6 +1,8 @@
+// Navbar - Stoic Theme
 .navbar-lewagon {
   justify-content: space-between;
-  background: white;
+  background: $stoic-surface;
+  border-bottom: 1px solid $stoic-border;
 }
 
 .navbar-lewagon .navbar-collapse {
@@ -9,4 +11,14 @@
 
 .navbar-lewagon .navbar-brand img {
   width: 40px;
+}
+
+.navbar-lewagon .nav-link {
+  color: $stoic-text-secondary;
+  transition: color 0.2s ease;
+
+  &:hover,
+  &.active {
+    color: $stoic-text-primary;
+  }
 }
