@@ -255,8 +255,9 @@ module HavenPromptsHelper
       - Tu proposes un profil relationnel uniquement si les indices sont clairs. Pas d'interprétation clinique.
       - Tu indiques true sur les booléens uniquement si plusieurs signaux indépendants le montrent.
       - Le résumé est factuel, neutre, sans jugement ni analyse psychologique.
-      - Si un champ est incertain, mets null.
+      - Si un champ est incertain ou non mentionné dans la conversation, mets null.
       - Base ton analyse sur l'ensemble de la conversation, pas sur un seul message.
+      - Pour les champs avec des valeurs prédéfinies, utilise EXACTEMENT les valeurs indiquées.
 
       ---
 
@@ -265,18 +266,18 @@ module HavenPromptsHelper
       {
         "etape_deuil": "déni" | "colère" | "marchandage" | "tristesse" | "acceptation" | null,
         "emotion_dominante": string | null,
-        "emotions_secondaires": [string] | null,
         "intensite_emotionnelle": 1-10 | null,
         "profil_relationnel": string | null,
-        "attachement_ex": "fort" | "modéré" | "faible" | "ambivalent" | null,
         "ruminations": boolean | null,
         "signes_isolement": boolean | null,
-        "signes_risque": boolean | null,
-        "ouverture_au_dialogue": "haute" | "moyenne" | "faible" | "défensive" | null,
         "themes_recurrents": [string] | null,
-        "besoins_identifies": [string] | null,
-        "resume_conversation": string | null,
-        "recommandation_interne": string | null
+        "resume_conversation": string (2-3 phrases factuelles résumant ce qui a été partagé),
+        "trigger_source": "instagram" | "facebook" | "linkedin" | "tiktok" | "snapchat" | "twitter" | "mémoire" | "message" | "chanson" | "lieu" | "photo" | "objet" | "rêve" | "autre" | null,
+        "ex_contact_frequency": "aucun_contact" | "contact_rare" | "contact_occasionnel" | "contact_frequent" | "contact_quotidien" | null,
+        "considered_reunion": boolean | null,
+        "sleep_quality": "tres_bon" | "bon" | "moyen" | "mauvais" | "tres_mauvais" | "insomnie" | null,
+        "support_level": "tres_entoure" | "entoure" | "peu_entoure" | "isole" | null,
+        "habits_changed": string (description courte des changements d'habitudes mentionnés) | null
       }
 
       ---
@@ -286,6 +287,7 @@ module HavenPromptsHelper
       - Réponds UNIQUEMENT avec l'objet JSON.
       - Pas de texte avant, pas de texte après.
       - Pas de markdown autour du JSON.
+      - Pas de ```json``` autour du JSON.
     PROMPT
   end
 
